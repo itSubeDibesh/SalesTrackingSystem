@@ -1,0 +1,60 @@
+﻿@model Models.Users_Model
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+}
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-content--bge5">
+                <div class="container container-fluid">
+                    <div class="login-wrap">
+                        @Html.Partial("~/Views/Shared/_Alert.cshtml")
+                        <div class="login-content">
+                            <div class="login-logo">
+                                <a href="#">
+                                    <img src="~/Images/icon/logo.png" alt="Tinjure tea factory">
+                                </a>
+                            </div>
+                            <div class="login-form m-t-50">
+                                @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "au-input au-input--full", @type = "email", @placeholder = "Email" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input class="au-input au-input--full" type="password" name="password" id="password" minlength="8" placeholder="Password">
+                                        @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="login-checkbox">
+                                        <label>
+                                            <input type="checkbox" value="remembered" name="remember">Remember Me
+                                        </label>
+                                        <label>
+                                            <a href="#">Forgotten Password?</a>
+                                        </label>
+                                    </div>
+                                    <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("~/Views/Shared/_Debug.cshtml");
+
+
+

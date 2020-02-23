@@ -1,0 +1,23 @@
+﻿<div>
+    @if (Session["Success"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Infromation : &nbsp;&nbsp; <span> @Session["Success"].ToString() </span>
+        </div>
+        Session.Remove("Success");
+    }
+    @if (Session["Warning"] != null)
+    {
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Warning : &nbsp;&nbsp; <span> @Session["Warning"].ToString() </span>
+        </div>
+        Session.Remove("Warning");
+    }
+    @if (Session["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-bullhorn"></i>&nbsp;&nbsp; Error : &nbsp;&nbsp; <span> @Session["Error"].ToString() </span>
+        </div>
+        Session.Remove("Error");
+    }
+</div>

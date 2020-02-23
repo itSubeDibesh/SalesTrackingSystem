@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3c2cfdaab6f74b2aad2cd5e288e88003" Name="Diagram1" DisplayType="true" ZoomLevel="82">
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Batch" Width="2.25" PointX="15.75" PointY="1.125" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.DistributonArea" Width="2.25" PointX="3.75" PointY="11.375" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Distributor" Width="2.25" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.ExceptionUserProfile" Width="2.25" PointX="6.75" PointY="6.375" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Module" Width="2.25" PointX="3.75" PointY="20.5" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.ModuleAction" Width="2.25" PointX="3.75" PointY="1.75" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.ProductCategory" Width="2.25" PointX="12.75" PointY="3.125" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Product" Width="2.25" PointX="15.75" PointY="5" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Reseller" Width="2.25" PointX="3.75" PointY="15.5" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.TransactionDetail" Width="2.25" PointX="18.75" PointY="5.25" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Transaction" Width="2.25" PointX="15.75" PointY="9.125" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.UserProfile" Width="2.25" PointX="6.75" PointY="10.875" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.UserProfileDetail" Width="2.25" PointX="9.75" PointY="8.125" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.User" Width="2.25" PointX="3.75" PointY="5.75" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_Batch_ProductCategory" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_Resellers_Distributors" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_Users_Distributors" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_ModuleAction_Module" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfileDetails_Module" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfileDetails_ModuleAction" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_ProductCategory_ProductCategory" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_Products_ProductCategory" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_TransactionDetails_Products" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_TransactionDetails_Transactions" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfile_Users" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfileDetails_UserProfile" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_Users_UserProfile" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfileDetails_Users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,40 @@
+﻿
+    <div class="container bg-warning " style="color:black;font-size:large;">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title m-3">Server Debugger</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            methord =>@Request.RequestType
+                            <pre>
+                            <code>                  
+                    @for (int i = 0; i < Request.Params.AllKeys.Length; i++)
+                    {
+                            <pre> @Request.Params.Keys.Get(i).Substring(0) => @Request.Params.Get(Request.Params.Keys.Get(i)).Substring(0)</pre>
+                    }
+                </code>
+            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container bg-warning " style="color:black;font-size:large;">
+        <div class="card">
+            <div class="card-content">
+                <div class="card-title m-3">Server Information</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <pre>
+                                @ServerInfo.GetHtml()
+                            </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
