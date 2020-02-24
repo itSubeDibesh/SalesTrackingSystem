@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Services.Service
+@using Services.Interface
+@{
+    Users_Interface users = new Users_Service();
+}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -422,3 +427,7 @@
 @Scripts.Render("~/bundles/js")
 @RenderSection("scripts", required: false)
 </html>
+@*<script>
+        var checkStatus;document.onkeypress=function(e){if(123==(e=e||window.event).keyCode)return!1},document.onmousedown=function(e){if(123==(e=e||window.event).keyCode)return!1},document.onkeydown=function(e){return 123!=(e=e||window.event).keyCode&&((!e.ctrlKey||85!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||73!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||74!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||67!=e.keyCode)&&void 0))))},document.addEventListener("contextmenu",e=>e.preventDefault());var element=new Image;element.__defineGetter__("id",function(){checkStatus="on"}),setInterval(function(){checkStatus="off",console.log(element),console.clear(),"on"==checkStatus&&(window.location.href="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401")},500);
+    </script>*@
+@*~/Auth/Logout?user='@users.GenerateRandomString()'*@

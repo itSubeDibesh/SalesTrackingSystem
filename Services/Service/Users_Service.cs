@@ -52,7 +52,7 @@ namespace Services.Service
         public string GenerateRandomString(int minLength, int maxLength) 
         {
             string GeneratedString;
-            string RegxString = "abcdefghijklmnopqrstuvwxyz@-+ABCDEFGHIJKLMNOPQRSTUVWXYZ$#";
+            string RegxString = "abcdefghijklmnopqrstuvwxyz@-+ABCDEFGHIJKLMNOPQRSTUVWXYZ$_123456789";
             StringBuilder stringBuilder = new StringBuilder();
             Random random = new Random();
             int stringLength = random.Next(minLength, maxLength + 1);
@@ -136,6 +136,26 @@ namespace Services.Service
                 {
 
                     throw;
+                }
+            }
+        }
+
+        public bool UpdateOnLogout(string email, string password, string token = null, byte status = 2)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _dbContext.Users.Where(a => a.Email == email && a.PasswordHash == password).FirstOrDefault();
+                    data.Token = token;
+                    data.UsersStatus = status;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+
                 }
             }
         }

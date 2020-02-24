@@ -142,8 +142,7 @@ namespace SalesTrackingSystem.Controllers
                     if (remember != "")
                     {
                         Remembered = Users.GenerateRandomString();
-                        Cookie = new HttpCookie("auth", Remembered);
-                        Cookie.Expires = DateTime.Now.AddDays(30);
+                        Cookie = new HttpCookie("auth", Remembered);                       
                         Response.Cookies.Add(Cookie);
                     }
                     else
@@ -162,8 +161,7 @@ namespace SalesTrackingSystem.Controllers
                     if (remember != "")
                     {
                         Remembered = Users.GenerateRandomString();
-                        Cookie = new HttpCookie("auth", Remembered);
-                        Cookie.Expires = DateTime.Now.AddDays(30);
+                        Cookie = new HttpCookie("auth", Remembered);                       
                         Response.Cookies.Add(Cookie);
                     }
                     else
@@ -200,5 +198,10 @@ namespace SalesTrackingSystem.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult Logout(string token)
+        {            
+            return View("Login");
+        }
     }
 }

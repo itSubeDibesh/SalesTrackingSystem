@@ -1,5 +1,9 @@
-﻿@{
+﻿@using Models
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
     ViewBag.Page = "Home";
 }
+
+@{var Ses = (Session["auth"] as Users_Model);}
+<p>Tokens : @Ses.Token</p>
