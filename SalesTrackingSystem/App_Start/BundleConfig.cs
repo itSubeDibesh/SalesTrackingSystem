@@ -49,6 +49,10 @@ namespace SalesTrackingSystem
                  "~/Assets/css/theme.css"
                ));
 
+            bundles.Add(new StyleBundle("~/bundles/error").Include(
+                "~/Assets/css/error.css"
+              ));
+
             BundleTable.EnableOptimizations = false;           
         }
     }

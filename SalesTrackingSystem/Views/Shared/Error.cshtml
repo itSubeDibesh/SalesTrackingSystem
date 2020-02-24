@@ -2,12 +2,13 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Error</title>
+    <link rel="icon" href="~/Images/icon/favicon.png" type="image">
+    <title>Error @ViewBag.Title | Tinjure tea factory</title>
+    @Styles.Render("~/bundles/error")
 </head>
-<body>
-    <hgroup>
-        <h1>Error.</h1>
-        <h2>An error occurred while processing your request.</h2>
-    </hgroup>
+<body>   
+    <div class="main">
+        @RenderBody()
+    </div>
 </body>
 </html>

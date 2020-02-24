@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -136,6 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\error.css" />
     <Content Include="Assets\css\font-face.css" />
     <Content Include="Assets\css\theme.css" />
     <Content Include="Assets\fonts\poppins\poppins-v5-latin-100.svg" />
@@ -493,6 +495,12 @@
     <Content Include="Views\Auth\Login.cshtml" />
     <Content Include="Views\Shared\_Alert.cshtml" />
     <Content Include="Views\Shared\_Debug.cshtml" />
+    <Content Include="Views\Error\E401.cshtml" />
+    <Content Include="Views\Error\E404.cshtml" />
+    <Content Include="Views\Error\E500.cshtml" />
+    <Content Include="Views\Error\J404.cshtml" />
+    <Content Include="Views\Auth\ForgetPassword.cshtml" />
+    <Content Include="Views\Auth\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

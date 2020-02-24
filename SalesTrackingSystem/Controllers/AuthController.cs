@@ -199,9 +199,48 @@ namespace SalesTrackingSystem.Controllers
         }
 
         [HttpGet]
-        public ActionResult Logout(string token)
-        {            
+        public ActionResult Logout()
+        {
+            var LoginSession = (Users_Model)Session["auth"];
+            var Cookie = Request.Cookies["auth"];
+            Cookie = new HttpCookie("auth");
+            var DbContent = new Users_Model();
+            if (Cookie.Value != null)
+            {
+                DbContent = Users.GetModelByToken(Cookie.Value.ToString());
+            }
+            if (LoginSession != null)
+            {
+                Users.UpdateOnLogout(LoginSession.Email, LoginSession.PasswordHash);
+                Session.RemoveAll();
+                Cookie = new HttpCookie("auth");
+                Cookie.Expires = DateTime.Now.AddSeconds(-10);
+                Response.Cookies.Add(Cookie);              
+                return View("Login");
+            }
+
+            if (Cookie.Value != null)
+            {
+                Users.UpdateOnLogout(DbContent.Email, DbContent.PasswordHash);
+                Session.RemoveAll();
+                Cookie = new HttpCookie("auth");
+                Cookie.Expires = DateTime.Now.AddSeconds(-10);
+                Response.Cookies.Add(Cookie);               
+                return View("Login");
+            }  
             return View("Login");
+        }
+
+        [HttpGet]
+        public ActionResult Forget()
+        {
+            return View("ForgetPassword");
+        }
+
+        [HttpGet]
+        public ActionResult Reset()
+        {
+            return View("ResetPassword");
         }
     }
 }

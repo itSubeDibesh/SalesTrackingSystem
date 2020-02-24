@@ -1,5 +1,4 @@
-﻿@using Models
-@model Models.Users_Model
+﻿@model Models.Users_Model
 
 @{
     ViewBag.Title = "Login";
@@ -41,7 +40,7 @@
                                             <input type="checkbox" value="remembered" name="remember">Remember Me
                                         </label>
                                         <label>
-                                            <a href="#">Forgotten Password?</a>
+                                            <a href="~/Auth/Forget">Forgotten Password?</a>
                                         </label>
                                     </div>
                                     <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
@@ -54,7 +53,6 @@
         </div>
     </div>
 </div>
-@Html.Partial("~/Views/Shared/_Debug.cshtml");
 
 
 

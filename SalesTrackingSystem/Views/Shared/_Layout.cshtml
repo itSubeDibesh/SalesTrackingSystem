@@ -1,11 +1,5 @@
-﻿@using Services.Service
-@using Services.Interface
-@{
-    Users_Interface users = new Users_Service();
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <!-- Required meta tags-->
     <meta charset="UTF-8">
@@ -388,7 +382,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="~/Auth/Logout">
                                                     <i class="zmdi zmdi-power"></i>Logout
                                                 </a>
                                             </div>
@@ -403,7 +397,7 @@
             <!-- HEADER DESKTOP-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
-                    <div class="container-fluid dark">
+                    <div class="container-fluid dark">                       
                         @RenderBody()
                         <div class="row">
                             <div class="col-md-12">
@@ -427,7 +421,3 @@
 @Scripts.Render("~/bundles/js")
 @RenderSection("scripts", required: false)
 </html>
-@*<script>
-        var checkStatus;document.onkeypress=function(e){if(123==(e=e||window.event).keyCode)return!1},document.onmousedown=function(e){if(123==(e=e||window.event).keyCode)return!1},document.onkeydown=function(e){return 123!=(e=e||window.event).keyCode&&((!e.ctrlKey||85!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||73!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||74!=e.keyCode)&&((!e.ctrlKey||!e.shiftKey||67!=e.keyCode)&&void 0))))},document.addEventListener("contextmenu",e=>e.preventDefault());var element=new Image;element.__defineGetter__("id",function(){checkStatus="on"}),setInterval(function(){checkStatus="off",console.log(element),console.clear(),"on"==checkStatus&&(window.location.href="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401")},500);
-    </script>*@
-@*~/Auth/Logout?user='@users.GenerateRandomString()'*@
