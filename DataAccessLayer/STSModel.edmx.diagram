@@ -38,6 +38,8 @@
         <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfileDetails_UserProfile" />
         <AssociationConnector Association="SalesTrackingSystemModel.FK_Users_UserProfile" />
         <AssociationConnector Association="SalesTrackingSystemModel.FK_UserProfileDetails_Users" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Verification" Width="1.5" PointX="6.75" PointY="1.75" />
+        <AssociationConnector Association="SalesTrackingSystemModel.FK_Verification_Users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

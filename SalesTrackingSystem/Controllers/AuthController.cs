@@ -2,59 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Configuration;
+using System.IO;
+using System.Net.Mail;
 using System.Web.Mvc;
 using Services.Interface;
 using Services.Service;
 using Models;
 using System.Web.Helpers;
-using SalesTrackingSystem.Helpers;
+
 
 namespace SalesTrackingSystem.Controllers
 {
     public class AuthController : Controller
     {
         #region //Interface Inatialization
-        UserProfile_Interface UserProfile;
-        UserProfileDetails_Interface UserProfileDetails;
         Users_Interface Users;
-        ExceptionUserProfile_Interface ExceptionUserProfile;
-        Module_Interface Module;
-        ModuleAction_Interface ModuleAction;
+        Verification_Interface Verification;
         #endregion
 
         public AuthController()
         {
-            UserProfile = new UserProfile_Service();
-            UserProfileDetails = new UserProfileDetails_Service();
             Users = new Users_Service();
-            ExceptionUserProfile = new ExceptionUserProfile_Service();
-            Module = new Module_Service();
-            ModuleAction = new ModuleAction_Service();
+            Verification = new Verification_service();
         }
 
         [HttpGet]
         public ActionResult Login()
         {
             var LoginSession = (Users_Model)Session["auth"];
-            var Cookie = Request.Cookies["auth"];
-            var DbContents = new Users_Model();
             string CheckLogin;
-            if (Cookie != null)
+            if (LoginSession != null)
             {
-                DbContents = Users.GetModelByToken(Cookie.Value.ToString());
-            }
-            if (Request.Cookies["auth"] != null && DbContents != null && Cookie.Value.ToString() == DbContents.Token)
-            {
-                CheckLogin = Users.CheckLogin(DbContents.Email, DbContents.PasswordHash);
+                CheckLogin = Users.CheckLogin(LoginSession.Email, LoginSession.PasswordHash);
                 if (CheckLogin == "ValidUserActiveStatus")
                 {
-                    Session["Success"] = "Let's do something greate " + DbContents.FullName + ".";
+                    Session["Success"] = "Let's do something greate " + LoginSession.FullName + ".";
                     /*Redirect to different assigned page*/
                     return RedirectToAction("Index", "Home");
                 }
                 else if (CheckLogin == "ValidUserInactiveStatus")
                 {
-                    Session["auth"] = Users.UpdateOnLogin(DbContents.Email, DbContents.PasswordHash, DbContents.Token, 1);
+                    Session["auth"] = Users.UpdateOnLogin(LoginSession.Email, LoginSession.PasswordHash, LoginSession.Token, 1);
                     LoginSession = (Users_Model)Session["auth"];
                     Session["Success"] = "Hello " + LoginSession.FullName + ", something great is going to happen.";
                     /*Redirect to different assigned page*/
@@ -78,50 +67,8 @@ namespace SalesTrackingSystem.Controllers
             }
             else
             {
-                var DbContentsSession = new Users_Model();
-                string CheckLoginSession = " ";
-                if (LoginSession != null)
-                {
-                    DbContentsSession = Users.GetModelByToken(LoginSession.Token);
-                    CheckLoginSession = Users.CheckLogin(DbContentsSession.Email, DbContentsSession.PasswordHash);
-                }
-                if (LoginSession != null && DbContentsSession != null && LoginSession.Token == DbContentsSession.Token)
-                {
-                    if (CheckLoginSession == "ValidUserActiveStatus")
-                    {
-                        Session["Success"] = "Going greate " + DbContentsSession.FullName + ".";
-                        /*Redirect to different assigned page*/
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else if (CheckLoginSession == "ValidUserInactiveStatus")
-                    {
-                        Session["auth"] = Users.UpdateOnLogin(DbContentsSession.Email, DbContentsSession.PasswordHash, DbContentsSession.Token, 1);
-                        LoginSession = (Users_Model)Session["auth"];
-                        Session["Success"] = "Have a good day " + LoginSession.FullName + "!";
-                        /*Redirect to different assigned page*/
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else if (CheckLoginSession == "ValidUserBlockedStatus")
-                    {
-                        Session["Warning"] = "Your Account has been blocked please contact admin.";
-                        return View("Login");
-                    }
-                    else if (CheckLoginSession == "InvalidUser")
-                    {
-                        Session["Error"] = "Invalid email or password.";
-                        return View("Login");
-                    }
-                    else
-                    {
-                        Session["Error"] = "Email or password incorrect!!";
-                        return View("Login");
-                    }
-                }
-                else
-                {
-                    /*Normal redirect*/
-                    return View("Login");
-                }
+                /*Normal redirect*/
+                return View("Login");
             }
 
         }
@@ -135,15 +82,12 @@ namespace SalesTrackingSystem.Controllers
                 var LoginSalt = "SHA1" + email + "SalesTrackingSystem";
                 var HashedValue = Crypto.SHA1(LoginSalt + password);
                 var LoginSession = (Users_Model)Session["auth"];
-                HttpCookie Cookie;
                 string CheckLogin = Users.CheckLogin(email, HashedValue);
                 if (CheckLogin == "ValidUserActiveStatus")
                 {
                     if (remember != "")
                     {
                         Remembered = Users.GenerateRandomString();
-                        Cookie = new HttpCookie("auth", Remembered);                       
-                        Response.Cookies.Add(Cookie);
                     }
                     else
                     {
@@ -161,8 +105,6 @@ namespace SalesTrackingSystem.Controllers
                     if (remember != "")
                     {
                         Remembered = Users.GenerateRandomString();
-                        Cookie = new HttpCookie("auth", Remembered);                       
-                        Response.Cookies.Add(Cookie);
                     }
                     else
                     {
@@ -202,33 +144,16 @@ namespace SalesTrackingSystem.Controllers
         public ActionResult Logout()
         {
             var LoginSession = (Users_Model)Session["auth"];
-            var Cookie = Request.Cookies["auth"];
-            Cookie = new HttpCookie("auth");
-            var DbContent = new Users_Model();
-            if (Cookie.Value != null)
-            {
-                DbContent = Users.GetModelByToken(Cookie.Value.ToString());
-            }
             if (LoginSession != null)
             {
                 Users.UpdateOnLogout(LoginSession.Email, LoginSession.PasswordHash);
-                Session.RemoveAll();
-                Cookie = new HttpCookie("auth");
-                Cookie.Expires = DateTime.Now.AddSeconds(-10);
-                Response.Cookies.Add(Cookie);              
+                Session.Abandon();
                 return View("Login");
             }
-
-            if (Cookie.Value != null)
+            else
             {
-                Users.UpdateOnLogout(DbContent.Email, DbContent.PasswordHash);
-                Session.RemoveAll();
-                Cookie = new HttpCookie("auth");
-                Cookie.Expires = DateTime.Now.AddSeconds(-10);
-                Response.Cookies.Add(Cookie);               
                 return View("Login");
-            }  
-            return View("Login");
+            }
         }
 
         [HttpGet]
@@ -241,6 +166,124 @@ namespace SalesTrackingSystem.Controllers
         public ActionResult Reset()
         {
             return View("ResetPassword");
+        }
+
+        private string EmailBody(string SubjectTitle, string Subject, string UserName, string Message, string RedirectURL, string WarningMessage, string AppLink, string CopyrightDate)
+        {
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/EmailTemplate.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{SubjectTitle}", SubjectTitle);
+            body = body.Replace("{Subject}", Subject);
+            body = body.Replace("{UserName}", UserName);
+            body = body.Replace("{Message}", Message);
+            body = body.Replace("{RedirectURL}", RedirectURL);
+            body = body.Replace("{WarningMessage}", WarningMessage);
+            body = body.Replace("{AppLink}", AppLink);
+            body = body.Replace("{CopyrightDate}", CopyrightDate);
+            return body;
+        }
+
+        [HttpGet]
+        public ActionResult CheckVerification()
+        {
+            var LoginSession = (Users_Model)Session["auth"];
+            if (Session["auth"] != null && LoginSession.IsVerified.Value == false)
+            {
+                string generatedToken = Users.GenerateRandomString(20, 50);
+                if (Verification.updateVerificationAuthentacitation(LoginSession.UserID, 0, DateTime.Now, generatedToken))
+                {
+                    string subject = "Account confirmation!";
+                    string subjectTitle = "Account confirmation";
+                    string userName = LoginSession.FullName;
+                    string message = "Your account has been registered to our server. Please confirm its you by clicking the link below. This Link is valid for 50 minuts only.";
+                    string redirectUrl = "https://" + Request.ServerVariables["HTTP_HOST"] + "/Auth/RediecVerification?uat=" + LoginSession.UserID + "&uid=" + generatedToken;
+                    string warningMessage = "If this wasn't you please ignore this email. Verifying the email will only activate your account.";
+                    string appLink = "https://" + Request.ServerVariables["HTTP_HOST"];
+                    string copyrightDate = DateTime.Now.Year.ToString();
+                    try
+                    {
+                        //Configuring webMail class to send emails  
+                        //gmail smtp server  
+                        WebMail.SmtpServer = "smtp.gmail.com";
+
+                        //gmail port to send emails  
+                        WebMail.SmtpPort = 587;
+                        WebMail.SmtpUseDefaultCredentials = true;
+
+                        //sending emails with secure protocol  
+                        WebMail.EnableSsl = true;
+
+                        //EmailId used to send emails from application  
+                        WebMail.UserName = "jkclaws325@gmail.com";
+                        WebMail.Password = "joker9813570528";
+
+                        //Sender email address.  
+                        WebMail.From = "jkclaws325@gmail.com";
+
+                        //Send email  
+                        WebMail.Send(to: LoginSession.Email, subject: subject, body: EmailBody(subjectTitle, subject, userName, message, redirectUrl, warningMessage, appLink, copyrightDate), isBodyHtml: true);
+                        Session["Success"] = "An email has been successfully to your account.";
+                    }
+                    catch (Exception)
+                    {
+                        Session["Error"] = "Problem while sending email.";
+
+                    }
+                    return View("Verification");
+                }
+                else
+                {
+                    Session["Error"] = "Problem while sending email.";
+                    return View("Verification");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult RediecVerification(Int64 uat, string uid)
+        {
+            if (uat != 0 && uid != null)
+            {
+                var verificationModel = Verification.checkVerification(uat, uid);
+                if (verificationModel.IsVerified == false)
+                {
+                    DateTime verifiedDate = Convert.ToDateTime(verificationModel.DateVerified);
+                    DateTime currentDate = DateTime.Now;
+                    var LoginSession = (Users_Model)Session["auth"];
+                    if ((verifiedDate - currentDate).Hours <= 50)
+                    {
+                        if (Verification.updateCheckedVerification(uat, 1))
+                        {
+                            Session["auth"] = Users.GetModelById(uat);
+                            return RedirectToAction("Login");
+                        }
+                        else
+                        {
+                            Session["Error"] = "Problem while activating account.";
+                            return View("LongVerification");
+                        }
+                    }
+                    else
+                    {
+                        return View("LongVerification");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login");
+                }
+            }
+            else
+            {
+                return View("CheckVerification");
+            }
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿@model Models.Users_Model
+@using Models
+@{
+    ViewBag.Title = "Verification";
+    Layout = "~/Views/Shared/_LayoutAuth.cshtml";
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+}
+
+<div class="page-wrapper">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-content--bge5">
+                <div class="container">
+                    <div class="login-wrap">
+                        @Html.Partial("~/Views/Shared/_Alert.cshtml")
+                        <div class="login-content">
+                            <div class="login-logo">
+                                <img src="https://@Request.ServerVariables["HTTP_HOST"]/Images/icon/logo.png" alt="Tinjure tea factory">
+                            </div>
+                            <div class="row">
+                                <div class="col-12" style="text-align:center"> <span> <h3>Verification</h3> <p>One more step and it's all yours!</p></span></div>
+                            </div>
+                            <hr />
+                            <div class="login-form m-t-20">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-12 form-group text-success">
+                                            <label style="text-align:center">Verification email sent to @SessionVariable.Email</label>
+                                            <label style="text-align:center">Please check your Email <i class="fas fa-envelope"></i></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

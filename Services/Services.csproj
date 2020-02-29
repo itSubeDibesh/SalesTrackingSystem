@@ -57,6 +57,7 @@
     <Compile Include="Interface\UserProfileDetails_Interface.cs" />
     <Compile Include="Interface\UserProfile_Interface.cs" />
     <Compile Include="Interface\Users_Interface.cs" />
+    <Compile Include="Interface\Verification_Interface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ExceptionUserProfile_Service.cs" />
     <Compile Include="Service\ModuleAction_Service.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Service\UserProfileDetails_Service.cs" />
     <Compile Include="Service\UserProfile_Service.cs" />
     <Compile Include="Service\Users_Service.cs" />
+    <Compile Include="Service\Verification_service.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

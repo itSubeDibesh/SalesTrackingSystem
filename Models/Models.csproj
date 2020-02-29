@@ -49,6 +49,7 @@
     <Compile Include="UserProfile_Model.cs" />
     <Compile Include="UserProfileDetails_Model.cs" />
     <Compile Include="Users_Model.cs" />
+    <Compile Include="Verification_Model.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

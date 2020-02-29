@@ -212,6 +212,20 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="VerificationID" />
+          </Key>
+          <Property Name="VerificationID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="IsVerified" Type="bit" />
+          <Property Name="DateVerified" Type="datetime" />
+          <Property Name="VerifiedToken" Type="varchar" MaxLength="200" />
+          <Property Name="ResetToken" Type="varchar" MaxLength="200" />
+          <Property Name="ResetTriggered" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
         <Association Name="FK_Batch_ProductCategory">
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -464,6 +478,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Verification_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Verification" Type="Self.Verification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Verification">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SalesTrackingSystemModelStoreContainer">
           <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributonArea" EntityType="Self.DistributonArea" Schema="dbo" store:Type="Tables" />
@@ -479,6 +505,7 @@
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileDetails" EntityType="Self.UserProfileDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Verification" EntityType="Self.Verification" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Batch_ProductCategory" Association="Self.FK_Batch_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Batch" EntitySet="Batch" />
@@ -554,6 +581,10 @@
           <AssociationSet Name="FK_Users_UserProfile" Association="Self.FK_Users_UserProfile">
             <End Role="UserProfile" EntitySet="UserProfile" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Verification_Users" Association="Self.FK_Verification_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Verification" EntitySet="Verification" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -650,6 +681,11 @@
           <AssociationSet Name="FK_UserProfileDetails_Users" Association="SalesTrackingSystemModel.FK_UserProfileDetails_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="UserProfileDetail" EntitySet="UserProfileDetails" />
+          </AssociationSet>
+          <EntitySet Name="Verifications" EntityType="SalesTrackingSystemModel.Verification" />
+          <AssociationSet Name="FK_Verification_Users" Association="SalesTrackingSystemModel.FK_Verification_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Verification" EntitySet="Verifications" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Batch">
@@ -896,6 +932,7 @@
           <NavigationProperty Name="UserProfiles" Relationship="SalesTrackingSystemModel.FK_UserProfile_Users" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfile" Relationship="SalesTrackingSystemModel.FK_Users_UserProfile" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Users" FromRole="User" ToRole="UserProfileDetail" />
+          <NavigationProperty Name="Verifications" Relationship="SalesTrackingSystemModel.FK_Verification_Users" FromRole="User" ToRole="Verification" />
         </EntityType>
         <Association Name="FK_Batch_ProductCategory">
           <End Type="SalesTrackingSystemModel.ProductCategory" Role="ProductCategory" Multiplicity="0..1">
@@ -1149,6 +1186,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="VerificationID" />
+          </Key>
+          <Property Name="VerificationID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="DateVerified" Type="DateTime" Precision="3" />
+          <Property Name="VerifiedToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ResetToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ResetTriggered" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_Verification_Users" FromRole="Verification" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Verification_Users">
+          <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Verification" Role="Verification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Verification">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1373,6 +1437,21 @@
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
                 <ScalarProperty Name="UserProfileID" ColumnName="UserProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Verifications">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.Verification">
+              <MappingFragment StoreEntitySet="Verification">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ResetTriggered" ColumnName="ResetTriggered" />
+                <ScalarProperty Name="ResetToken" ColumnName="ResetToken" />
+                <ScalarProperty Name="VerifiedToken" ColumnName="VerifiedToken" />
+                <ScalarProperty Name="DateVerified" ColumnName="DateVerified" />
+                <ScalarProperty Name="IsVerified" ColumnName="IsVerified" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="VerificationID" ColumnName="VerificationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

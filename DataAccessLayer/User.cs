@@ -21,6 +21,7 @@ namespace DataAccessLayer
             this.ExceptionUserProfiles1 = new HashSet<ExceptionUserProfile>();
             this.UserProfiles = new HashSet<UserProfile>();
             this.UserProfileDetails = new HashSet<UserProfileDetail>();
+            this.Verifications = new HashSet<Verification>();
         }
     
         public long UserID { get; set; }
@@ -47,5 +48,7 @@ namespace DataAccessLayer
         public virtual UserProfile UserProfile { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileDetail> UserProfileDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Verification> Verifications { get; set; }
     }
 }

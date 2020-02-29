@@ -111,6 +111,9 @@
     <Compile Include="UserProfileDetail.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Verification.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,6 @@
-﻿
+﻿@using Models
+@if (ViewBag.ServerDebug!=null)
+{
     <div class="container bg-warning " style="color:black;font-size:large;">
         <div class="card">
             <div class="card-content">
@@ -21,7 +23,10 @@
             </div>
         </div>
     </div>
+}
 
+@if (ViewBag.ServerInfo!=null)
+{
     <div class="container bg-warning " style="color:black;font-size:large;">
         <div class="card">
             <div class="card-content">
@@ -38,3 +43,32 @@
             </div>
         </div>
     </div>
+}
+
+@if (ViewBag.UserInfo!=null)
+{
+    var Ses = (Session["auth"] as Users_Model);
+    <p>UserID : @Ses.UserID</p>
+    <p>UserProfileID : @Ses.UserProfileID</p>
+    <p>VerificationID : @Ses.VerificationID</p>
+    <p>DistrubitorID : @Ses.DistrubitorID</p>
+    <p>CreatedBy : @Ses.CreatedBy</p>
+    <p>DateCreated : @Ses.DateCreated</p>
+    <p>DateUpdated : @Ses.DateUpdated</p>
+    <p>DateVerified : @Ses.DateVerified</p>
+    <p>Description : @Ses.Description</p>
+    <p>Email : @Ses.Email</p>
+    <p>ExeceptionProfile : @Ses.ExeceptionProfile</p>
+    <p>FullName : @Ses.FullName</p>
+    <p>ImageString : @Ses.ImageString</p>
+    <p>IsVerified : @Ses.IsVerified</p>
+    <p>MobileNo : @Ses.MobileNo</p>
+    <p>PasswordHash : @Ses.PasswordHash</p>
+    <p>ProfileName : @Ses.ProfileName</p>
+    <p>ResetToken : @Ses.ResetToken</p>
+    <p>ResetTriggered : @Ses.ResetTriggered</p>
+    <p>Token : @Ses.Token</p>
+    <p>UserProfileStatus : @Ses.UserProfileStatus</p>
+    <p>UsersStatus : @Ses.UsersStatus</p>
+    <p>VerifiedToken : @Ses.VerifiedToken</p>
+}

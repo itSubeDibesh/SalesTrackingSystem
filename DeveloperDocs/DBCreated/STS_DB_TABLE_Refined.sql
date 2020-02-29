@@ -447,3 +447,30 @@ ALTER TABLE UserProfileDetails
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 GO
+CREATE TABLE Verification(
+	VerificationID		BIGINT			PRIMARY KEY,
+	UserID				BIGINT			NULL,	
+	IsVerified			BIT				DEFAULT(0),
+	DateVerified		DATETIME		NULL,	
+	VerifiedToken		VARCHAR(200)	NULL,
+	ResetToken			VARCHAR(200)	NULL,
+	ResetTriggered		DATETIME		NULL,
+	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_Verification on Verification FOR UPDATE AS            
+BEGIN
+    UPDATE Verification
+    SET DateUpdated=getdate()
+    FROM Verification INNER JOIN deleted d
+    ON Verification.VerificationID = d.VerificationID
+END
+GO
+/*---------------------------------19	FK_Verification_Users	-------------------------------------*/
+ALTER TABLE Verification
+   ADD CONSTRAINT FK_Verification_Users FOREIGN KEY (UserID)
+      REFERENCES Users (UserID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+GO

@@ -22,9 +22,19 @@ namespace Models
         [StringLength(20,ErrorMessage ="Password Must Be between 8 and 20 characters",MinimumLength =8)]
         [DataType(DataType.Password)]
         public string PasswordHash { get; set; }
+
         [Required(ErrorMessage ="Email is required!")]
-        [EmailAddress]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Email is not valid.")]
         public string Email { get; set; }
+
+        public long VerificationID { get; set; }   
+        public Nullable<bool> IsVerified { get; set; }
+        public Nullable<System.DateTime> DateVerified { get; set; }
+        public string VerifiedToken { get; set; }
+        public string ResetToken { get; set; }
+        public Nullable<System.DateTime> ResetTriggered { get; set; }
+
         public string Token { get; set; }
         public long MobileNo { get; set; }
         public string ImageString { get; set; }

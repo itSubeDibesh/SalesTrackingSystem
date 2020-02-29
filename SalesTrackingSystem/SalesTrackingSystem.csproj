@@ -363,6 +363,7 @@
     <Content Include="Images\icon\avatar-big-01.jpg" />
     <Content Include="Images\icon\logo.png" />
     <Content Include="Images\icon\Untitled-1.jpg" />
+    <Content Include="Views\Shared\EmailTemplate.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -501,6 +502,8 @@
     <Content Include="Views\Error\J404.cshtml" />
     <Content Include="Views\Auth\ForgetPassword.cshtml" />
     <Content Include="Views\Auth\ResetPassword.cshtml" />
+    <Content Include="Views\Auth\Verification.cshtml" />
+    <Content Include="Views\Auth\LongVerification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

@@ -39,5 +39,6 @@ namespace DataAccessLayer
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserProfileDetail> UserProfileDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Verification> Verifications { get; set; }
     }
 }

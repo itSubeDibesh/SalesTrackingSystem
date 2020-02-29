@@ -5,5 +5,5 @@
     ViewBag.Page = "Home";
 }
 
-@*@{var Ses = (Session["auth"] as Users_Model);}
-<p>Tokens : @Ses.Token</p>*@
+@{ ViewBag.UserInfo = true;}
+@Html.Partial("~/Views/Shared/_Debug.cshtml")
