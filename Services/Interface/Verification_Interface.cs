@@ -12,6 +12,9 @@ namespace Services.Interface
         bool updateVerificationAuthentacitation(Int64 userId,Byte isVerified,DateTime dateVerified,string verifiedtoken);
         Verification_Model checkVerification(Int64 userId, string verifiedtoken);
         bool updateCheckedVerification(Int64 userId, Byte isVerified);
+        bool updateResetAuthentication(Int64 userId, DateTime dateTriggered, string resetToken);
+        Verification_Model checkReset(Int64 userId, string resetToken);
+        bool CheckReset(Int64 userId, string resetToken);
 
     }
 }

@@ -15,5 +15,8 @@ namespace Services.Interface
         Users_Model GetModelByToken(string token);
         bool UpdateOnLogout(string email, string password, string token = null, byte status = 2);
         Users_Model GetModelById(Int64 userID);
+        Users_Model GetModelByEmail(string email);
+        bool checkEmail(string email);
+        bool resetpassword(Int64 userId, string password);
     }
 }

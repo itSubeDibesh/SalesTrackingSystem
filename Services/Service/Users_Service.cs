@@ -11,6 +11,36 @@ namespace Services.Service
 {
     public class Users_Service : Users_Interface
     {
+        public bool checkEmail(string email)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from actions in _dbContext.Users.Where(actions => actions.Email == email)
+                                select new Users_Model()
+                                {
+                                    FullName = actions.FullName,
+                                    Email = actions.Email,
+                                    PasswordHash = actions.PasswordHash,
+                                    UsersStatus = actions.UsersStatus
+                                }).FirstOrDefault();
+                    if (data.Email == email)
+                    {
+                        return true;
+                    }                   
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
         public string CheckLogin(string email, string password)
         {
            using (var _dbContext = new SalesTrackingSystemEntities())
@@ -63,6 +93,51 @@ namespace Services.Service
             GeneratedString = stringBuilder.ToString();
             return GeneratedString;
         }/*Set Max To 250 Limit from Database*/
+
+        public Users_Model GetModelByEmail(string email)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from actionUser in _dbContext.Users.Where(actionUser => actionUser.Email == email)
+                                join actionUserProfile in _dbContext.UserProfiles on actionUser.UserProfileID equals actionUserProfile.UserProfileID
+                                join actionVericication in _dbContext.Verifications on actionUser.UserID equals actionVericication.UserID
+                                select new Users_Model()
+                                {
+                                    UserID = actionUser.UserID,
+                                    UserProfileID = actionUserProfile.UserProfileID,
+                                    DistrubitorID = actionUser.DistrubitorID,
+                                    ExeceptionProfile = actionUser.ExeceptionProfile,
+                                    FullName = actionUser.FullName,
+                                    PasswordHash = actionUser.PasswordHash,
+                                    Email = actionUser.Email,
+                                    Token = actionUser.Token,
+                                    MobileNo = actionUser.MobileNo,
+                                    ImageString = actionUser.ImageString,
+                                    UsersStatus = actionUser.UsersStatus,
+                                    ProfileName = actionUserProfile.ProfileName,
+                                    Description = actionUserProfile.Description,
+                                    CreatedBy = actionUserProfile.CreatedBy,
+                                    UserProfileStatus = actionUserProfile.UserProfileStatus,
+                                    VerificationID = actionVericication.VerificationID,
+                                    IsVerified = actionVericication.IsVerified,
+                                    VerifiedToken = actionVericication.VerifiedToken,
+                                    DateVerified = actionVericication.DateVerified,
+                                    ResetToken = actionVericication.ResetToken,
+                                    ResetTriggered = actionVericication.ResetTriggered,
+                                    DateCreated = actionUser.DateCreated,
+                                    DateUpdated = actionUser.DateUpdated
+                                }).FirstOrDefault();
+                    return data;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
 
         public Users_Model GetModelById(long userID)
         {
@@ -150,6 +225,26 @@ namespace Services.Service
                 {
 
                     throw;
+                }
+            }
+        }
+
+        public bool resetpassword(long userId, string password)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _dbContext.Users.Where(actionUser => actionUser.UserID == userId).FirstOrDefault();
+                    data.PasswordHash = password;
+                    data.UsersStatus = 2;
+                    data.Token = null;
+                    _dbContext.SaveChanges();                   
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
                 }
             }
         }

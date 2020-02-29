@@ -11,6 +11,59 @@ namespace Services.Service
 {
     public class Verification_service : Verification_Interface
     {
+        public Verification_Model checkReset(long userId, string resetToken)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from verificationAction in _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId && verificationAction.ResetToken == resetToken)
+                                select new Verification_Model()
+                                {
+                                    VerificationID = verificationAction.VerificationID,
+                                    UserID = verificationAction.UserID,                                   
+                                    ResetTriggered = verificationAction.ResetTriggered,
+                                    ResetToken = verificationAction.ResetToken,
+                                    DateCreated = verificationAction.DateCreated,
+                                    DateUpdated = verificationAction.DateUpdated
+                                }).FirstOrDefault();
+                    return data;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        public bool CheckReset(long userId, string resetToken)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from verificationAction in _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId && verificationAction.ResetToken == resetToken)
+                                select new Verification_Model()
+                                {
+                                    VerificationID=verificationAction.VerificationID,
+                                    UserID=verificationAction.UserID,
+                                    ResetToken=verificationAction.ResetToken
+                                }).FirstOrDefault();
+                    if (data.UserID == userId && data.ResetToken == resetToken)
+                    {
+                        return true;
+                    }else{
+                        return false;
+                    }                  
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }           
+        }
+
         public Verification_Model checkVerification(long userId, string verifiedtoken)
         {
             using (var _dbContext = new SalesTrackingSystemEntities())
@@ -46,6 +99,25 @@ namespace Services.Service
                 {
                     var data = _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId).FirstOrDefault();                   
                     data.IsVerified = Convert.ToBoolean(isVerified);                  
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool updateResetAuthentication(Int64 userId, DateTime dateTriggered, string resetToken)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId).FirstOrDefault();
+                    data.ResetTriggered = dateTriggered;
+                    data.ResetToken =resetToken;                   
                     _dbContext.SaveChanges();
                     return true;
                 }

@@ -504,6 +504,7 @@
     <Content Include="Views\Auth\ResetPassword.cshtml" />
     <Content Include="Views\Auth\Verification.cshtml" />
     <Content Include="Views\Auth\LongVerification.cshtml" />
+    <Content Include="Views\Auth\VerificationEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">
