@@ -1,0 +1,237 @@
+﻿@model Models.Users_Model
+
+@{
+    ViewBag.Title = "Distributor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Page = "Distributor";
+    ViewBag.AppName = "Tinjure tea factory";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="overview-wrap">
+            <div class="title-1">
+                <h4><a href="">@ViewBag.AppName</a> > Distribution > @ViewBag.Page</h4>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-sm-12 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                Add <strong>Distributor</strong>
+                    <button class="btn btn-danger " style="float: right;">
+                        <i class="fas fa-close"></i>
+                    </button>
+            </div>
+            <div class="card-body">
+                <div class="col-12">
+                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                <label for="text-input" class=" form-control-label">Distributor Name</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="text" id="text-input" name="text-input" placeholder="Full Name" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                <label for="text-input" class=" form-control-label">Owner Name</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="text" id="text-input" name="text-input" placeholder="Full Name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">Regestration No</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">Mobile No</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">Phone No</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
+                            </div>
+
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">Fax No</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">Email</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <input type="email" id="phone-input" name="phone-input" placeholder="Email" class="form-control">
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">State</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <select name="select" id="select" class="form-control">
+                                    <option selected disabled>Please select</option>
+                                    <option value="active">Eastern </option>
+                                    <option value="inactive">Central</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                <label for="phone-input" class=" form-control-label">District</label>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <select name="select" id="select" class="form-control">
+                                    <option selected disabled>Please select</option>
+                                    <option value="active">Mechi </option>
+                                    <option value="inactive">Koshi</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fa fa-paper-plane"></i> Submit
+                            </button>
+                            <button type="reset" class="btn btn-primary btn-sm">
+                                <i class="fa fa-trash"></i> Reset
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-close"></i> Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>               
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <strong> Distributors List</strong>
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add distributor">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-table table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <th style="text-align: center;">SN</th>
+                        <th style="text-align: center;">Distributor Name</th>
+                        <th style="text-align: center;">Owner Name</th>
+                        <th style="text-align: center;">Mobile No</th>
+                        <th style="text-align: center;">Phone No</th>
+                        <th style="text-align: center;">Fax</th>
+                        <th style="text-align: center;">Email</th>
+                        <th style="text-align: center;">Address</th>
+                        <th style="text-align: center;">Status</th>
+                        <th style="text-align: center;">Action</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Dibesh Raj Subedi</td>
+                            <td style="text-align: center;">Dibesh Raj Subedi</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
+                            <td style="text-align: center;">Gaushala Pinglasthan</td>
+                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
+                            <td>
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Rohan Raj Subedi</td>
+                            <td style="text-align: center;">Rohan Raj Subedi</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
+                            <td style="text-align: center;">Gaushala Pinglasthan</td>
+                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
+                            <td>
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Rohan Puri</td>
+                            <td style="text-align: center;">Rohan Puri</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;">9861315234</td>
+                            <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
+                            <td style="text-align: center;">Gaushala Pinglasthan</td>
+                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
+                            <td>
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(function () {
+            $('.dynamic-table').DataTable({
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+
+            });
+        });
+        $(function () {
+            $('.dynamic-table-action').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                drawCallback: function (e) {
+                    var t = this.api(),
+                        l = t.rows({
+                            page: "current"
+                        }).nodes(),
+                        c = null;
+                    t.column(1, {
+                        page: "current"
+                    }).data().each(function (e, t) {
+                        c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
+                    })
+                }
+            });
+        });
+    </script>
+}

@@ -13,17 +13,6 @@
     }
 });
 
-$(function () {
-    $('.table').DataTable({
-        responsive: true,
-        lengthMenu: [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, "All"]
-        ],
-
-    });
-});
-
 $('.dropify').dropify({
     messages: {
         'default': 'Drag and drop a file here or click',

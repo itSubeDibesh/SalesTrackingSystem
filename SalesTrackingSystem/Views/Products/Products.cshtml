@@ -1,0 +1,289 @@
+﻿@{
+    ViewBag.Title = "Products";
+    ViewBag.Page = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.AppName = "Tinjure tea factory";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="overview-wrap">
+            <div class="title-1">
+                <h4><a href="">@ViewBag.AppName</a> > Products > @ViewBag.Page</h4>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<!--#region Forms-->
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="card">
+            <div class="card-header">
+                <strong>Add</strong> @ViewBag.Page
+                <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Product">
+                    <i class="fas fa-close"></i>
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            <label for="select" class=" form-control-label">Product Category</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="select" id="select" class="form-control">
+                                <option selected disabled>Please select</option>
+                                <option value="1">Iphone</option>
+                                <option value="2">Macbook</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="text-input" class=" form-control-label">Product Name</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            <label for="text-input" class=" form-control-label">Package Rate</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <input type="number" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="textarea-input" class=" form-control-label">Pack Size</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <input type="number" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">Description</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <textarea name="textarea-input" id="textarea-input" rows="15" placeholder="Content..." class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-paper-plane"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-primary btn-sm">
+                            <i class="fa fa-trash"></i> Reset
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                            <i class="fa fa-close"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 ">
+        <div class="card">
+            <div class="card-header">
+                <strong>Add</strong> @ViewBag.Page Category
+                <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Product Category">
+                    <i class="fas fa-close"></i>
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            <label for="text-input" class=" form-control-label">Product Category Name</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="text-input" class=" form-control-label">Is Sub-Category</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="inline-checkbox1" class="form-check-label ">
+                                <input type="checkbox" id="inline-checkbox1" name="inline-checkbox1" value="option1" class="form-check-input">Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            <label for="text-input" class=" form-control-label">Sub-Category Of</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="select" id="select" class="form-control">
+                                <option selected disabled>Please select</option>
+                                <option value="1">Iphone</option>
+                                <option value="2">Mac</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="select" class=" form-control-label">Category Status</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="select" id="select" class="form-control">
+                                <option selected disabled>Please select</option>
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-paper-plane"></i> Submit
+                        </button>
+                        <button type="reset" class="btn btn-primary btn-sm">
+                            <i class="fa fa-trash"></i> Reset
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                            <i class="fa fa-close"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Forms ends -->
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <strong> Product List</strong>
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add Product">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-scroable-table-module table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Product Name</th>
+                            <th style="text-align: center;">Category</th>
+                            <th style="text-align: center;">Package rate</th>
+                            <th style="text-align: center;">Pack size</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Iphone</td>
+                            <td style="text-align: center;">Phone</td>
+                            <td style="text-align: center;">Rs 45000/-</td>
+                            <td style="text-align: center;">500 Pieces</td>
+                            <td>
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Mack</td>
+                            <td style="text-align: center;">Laptops</td>
+                            <td style="text-align: center;">Rs 45000/-</td>
+                            <td style="text-align: center;">500 Pieces</td>
+                            <td>
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <strong> Product Category List</strong>
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add  Product Category ">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-table-action table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Product Category Name</th>
+                            <th style="text-align: center;">Is Sub Category</th>
+                            <th style="text-align: center;">Sub Category Name</th>
+                            <th style="text-align: center;">Category Status</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Iphone</td>
+                            <td style="text-align: center; color:red;"> <i class="fas fa-thumbs-down"></i> False</td>
+                            <td style="text-align: center;">Phone</td>
+                            <td style="text-align: center; color:green;">Available</td>
+                            <td style="padding-left:4%;">
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Iphone</td>
+                            <td style="text-align: center; color:green;"> <i class="fas fa-thumbs-up"></i> True</td>
+                            <td style="text-align: center;">Phone</td>
+                            <td style="text-align: center; color:red;"> Un-available</td>
+                            <td style="padding-left:4%;">
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--#endregion Forms ends-->
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $('.dynamic-scroable-table-module').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ]
+            });
+        });
+        $(function () {
+            $('.dynamic-table-action').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                drawCallback: function (e) {
+                    var t = this.api(),
+                        l = t.rows({
+                            page: "current"
+                        }).nodes(),
+                        c = null;
+                    t.column(1, {
+                        page: "current"
+                    }).data().each(function (e, t) {
+                        c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
+                    })
+                }
+            });
+        });
+    </script>
+}

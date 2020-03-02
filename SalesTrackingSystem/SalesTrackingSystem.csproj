@@ -128,8 +128,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModuleController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ResellerController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -503,8 +509,18 @@
     <Content Include="Views\Auth\ForgetPassword.cshtml" />
     <Content Include="Views\Auth\ResetPassword.cshtml" />
     <Content Include="Views\Auth\Verification.cshtml" />
-    <Content Include="Views\Auth\LongVerification.cshtml" />
+    <Content Include="Views\Auth\LongTimeVerification.cshtml" />
     <Content Include="Views\Auth\VerificationEmail.cshtml" />
+    <Content Include="Views\Module\Module.cshtml" />
+    <Content Include="Views\Module\Action.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
+    <Content Include="Views\User\Users.cshtml" />
+    <Content Include="Views\Distributor\Distributor.cshtml" />
+    <Content Include="Views\Reseller\Reseller.cshtml" />
+    <Content Include="Views\Distributor\DistributonArea.cshtml" />
+    <Content Include="Views\Products\Batch.cshtml" />
+    <Content Include="Views\Products\Products.cshtml" />
+    <Content Include="Views\Transaction\Transaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

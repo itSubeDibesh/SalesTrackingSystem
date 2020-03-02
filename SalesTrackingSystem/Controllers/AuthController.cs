@@ -381,12 +381,12 @@ namespace SalesTrackingSystem.Controllers
                         else
                         {
                             Session["Error"] = "Problem while activating account.";
-                            return View("LongVerification");
+                            return View("LongTimeVerification");
                         }
                     }
                     else
                     {
-                        return View("LongVerification");
+                        return View("LongTimeVerification");
                     }
                 }
                 else

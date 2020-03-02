@@ -2,6 +2,7 @@
 <noscript>
     <meta http-equiv="refresh" content="0;url=https://@Request.ServerVariables["HTTP_HOST"]/Error/J404">
 </noscript>
+@{ViewBag.AppName = "Tinjure tea factory";}
 <html lang="en">
 <head>
     <!-- Required meta tags-->
@@ -12,7 +13,7 @@
     <meta name="keywords" content="Sales Tracking System">
 
     <!-- Title Page-->
-    <title>@ViewBag.Title | Tinjure tea factory</title>
+    <title>@ViewBag.Title | @ViewBag.AppName</title>
     <link rel="icon" href="~/Images/icon/favicon.png" type="image">
     @Styles.Render("~/bundles/css")
     @RenderSection("style", required: false)
@@ -27,7 +28,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.html">
-                            <img src="~/Images/icon/logo.png" alt="Tinjure tea factory" />
+                            <img src="~/Images/icon/logo.png" alt="@ViewBag.AppName" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -41,7 +42,7 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled bg-white">
                         <li>
-                            <a href="table.html" style="color:@(ViewBag.Page == "Home" ? "royalblue" : "")">
+                            <a href="~/Home/Index" style="color:@(ViewBag.Page == "Home" ? "royalblue" : "")">
                                 <i class="zmdi zmdi-home zmdi-hc-lg"></i>Home
                             </a>
                         </li>
@@ -59,82 +60,64 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="chart.html">
-                                <i class="fas fa-truck"></i>Distributor
+                        <li class="has-sub">
+                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Distributor"||ViewBag.Page == "Distributon Area" ? "royalblue" : "")">
+                                <i class="zmdi zmdi-store zmdi-hc-lg"></i>Distribution
                             </a>
-                        </li>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                <li>
+                                    <a href="~/Distributor/Distributor"><i class="fas fa-truck"></i>Distributor</a>
+                                </li>
+                                <li>
+                                    <a href="~/Distributor/DistributonArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributon Area</a>
+                                </li>
+                            </ul>
                         <li>
-                            <a href="table.html">
-                                <i class="zmdi zmdi-store-24 zmdi-hc-lg"></i>Reseller
+                            <a href="~/Reseller/Reseller">
+                                <i class="zmdi zmdi-store-24 zmdi-hc-lg" style="color:@(ViewBag.Page == "Reseller" ? "royalblue" : "")"></i>Reseller
                             </a>
                         </li>
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "royalblue" : "")">
                                 <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="index.html"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
+                                    <a href="~/Module/Module"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
                                 </li>
                                 <li>
-                                    <a href="index2.html"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
+                                    <a href="~/Module/Action"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
                                 </li>
                             </ul>
                         </li>
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "royalblue" : "")">
                                 <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="index.html"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
+                                    <a href="~/User/UserProfile"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
                                 </li>
                                 <li>
-                                    <a href="index2.html"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
+                                    <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="map.html">
-                                <i class="fas fa-map-marker-alt"></i>Maps
+                            <a href="~/Transaction/Transaction">
+                                <i class="zmdi zmdi-file-text zmdi-hc-lg" style="color:@(ViewBag.Page == "Transaction" ? "royalblue" : "")"></i>Transaction
                             </a>
-                        </li>
+                        </li>                        
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Transaction
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.html"><i class="zmdi zmdi-file-text zmdi-hc-lg"></i> Transaction List</a>
-                                </li>
-                                <li>
-                                    <a href="register.html"><i class="zmdi zmdi-receipt zmdi-hc-lg"></i> Invoice</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ? "royalblue" : "")">
                                 <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="button.html"><i class="fas fa-sitemap"></i> Batch</a>
+                                    <a href="~/Products/Batch"><i class="fas fa-sitemap"></i> Batch</a>
                                 </li>
                                 <li>
-                                    <a href="badge.html"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="zmdi zmdi-file zmdi-hc-lg"></i>Pages
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="button.html"><i class="zmdi zmdi-view-carousel zmdi-hc-lg"></i> Frontend</a>
-                                </li>
-                                <li>
-                                    <a href="badge.html"><i class="zmdi zmdi-cloud-box zmdi-hc-lg"></i> Backend</a>
+                                    <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
                                 </li>
                             </ul>
                         </li>
@@ -154,7 +137,7 @@
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
                         <li class="@(ViewBag.Page == "Home" ? "active" : " ")">
-                            <a href="table.html">
+                            <a href="~/Home/Index">
                                 <i class="zmdi zmdi-home zmdi-hc-lg"></i>Home
                             </a>
                         </li>
@@ -171,83 +154,66 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="chart.html">
-                                <i class="fas fa-truck"></i>Distributor
+                        <li class="has-sub @(ViewBag.Page == "Distributor"||ViewBag.Page == "Distributon Area" ? "active" : " ")">
+                            <a class="js-arrow" href="#">
+                                <i class="zmdi zmdi-store zmdi-hc-lg"></i>Distribution
                             </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="~/Distributor/Distributor"><i class="fas fa-truck"></i>Distributor</a>
+                                </li>
+                                <li>
+                                    <a href="~/Distributor/DistributonArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributon Area</a>
+                                </li>
+                            </ul>
                         </li>
-                        <li>
-                            <a href="table.html">
+                        <li class="@(ViewBag.Page == "Reseller" ? "active" : " ")">
+                            <a href="~/Reseller/Reseller">
                                 <i class="zmdi zmdi-store-24 zmdi-hc-lg"></i>Reseller
                             </a>
                         </li>
-                        <li class="has-sub">
+                        <li class="has-sub @(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "active" : " ")">
                             <a class="js-arrow" href="#">
                                 <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="index.html"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
+                                    <a href="~/Module/Module"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
                                 </li>
                                 <li>
-                                    <a href="index2.html"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
+                                    <a href="~/Module/Action"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="has-sub">
+                        <li class="has-sub @(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "active" : " ")">
                             <a class="js-arrow" href="#">
                                 <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="index.html"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
+                                    <a href="~/User/Userprofile"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
                                 </li>
                                 <li>
-                                    <a href="index2.html"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
+                                    <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="map.html">
-                                <i class="fas fa-map-marker-alt"></i>Maps
+                        
+                        <li class="@(ViewBag.Page == "Transaction" ? "active" : " ")">
+                            <a href="~/Transaction/Transaction">
+                                <i class="zmdi zmdi-file-text zmdi-hc-lg"></i>Transaction
                             </a>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Transaction
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="login.html"><i class="zmdi zmdi-file-text zmdi-hc-lg"></i> Transaction List</a>
-                                </li>
-                                <li>
-                                    <a href="register.html"><i class="zmdi zmdi-receipt zmdi-hc-lg"></i> Invoice</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
+                        </li>                        
+                        <li class="has-sub  @(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ? "active" : " ")">
                             <a class="js-arrow" href="#">
                                 <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="button.html"><i class="fas fa-sitemap"></i> Batch</a>
+                                    <a href="~/Products/Batch"><i class="fas fa-sitemap"></i> Batch</a>
                                 </li>
                                 <li>
-                                    <a href="badge.html"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="zmdi zmdi-file zmdi-hc-lg"></i>Pages
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="button.html"><i class="zmdi zmdi-view-carousel zmdi-hc-lg"></i> Frontend</a>
-                                </li>
-                                <li>
-                                    <a href="badge.html"><i class="zmdi zmdi-cloud-box zmdi-hc-lg"></i> Backend</a>
+                                    <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
                                 </li>
                             </ul>
                         </li>
@@ -399,14 +365,14 @@
             </header>
             <!-- HEADER DESKTOP-->
             <div class="main-content">
-                <div class="section__content section__content--p30">
+                <div class="section__content--p30">
                     <div class="container-fluid dark">
                         @RenderBody()
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © @DateTime.Now.Year Tinjure tea factory. All rights reserved. Powred by: <a href="#">ProCodeHunter</a></p>
+                                    <p>Copyright © @DateTime.Now.Year Tinjure tea factory. All rights reserved. Powred by: <a href="https://www.procodehunter.com" target="_blank">ProCodeHunter</a></p>
                                 </div>
                             </div>
                         </div>
@@ -415,10 +381,10 @@
                 </div>
             </div>
             <div class="row mt-80 d-sm-none d-md-none d-lg-block d-xl-none ">
-                <br><br><br><br><br><br><br><br>
+                <br /><br />
             </div>
             <div class="row mt-40 d-lg-none d-sm-block">
-                <br><br><br><br>
+                
             </div>
         </div>
     </div>
@@ -426,17 +392,7 @@
 @Scripts.Render("~/bundles/js")
 @RenderSection("scripts", required: false)
 </html>
-
-
-@{bool blnDebuggin = false;}
-#if (DEBUG)
-       @{blnDebuggin = true;}
- #else
-       @{blnDebuggin = false; }
- #endif
-
-@if(blnDebuggin){
-<script>
+@*<script>
     !function (e, t) { "object" == typeof exports && "object" == typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define("DevTools", [], t) : "object" == typeof exports ? exports.DevTools = t() : e.DevTools = t() }(window, function () {
         return function (e) { var t = {}; function n(r) { if (t[r]) return t[r].exports; var o = t[r] = { i: r, l: !1, exports: {} }; return e[r].call(o.exports, o, o.exports, n), o.l = !0, o.exports } return n.m = e, n.c = t, n.d = function (e, t, r) { n.o(e, t) || Object.defineProperty(e, t, { enumerable: !0, get: r }) }, n.r = function (e) { "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, { value: "Module" }), Object.defineProperty(e, "__esModule", { value: !0 }) }, n.t = function (e, t) { if (1 & t && (e = n(e)), 8 & t) return e; if (4 & t && "object" == typeof e && e && e.__esModule) return e; var r = Object.create(null); if (n.r(r), Object.defineProperty(r, "default", { enumerable: !0, value: e }), 2 & t && "string" != typeof e) for (var o in e) n.d(r, o, function (t) { return e[t] }.bind(null, o)); return r }, n.n = function (e) { var t = e && e.__esModule ? function () { return e.default } : function () { return e }; return n.d(t, "a", t), t }, n.o = function (e, t) { return Object.prototype.hasOwnProperty.call(e, t) }, n.p = "", n(n.s = 0) }([function (e, t, n) { "use strict"; var r = this && this.__decorate || function (e, t, n, r) { var o, i = arguments.length, u = i < 3 ? t : null === r ? r = Object.getOwnPropertyDescriptor(t, n) : r; if ("object" == typeof Reflect && "function" == typeof Reflect.decorate) u = Reflect.decorate(e, t, n, r); else for (var a = e.length - 1; a >= 0; a--)(o = e[a]) && (u = (i < 3 ? o(u) : i > 3 ? o(t, n, u) : o(t, n)) || u); return i > 3 && u && Object.defineProperty(t, n, u), u }, o = this && this.__metadata || function (e, t) { if ("object" == typeof Reflect && "function" == typeof Reflect.metadata) return Reflect.metadata(e, t) }, i = this && this.__param || function (e, t) { return function (n, r) { t(n, r, e) } }; Object.defineProperty(t, "__esModule", { value: !0 }); var u = n(1), a = n(2), s = n(3), c = n(4), f = new (function () { function e() { } return e.prototype.freezeWhenDevToolsOpened = function (e) { e ? u.default.sharedInstance().startMonitoringDebuggerAttach() : u.default.sharedInstance().stopMonitoringDebuggerAttach() }, e.prototype.alwaysConsoleClear = function (e) { e ? a.default.sharedInstance().enableAlwaysClearConsole() : a.default.sharedInstance().disableAlwaysClearConsole() }, e.prototype.startDevToolMonitoring = function (e) { s.default.sharedInstance().startMonitoringDevTools(e) }, e.prototype.stopDevToolMonitoring = function () { s.default.sharedInstance().stopMonitoringDevTools() }, r([c.CheckRequiredParameters, i(0, c.Required), o("design:type", Function), o("design:paramtypes", [Boolean]), o("design:returntype", void 0)], e.prototype, "freezeWhenDevToolsOpened", null), r([c.CheckRequiredParameters, i(0, c.Required), o("design:type", Function), o("design:paramtypes", [Boolean]), o("design:returntype", void 0)], e.prototype, "alwaysConsoleClear", null), r([c.CheckRequiredParameters, i(0, c.Required), o("design:type", Function), o("design:paramtypes", [Function]), o("design:returntype", void 0)], e.prototype, "startDevToolMonitoring", null), r([c.CheckRequiredParameters, o("design:type", Function), o("design:paramtypes", []), o("design:returntype", void 0)], e.prototype, "stopDevToolMonitoring", null), e }()); t.Manager = f }, function (module, exports, __webpack_require__) { "use strict"; Object.defineProperty(exports, "__esModule", { value: !0 }); var DebuggerManager = function () { function DebuggerManager() { this.debuggerTimer = null } return DebuggerManager.sharedInstance = function () { return null === DebuggerManager.debuggerManager && (DebuggerManager.debuggerManager = new DebuggerManager), DebuggerManager.debuggerManager }, DebuggerManager.prototype.startMonitoringDebuggerAttach = function () { null === this.debuggerTimer ? this.debuggerTimer = setInterval(function () { eval("debugger") }, 10) : console.warn("Monitoring timer already running.") }, DebuggerManager.prototype.stopMonitoringDebuggerAttach = function () { null !== this.debuggerTimer ? clearInterval(this.debuggerTimer) : console.warn("Not running monitoring timer. Did you call startMonitoringDebuggerAttach() method before calling it?") }, DebuggerManager.debuggerManager = null, DebuggerManager }(); exports.default = DebuggerManager }, function (e, t, n) { "use strict"; Object.defineProperty(t, "__esModule", { value: !0 }); var r = function () { function e() { this.timerHandle = null } return e.sharedInstance = function () { return null === e.consoleManager && (e.consoleManager = new e), e.consoleManager }, e.prototype.enableAlwaysClearConsole = function () { null === this.timerHandle && (this.timerHandle = setInterval(function () { console.clear() }, 1e3)) }, e.prototype.disableAlwaysClearConsole = function () { null !== this.timerHandle && clearInterval(this.timerHandle) }, e.consoleManager = null, e }(); t.default = r }, function (e, t, n) { "use strict"; Object.defineProperty(t, "__esModule", { value: !0 }); var r = function () { function e() { this.monitoringTimer = null, this.isDevtoolOpened = !1, this.consoleDirection = "", this.threshold = 150 } return e.sharedInstance = function () { return null === e.devToolsManager && (e.devToolsManager = new e), e.devToolsManager }, e.prototype.startMonitoringDevTools = function (e) { var t = this; null === this.monitoringTimer ? this.monitoringTimer = setInterval(function () { t.monitoringTimerHandler(e) }, 1e3) : console.warn("Already started monitoring dev tools!!") }, e.prototype.stopMonitoringDevTools = function () { null !== this.monitoringTimer ? clearInterval(this.monitoringTimer) : console.warn("Not started monitoring dev tools!!") }, e.prototype.monitoringTimerHandler = function (e) { var t = !1, n = !1; if (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized && (n = !0, t = !0), !t) { var r = /./; r.toString = function () { n = !0, t = !0 }, console.log("%c", r), console.clear() } t || void 0 !== console.profiles && null !== console.profiles && (console.profile(), console.profileEnd(), console.profiles.length > 0 && (n = !0, t = !0)); var o = window.outerWidth - window.innerWidth > this.threshold, i = window.outerHeight - window.innerHeight > this.threshold, u = o ? "vertical" : "horizontal"; u = !n || o || i ? u : "seperated-window", u = n ? u : "closed", t || (o || i) && (n = !0), this.isDevtoolOpened === n && this.consoleDirection === u || (this.isDevtoolOpened = n, this.consoleDirection = u, e(this.isDevtoolOpened, u)) }, e.devToolsManager = null, e }(); t.default = r }, function (e, t, n) { "use strict"; Object.defineProperty(t, "__esModule", { value: !0 }), n(5); var r = Symbol("Required"); t.Required = function (e, t, n) { var o = Reflect.getOwnMetadata(r, e, t) || []; o.push(n), Reflect.defineMetadata(r, o, e, t) }, t.CheckRequiredParameters = function (e, t, n) { var o = n.value; n.value = function () { var n = Reflect.getOwnMetadata(r, e, t); if (n) for (var i = 0, u = n; i < u.length; i++) { var a = u[i]; if (a >= arguments.length || void 0 === arguments[a]) throw new Error("Missing parameters " + t + " method.") } return o.apply(this, arguments) } } }, function (e, t, n) {
             (function (e, t) {
@@ -483,7 +439,7 @@
             return false;
         }
     }
-</script>
+</script>*@
 
-}
+
 
