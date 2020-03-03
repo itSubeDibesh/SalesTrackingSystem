@@ -116,121 +116,126 @@
             </div>
         </div>
     </div>
+
     <div class="col-sm-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" cz-shortcut-listen="true">
                 <strong>Tranaction</strong> Invoice
                 <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Invoice">
                     <i class="fas fa-close"></i>
                 </button>
             </div>
-            <div class="card-body card-block">
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <td colspan="3"><span><Strong>Invoice No: </Strong> 98614516</span></td>
-                            <td style="float:left; margin-left:50%;"><span><Strong>Date Issued: </Strong> 09/08/2020</span></td>
-                            <td style="float:left;"><span><Strong>Due Date: </Strong> 09/08/2020</span></td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p></td>
-                            <td colspan="2" style="float:left; margin-left:70%;"><img src="~/images/icon/logo.png" alt="Tinjure tea factory" /></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">
-                                <hr />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan,Kathmandu</p><p>Kingraj530@gmail.com</p><p>9861315234</p></td>
-                            <td colspan="2" style="float:left;margin-left:45%"><strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">
-                                <hr />
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <table class="table dynamic-scroable-table-module table-bordered table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th style="text-align: center;">SN</th>
-                                    <th style="text-align: center;">product Name</th>
-                                    <th style="text-align: center;">Cost (NRS)</th>
-                                    <th style="text-align: center;">Units</th>
-                                    <th style="text-align: center;">Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="text-align: center;">1</td>
-                                    <td style="text-align: center;">Mac Book Pro</td>
-                                    <td style="text-align: center;">50000</td>
-                                    <td style="text-align: center;">500</td>
-                                    <td style="text-align: center;">5000000</td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align: center;">2</td>
-                                    <td style="text-align: center;">Mac Book Pro</td>
-                                    <td style="text-align: center;">50000</td>
-                                    <td style="text-align: center;">500</td>
-                                    <td style="text-align: center;">5000000</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5">
-                                <hr />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="5">
-                                <p>Thanks for your business.</p>
-                            </td>
-                        </tr>
-                    </tfoot>                                                              
-                </table>
-                <div style="margin-left:65%;">
-                    <div class="row">
-                        <div class="col-6"><p>Subtotal</p></div>
-                        <div class="col-6"><p>NRS 10000000</p></div>
+            <div class="container"id="invoice">
+                <div class="card-body card-block">
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <p>
+                                <Strong>Invoice No: </Strong> 98614516
+                            </p>
+                            <p>
+                                <Strong>Date Issued: </Strong> 09/08/2020
+                            </p>
+                            <p>
+                                <Strong>Due Date: </Strong> 09/08/2020
+                            </p>
+                        </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6"><p>Discount</p></div>
-                        <div class="col-6"><p>-NRS 50</p></div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <span>
+                                <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                            </span>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <br />
+                            <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
+                        </div>
+
                     </div>
-                    <div class="row">
-                        <div class="col-6"><p>Tax</p></div>
-                        <div class="col-6"><p>13%</p></div>
+                    <hr />
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
+                            <hr />
+                        </div>
+                        <div class="col-sm-6">
+                            <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
+                            <hr />
+                        </div>
                     </div>
-                    <hr style="width:90%;" />
-                    <div class="row">
-                        <div class="col-6"><p>Invoice Total</p></div>
-                        <div class="col-6"><p> NRS 100000000</p></div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <table class="table dynamic-scroable-table-module table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th style="text-align: center;">SN</th>
+                                        <th style="text-align: center;">Product Name</th>
+                                        <th style="text-align: center;">Cost (NRS)</th>
+                                        <th style="text-align: center;">Units</th>
+                                        <th style="text-align: center;">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">1</td>
+                                        <td style="text-align: center;">Mac Book Pro</td>
+                                        <td style="text-align: center;">50000</td>
+                                        <td style="text-align: center;">500</td>
+                                        <td style="text-align: center;">5000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">2</td>
+                                        <td style="text-align: center;">Mac Book Pro</td>
+                                        <td style="text-align: center;">50000</td>
+                                        <td style="text-align: center;">500</td>
+                                        <td style="text-align: center;">5000000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
                     </div>
-                    <div class="row">
-                        <div class="col-6"><p>Discount</p></div>
-                        <div class="col-6"><p> NRS 0</p></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6"><p>Balance(NRS)</p></div>
-                        <div class="col-6"><p>NRS 100000000</p></div>
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <p>Thanks for your business.</p>                       
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-6"><p>Subtotal</p></div>
+                                <div class="col-6"><p>NRS 10000000</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Discount</p></div>
+                                <div class="col-6"><p>-NRS 50</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Tax</p></div>
+                                <div class="col-6"><p>13%</p></div>
+                            </div>
+                            <hr style="width:90%;" />
+                            <div class="row">
+                                <div class="col-6"><p>Invoice Total</p></div>
+                                <div class="col-6"><p> NRS 100000000</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Discount</p></div>
+                                <div class="col-6"><p> NRS 0</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Balance(NRS)</p></div>
+                                <div class="col-6"><p>NRS 100000000</p></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+             
+               
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-success btn-sm">
-                    <i class="fa fa-print"></i> Print
-                </button>
-                <button type="reset" class="btn btn-primary btn-sm">
-                    <i class="fa fa-save"></i> Save
-                </button>
-                <button type="reset" class="btn btn-secondary btn-sm">
-                    <i class="fa fa-share"></i> Share
-                </button>
+                    <i class="fa fa-print"></i> Save
+                </button>               
                 <button type="reset" class="btn btn-danger btn-sm">
                     <i class="fa fa-close"></i> Cancel
                 </button>
@@ -308,7 +313,7 @@
                             <td style="text-align: center;">987654</td>
                             <td style="text-align: center;">2020/18/19</td>
                             <td style="padding-left:3.5%;">
-                                <a href="#"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
+                                <a href="#"><i class="fas fa-eye" style="color: skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
                                 <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
                             </td>
                         </tr>
@@ -343,8 +348,8 @@
                 "searching": false,
                 "bPaginate": false,
                 "bLengthChange": false,
-                "bFilter": true,
-                "bInfo": false,                
+                "bFilter": false,
+                "bInfo": false,
             });
         });
         $(function () {

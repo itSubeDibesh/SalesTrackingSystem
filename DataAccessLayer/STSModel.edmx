@@ -19,6 +19,7 @@
           <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="ProductID" Type="bigint" />
         </EntityType>
         <EntityType Name="DistributonArea">
           <Key>
@@ -237,6 +238,18 @@
             </Principal>
             <Dependent Role="Batch">
               <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Batch_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -510,6 +523,10 @@
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Batch" EntitySet="Batch" />
           </AssociationSet>
+          <AssociationSet Name="FK_Batch_Products" Association="Self.FK_Batch_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Batch" EntitySet="Batch" />
+          </AssociationSet>
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="Self.FK_DistributonArea_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
             <End Role="DistributonArea" EntitySet="DistributonArea" />
@@ -606,8 +623,13 @@
           <EntitySet Name="UserProfiles" EntityType="SalesTrackingSystemModel.UserProfile" />
           <EntitySet Name="UserProfileDetails" EntityType="SalesTrackingSystemModel.UserProfileDetail" />
           <EntitySet Name="Users" EntityType="SalesTrackingSystemModel.User" />
+          <EntitySet Name="Verifications" EntityType="SalesTrackingSystemModel.Verification" />
           <AssociationSet Name="FK_Batch_ProductCategory" Association="SalesTrackingSystemModel.FK_Batch_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Batch" EntitySet="Batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Batch_Products" Association="SalesTrackingSystemModel.FK_Batch_Products">
+            <End Role="Product" EntitySet="Products" />
             <End Role="Batch" EntitySet="Batches" />
           </AssociationSet>
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors">
@@ -682,7 +704,6 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserProfileDetail" EntitySet="UserProfileDetails" />
           </AssociationSet>
-          <EntitySet Name="Verifications" EntityType="SalesTrackingSystemModel.Verification" />
           <AssociationSet Name="FK_Verification_Users" Association="SalesTrackingSystemModel.FK_Verification_Users">
             <End Role="User" EntitySet="Users" />
             <End Role="Verification" EntitySet="Verifications" />
@@ -702,7 +723,9 @@
           <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="ProductID" Type="Int64" />
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="Batch" ToRole="ProductCategory" />
+          <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Batch" ToRole="Product" />
         </EntityType>
         <EntityType Name="DistributonArea">
           <Key>
@@ -822,6 +845,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Product" ToRole="Batch" />
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Products" FromRole="Product" ToRole="TransactionDetail" />
         </EntityType>
@@ -934,6 +958,21 @@
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Users" FromRole="User" ToRole="UserProfileDetail" />
           <NavigationProperty Name="Verifications" Relationship="SalesTrackingSystemModel.FK_Verification_Users" FromRole="User" ToRole="Verification" />
         </EntityType>
+        <EntityType Name="Verification">
+          <Key>
+            <PropertyRef Name="VerificationID" />
+          </Key>
+          <Property Name="VerificationID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="IsVerified" Type="Boolean" />
+          <Property Name="DateVerified" Type="DateTime" Precision="3" />
+          <Property Name="VerifiedToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ResetToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ResetTriggered" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_Verification_Users" FromRole="Verification" ToRole="User" />
+        </EntityType>
         <Association Name="FK_Batch_ProductCategory">
           <End Type="SalesTrackingSystemModel.ProductCategory" Role="ProductCategory" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -945,6 +984,18 @@
             </Principal>
             <Dependent Role="Batch">
               <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Batch_Products">
+          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Batch" Role="Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1186,21 +1237,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Verification">
-          <Key>
-            <PropertyRef Name="VerificationID" />
-          </Key>
-          <Property Name="VerificationID" Type="Int64" Nullable="false" />
-          <Property Name="UserID" Type="Int64" />
-          <Property Name="IsVerified" Type="Boolean" />
-          <Property Name="DateVerified" Type="DateTime" Precision="3" />
-          <Property Name="VerifiedToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ResetToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ResetTriggered" Type="DateTime" Precision="3" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_Verification_Users" FromRole="Verification" ToRole="User" />
-        </EntityType>
         <Association Name="FK_Verification_Users">
           <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1" />
           <End Type="SalesTrackingSystemModel.Verification" Role="Verification" Multiplicity="*" />
@@ -1222,6 +1258,7 @@
           <EntitySetMapping Name="Batches">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Batch">
               <MappingFragment StoreEntitySet="Batch">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />

@@ -474,3 +474,12 @@ ALTER TABLE Verification
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 GO
+Alter TABLE Batch
+ADD ProductID BIGINT NULL
+GO
+/*---------------------------------20	FK_Batch_Products	-------------------------------------*/
+Alter TABLE Batch
+ADD CONSTRAINT FK_Batch_Products FOREIGN KEY (ProductID)
+      REFERENCES Products (ProductID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION

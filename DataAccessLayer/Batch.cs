@@ -24,7 +24,9 @@ namespace DataAccessLayer
         public System.DateTime ExpiryDate { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
+        public Nullable<long> ProductID { get; set; }
     
         public virtual ProductCategory ProductCategory { get; set; }
+        public virtual Product Product { get; set; }
     }
 }
