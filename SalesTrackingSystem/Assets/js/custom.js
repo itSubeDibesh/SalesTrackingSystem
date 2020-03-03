@@ -1,5 +1,5 @@
 ﻿tinymce.init({
-    selector: "textarea",
+    selector: ".textarea-init",
     plugins: 'print preview searchreplace autolink directionality  visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount  imagetools textpattern help ',
     toolbar: 'formatselect | bold italic strikethrough forecolor backcolor permanentpen formatpainter | link image media pageembed | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | removeformat | addcomment',
     paste_data_images: true,

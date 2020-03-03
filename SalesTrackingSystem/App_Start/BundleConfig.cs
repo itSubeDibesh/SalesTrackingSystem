@@ -23,6 +23,7 @@ namespace SalesTrackingSystem
                    "~/Assets/vendor/select2/select2.min.js",
                    "~/Assets/vendor/tinymce/tinymce.min.js",
                    "~/Assets/js/main.js",
+                    "~/Assets/vendor/sweetalert/sweetalert.min.js",
                    "~/Assets/vendor/dropify/js/dropify.min.js",
                    "~/Assets/vendor/data-tables/dataTables.min.js",
                    "~/Assets/vendor/data-tables/extensions/responsive/js/dataTables.responsive.min.js",
@@ -49,7 +50,8 @@ namespace SalesTrackingSystem
                  "~/Assets/vendor/data-tables/dataTables.css",
                  "~/Assets/vendor/data-tables/dataTables.min.css",
                  "~/Assets/vendor/dropify/css/dropify.min.css",
-                 "~/Assets/css/theme.css"
+                 "~/Assets/css/theme.css",
+                  "~/Assets/css/custom.css"
                ));
 
             bundles.Add(new StyleBundle("~/bundles/error").Include(

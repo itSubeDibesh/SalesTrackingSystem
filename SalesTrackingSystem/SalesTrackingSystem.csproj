@@ -143,6 +143,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\custom.css" />
     <Content Include="Assets\css\error.css" />
     <Content Include="Assets\css\font-face.css" />
     <Content Include="Assets\css\theme.css" />
@@ -521,6 +522,8 @@
     <Content Include="Views\Products\Batch.cshtml" />
     <Content Include="Views\Products\Products.cshtml" />
     <Content Include="Views\Transaction\Transaction.cshtml" />
+    <Content Include="Views\Module\Module_Add.cshtml" />
+    <Content Include="Views\Module\Module_Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

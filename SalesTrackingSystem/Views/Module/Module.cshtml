@@ -1,12 +1,19 @@
-﻿@model Models.Module_Model
+﻿@using Services.Interface
+@using Services.Service
+@using Models;
+@{
+    Module_Interface Module_ = new Module_Service();
+}
 
 @{
     ViewBag.Title = "Module";
     ViewBag.Page = "Module";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.AppName = "Tinjure tea factory";
+    int SearialNumber = 1;
+    ViewBag.ActionName = "Add";
 }
-
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
 <div class="row">
     <div class="col-12">
         <div class="overview-wrap">
@@ -18,104 +25,99 @@
     </div>
 </div>
 <!--#region Forms-->
+@if (ViewBag.AddError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ModuleAdd').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.EditDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ModuleUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ModuleUpdate').slideDown();
+        }
+    </script>
+}
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <strong>Add</strong> Module
-                <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Module">
-                    <i class="fas fa-close"></i>
-                </button>
-            </div>
-            <div class="card-body card-block">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="text-input" class=" form-control-label">Module Name</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="text-input" class=" form-control-label">Controller Name</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Module Status</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">Description</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <textarea name="textarea-input" id="textarea-input" rows="15" placeholder="Content..." class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <i class="fa fa-paper-plane"></i> Submit
-                        </button>
-                        <button type="reset" class="btn btn-primary btn-sm">
-                            <i class="fa fa-trash"></i> Reset
-                        </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-close"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
+    @if (ViewBag.ActionName == "Add")
+    {
+        @Html.Partial("Module_Add")
+    }
+
+    @if (Request.Params.Get("action") == "Update")
+    {
+        if (Module_.ModuleExists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("Module_Update", Module_.ModuleByID(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " Module couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.UpdateData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateData);
+        if (Module_.ModuleExists(uaid))
+        {
+            @Html.Partial("Module_Update", Module_.ModuleByID(uaid));
+        }
+        else
+        {
+            Session["Error"] = " Module couldn't be found please retry!!";
+        }
+    }
+
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <strong> Module List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add Module">
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add Module" onclick="javascript: $('#ModuleAdd').slideDown()">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
             <div class="card-body card-block">
                 <table class="table dynamic-scroable-table-module table-bordered table-hover">
                     <thead class="thead-dark">
-                    <th style="text-align: center;">SN</th>
-                    <th style="text-align: center;">Module Name</th>
-                    <th style="text-align: center;">Controller Name</th>
-                    <th style="text-align: center;">Module Status</th>
-                    <th style="text-align: center;">Action</th>
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Module Name</th>
+                            <th style="text-align: center;">Controller Name</th>
+                            <th style="text-align: center;">Module Status</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Login</td>
-                            <td style="text-align: center;">Login</td>
-                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ?"fa-thumbs-up":"fa-thumbs-down"?>"></i>*@ Active</td>
-                            <td style="padding-left:15%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">2</td>
-                            <td style="text-align: center;">Validation</td>
-                            <td style="text-align: center;">Login</td>
-                            <td style="text-align: center; color:red;"> @*<i class="fas <?php echo " inactive"= ="active" ?"fa-thumbs-up":"fa-thumbs-down"?>"></i>*@ Inactive</td>
-                            <td style="padding-left:15%;">
-                                <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
+                        @foreach (var ModuleItem in Module_.DisplayTable())
+                        {
+                            if (Module_.DisplayTable() != null)
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SearialNumber++)</td>
+                                    <td style="text-align: center;">@ModuleItem.ModuleName</td>
+                                    <td style="text-align: center;">@ModuleItem.ControllerName</td>
+                                    <td style="text-align: center; color:@(ModuleItem.ModuleStatus==true?"green":"red");"> <i class="fas @(ModuleItem.ModuleStatus==true ?"fa-thumbs-up":"fa-thumbs-down")"></i> @(ModuleItem.ModuleStatus == true ? "Enabled" : "Disabled")</td>
+                                    <td style="padding-left:15%;">
+                                        <a href="~/Module/ModuleEdit?action=Update&uaid=@ModuleItem.ModuleID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                        <a href="javascript:void(0);" onclick="DeleteAndNotify(@ModuleItem.ModuleID,'@ModuleItem.ModuleName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
                     </tbody>
                 </table>
             </div>
@@ -139,5 +141,44 @@
                 "bAutoWidth": false
             });
         });
+
+         function DeleteAndNotify(id, value) {           
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " Module, all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside :false,
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.ModuleID = id;
+                        data.ModuleName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/Module/ModuleDelete",
+                            dataType:"json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/Module/Module"
+                                });
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    }                   
+                });
+        }
     </script>
 }
