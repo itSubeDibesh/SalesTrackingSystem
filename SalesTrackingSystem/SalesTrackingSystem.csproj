@@ -526,6 +526,10 @@
     <Content Include="Views\Module\Module_Update.cshtml" />
     <Content Include="Views\Module\Action_Add.cshtml" />
     <Content Include="Views\Module\Action_Update.cshtml" />
+    <Content Include="Views\User\UserProfile_Add.cshtml" />
+    <Content Include="Views\User\UserProfileDetails_Add.cshtml" />
+    <Content Include="Views\User\UserProfile_Update.cshtml" />
+    <Content Include="Views\User\UserProfileDetails_Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using static SalesTrackingSystem.Helpers.AppAuthAttribute;
 
 namespace SalesTrackingSystem.Controllers
 {
+    [Authorization]
     public class ModuleController : Controller
     {
         // GET: Module
@@ -82,12 +84,14 @@ namespace SalesTrackingSystem.Controllers
                 if (Module_.UpdateModule(module_Model))
                 {
                     Session["Success"] = module_Model.ModuleName + " updated successfully!!";
+                    return RedirectToAction("Module");
                 }
                 else
                 {
                     Session["Error"] = module_Model.ModuleName + " couldn't be updated please retry!!";
+                    return View("Module");
                 }
-                return View("Module");
+                
             }
         }
 
@@ -177,12 +181,14 @@ namespace SalesTrackingSystem.Controllers
                 if (ModuleAction_.UpdateAction(moduleAction_Model))
                 {
                     Session["Success"] = moduleAction_Model.ActionName + " updated successfully!!";
+                    return RedirectToAction("Action");
                 }
                 else
                 {
                     Session["Error"] = moduleAction_Model.ActionName + " couldn't be updated please retry!!";
+                    return View("Action");
                 }
-                return View("Action");
+               
             }
         }
 

@@ -346,14 +346,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_ProductCategory">
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
               <PropertyRef Name="ProductCategoryID" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="ProductCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -830,7 +830,7 @@
           <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="ProductCategory" ToRole="Batch" />
           <NavigationProperty Name="ProductCategory1" Relationship="SalesTrackingSystemModel.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
           <NavigationProperty Name="ProductCategory2" Relationship="SalesTrackingSystemModel.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
-          <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1146,14 +1146,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_ProductCategory">
-          <End Type="SalesTrackingSystemModel.ProductCategory" Role="ProductCategory" Multiplicity="1" />
-          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
               <PropertyRef Name="ProductCategoryID" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="ProductCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

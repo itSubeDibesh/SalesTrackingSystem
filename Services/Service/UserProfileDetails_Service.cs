@@ -1,4 +1,6 @@
-﻿using Services.Interface;
+﻿using DataAccessLayer;
+using Models;
+using Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,63 @@ using System.Threading.Tasks;
 
 namespace Services.Service
 {
-    public class UserProfileDetails_Service: UserProfileDetails_Interface
+    public class UserProfileDetails_Service : UserProfileDetails_Interface
     {
+        public bool DeleteUserProfileDetails(long userProfileDetailsId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserProfileDetails_Model> DisplayTable()
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from userProfileDetails in _dbContext.UserProfileDetails
+                                join userProfile in _dbContext.UserProfiles on userProfileDetails.UserProfileID equals userProfile.UserProfileID
+                                join moduleS in _dbContext.Modules on userProfileDetails.ModuleID equals moduleS.ModuleID
+                                join moduleActionStatus in _dbContext.ModuleActions on userProfileDetails.ModuleActionID equals moduleActionStatus.ModuleActionID
+                                select new UserProfileDetails_Model()
+                                {
+                                    UserProfileDetailID= userProfileDetails.UserProfileDetailID,
+                                    UserProfileID= userProfileDetails.UserProfileID,
+                                    ModuleID= userProfileDetails.ModuleID,
+                                    ModuleActionID= userProfileDetails.ModuleActionID,
+                                    ProfileDetailStatus= userProfileDetails.ProfileDetailStatus,
+                                    Description= userProfileDetails.Description,
+                                    CreatedBy= userProfileDetails.CreatedBy,
+                                    ProfileName= userProfile.ProfileName,
+                                    ModuleName = moduleS.ModuleName,
+                                    ActionName = moduleActionStatus.ActionName
+                                }).ToList();
+                    return data;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public bool SaveUserProfileDetails(UserProfileDetails_Model userProfileDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateUserProfileDetails(UserProfileDetails_Model userProfileDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserProfileDetails_Model UserProfilDetailsByID(long userProfileDetailsId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UserProfileDetailsExists(long userProfileDetailsId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

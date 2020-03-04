@@ -327,7 +327,7 @@ GO
 
 /*---------------------------------5	FK_Products_ProductCategory	-------------------------------------*/
 ALTER TABLE Products
-   ADD CONSTRAINT FK_Products_ProductCategory FOREIGN KEY (ProductID)
+   ADD CONSTRAINT FK_Products_ProductCategory FOREIGN KEY (ProductCategoryID)
       REFERENCES ProductCategory (ProductCategoryID)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION

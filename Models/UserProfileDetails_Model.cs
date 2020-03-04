@@ -15,6 +15,11 @@ namespace Models
         public Nullable<bool> ProfileDetailStatus { get; set; }
         public string Description { get; set; }
         public Nullable<long> CreatedBy { get; set; }
+
+        public string ProfileName { get; set; }
+        public string ModuleName { get; set; }
+        public string ActionName { get; set; }
+
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     }
