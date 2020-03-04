@@ -38,6 +38,7 @@
         }
     </script>
 }
+
 @if (ViewBag.EditUserProfileDropDown != null)
 {
     <script>
@@ -55,6 +56,31 @@
     </script>
 }
 
+@if (ViewBag.AddUserProfileDetailsError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#UserProfileDetailsAdd').slideDown();
+        }
+    </script>
+}
+
+@if (ViewBag.EditUserProfileDetailsDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#UserProfileDetailsUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateUserProfileDetailsError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#UserProfileDetailsUpdate').slideDown();
+        }
+    </script>
+}
 <!--#region Forms-->
 <div class="row">
 
@@ -88,58 +114,37 @@
         }
     }
 
+    @if (ViewBag.ActionNameProfileDetails == "Add")
+    {
+        @Html.Partial("UserProfileDetails_Add")
+    }
 
-    @*<div class="col-sm-12 ">
-            <div class="card">
-                <div class="card-header">
-                    <strong>Add</strong> @ViewBag.Page
-                    <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Module Action">
-                        <i class="fas fa-close"></i>
-                    </button>
-                </div>
-                <div class="card-body card-block">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="row form-group">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="text-input" class=" form-control-label">Profile Name</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <label for="select" class=" form-control-label">Profile Status</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <select name="select" id="select" class="form-control">
-                                    <option selected disabled>Please select</option>
-                                    <option value="1">Active</option>
-                                    <option value="2">Inactive</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col col-md-3">
-                                <label for="textarea-input" class=" form-control-label">Description</label>
-                            </div>
-                            <div class="col-12 col-md-9">
-                                <textarea name="textarea-input" id="textarea-input" rows="15" placeholder="Content..." class="form-control"></textarea>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success btn-sm">
-                                <i class="fa fa-paper-plane"></i> Submit
-                            </button>
-                            <button type="reset" class="btn btn-primary btn-sm">
-                                <i class="fa fa-trash"></i> Reset
-                            </button>
-                            <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-close"></i> Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>*@
+
+    @if (Request.Params.Get("action") == "UserProfileDetailsUpdate")
+    {
+        if (userProfileDetails_.UserProfileDetailsExists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("UserProfileDetails_Update", userProfileDetails_.UserProfilDetailsByID(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " Profile details couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.UpdateUserProfileDetailsData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateUserProfileDetailsData);
+        if (userProfileDetails_.UserProfileDetailsExists(uaid))
+        {
+            @Html.Partial("UserProfileDetails_Update", userProfileDetails_.UserProfilDetailsByID(uaid));
+        }
+        else
+        {
+            Session["Error"] = " Profile details couldn't be found please retry!!";
+        }
+    }
+
     @*<div class="col-sm-12 ">
             <div class="card">
                 <div class="card-header">
@@ -262,7 +267,7 @@
         <div class="card">
             <div class="card-header">
                 <strong> Profile Details List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add user profile">
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add user profile details" onclick="javascript: $('#UserProfileDetailsAdd').slideDown()">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
@@ -290,8 +295,8 @@
                                     <td style="text-align: center;">@userProfileDetailsItem.ActionName</td>
                                     <td style="text-align: center; color:@(userProfileDetailsItem.ProfileDetailStatus==true?"green":"red");"> <i class="fas @(userProfileDetailsItem.ProfileDetailStatus==true ?"fa-thumbs-up":"fa-thumbs-down")"></i> @(userProfileDetailsItem.ProfileDetailStatus == true ? "Enabled" : "Disabled")</td>
                                     <td style="padding-left:4%;">
-                                        <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                        <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                        <a href="~/User/UserProfileDetailsEdit?action=UserProfileDetailsUpdate&uaid=@userProfileDetailsItem.UserProfileDetailID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                        <a href="#" onclick="DeleteUseProfileDetailsAndNotify(@userProfileDetailsItem.UserProfileDetailID,'@userProfileDetailsItem.ProfileName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
                                     </td>
                                 </tr>
 
@@ -347,16 +352,16 @@
             });
         });
 
-         function DeleteUseProfileAndNotify(id, value) {           
+        function DeleteUseProfileAndNotify(id, value) {
             swal({
                 title: "Are you sure?",
                 text: "You want to delete " + value + " Module, all the related data will be deleted!",
                 icon: "warning",
                 closeOnEsc: false,
-                closeOnClickOutside :false,
+                closeOnClickOutside: false,
                 buttons: true,
                 dangerMode: true,
-                })
+            })
                 .then((willDelete) => {
                     if (willDelete) {
                         var data = {};
@@ -365,7 +370,7 @@
                         $.ajax({
                             type: "POST",
                             url: "/User/UserProfileDelete",
-                            dataType:"json",
+                            dataType: "json",
                             data: JSON.stringify(data),
                             contentType: "application/json; charset=utf-8",
                             success: function (response) {
@@ -382,7 +387,46 @@
                                 alert(response.responseText);
                             }
                         });
-                    }                   
+                    }
+                });
+        }
+
+        function DeleteUseProfileDetailsAndNotify(id, value) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " Module, all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.UserProfileDetailID = id;
+                        data.ProfileName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/User/UserProfileDetailsDelete",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/User/UserProfile"
+                                });
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    }
                 });
         }
     </script>

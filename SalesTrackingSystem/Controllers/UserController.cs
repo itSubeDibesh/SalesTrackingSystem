@@ -12,11 +12,12 @@ namespace SalesTrackingSystem.Controllers
     public class UserController : Controller
     {
         // GET: User
-        UserProfile_Interface UserProfile_Interface_;      
+        UserProfile_Interface UserProfile_Interface_;
+        UserProfileDetails_Interface UserProfileDetails_;
         public UserController()
         {
             UserProfile_Interface_ = new UserProfile_Service();
-
+            UserProfileDetails_ = new UserProfileDetails_Service();
         }
 
         public ActionResult UserProfile()
@@ -103,6 +104,97 @@ namespace SalesTrackingSystem.Controllers
                 if (UserProfile_Interface_.DeleteUserProfile(userProfile_.UserProfileID))
                 {
                     return Json(Module_Name + " profile has been deleted successfully");
+                }
+                else
+                {
+                    return Json("Error");
+                }
+            }
+            catch (Exception e)
+            {
+                return Json("Error" + e.ToString());
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult UserProfileDetailsAdd(UserProfileDetails_Model userProfileDetails_)
+        {
+            if (userProfileDetails_.UserProfileID==null || userProfileDetails_.ModuleID==null || userProfileDetails_.ModuleActionID == null)
+            {
+                ViewBag.AddUserProfileDetailsError = "Error";
+                return View("UserProfile");
+            }
+            else
+            {
+                if (UserProfileDetails_.SaveUserProfileDetails(userProfileDetails_))
+                {
+                    Session["Success"] = "Profile details added successfully!!";
+                }
+                else
+                {
+                    Session["Error"] = "Profile details couldn't be added please retry!!";
+                }
+                return RedirectToAction("UserProfile");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UserProfileDetailsEdit(string action, Int64 uaid)
+        {
+            if (string.IsNullOrEmpty(action) && uaid == 0)
+            {
+                Session["Error"] = "Profile details couldn't be found please retry!!";
+                return View("UserProfile");
+            }
+            else
+            {
+                if (UserProfileDetails_.UserProfileDetailsExists(uaid))
+                {
+                    ViewBag.EditUserProfileDetailsDropDown = "Drop";
+                    return View("UserProfile");
+                }
+                else
+                {
+                    Session["Error"] = "Profile details couldn't be found please retry!!";
+                    return View("UserProfile");
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UserProfileDetailsUpdate(UserProfileDetails_Model userProfileDetails_)
+        {
+            if ((userProfileDetails_.UserProfileID == null || userProfileDetails_.ModuleID == null || userProfileDetails_.ModuleActionID == null))
+            {
+                ViewBag.UpdateUserProfileDetailsError = "Error";
+                ViewBag.UpdateUserProfileDetailsData = userProfileDetails_.UserProfileDetailID;
+                return View("UserProfile");
+            }
+            else
+            {
+                if (UserProfileDetails_.UpdateUserProfileDetails(userProfileDetails_))
+                {
+                    Session["Success"] = "Profile updated successfully!!";
+                    return RedirectToAction("UserProfile");
+                }
+                else
+                {
+                    Session["Error"] = "Profile couldn't be updated please retry!!";
+                    return View("UserProfile");
+                }
+
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UserProfileDetailsDelete(UserProfileDetails_Model userProfileDetails_)
+        {          
+            try
+            {
+                if (UserProfileDetails_.DeleteUserProfileDetails(userProfileDetails_.UserProfileDetailID))
+                {
+                    return Json("Profile details has been deleted successfully");
                 }
                 else
                 {
