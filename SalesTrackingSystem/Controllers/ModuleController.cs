@@ -13,9 +13,11 @@ namespace SalesTrackingSystem.Controllers
     {
         // GET: Module
         Module_Interface Module_;
+        ModuleAction_Interface ModuleAction_;
         public ModuleController()
         {
             Module_ = new Module_Service();
+            ModuleAction_ = new ModuleAction_Service();
         }
         public ActionResult Module()
         {            
@@ -114,6 +116,96 @@ namespace SalesTrackingSystem.Controllers
         public ActionResult Action()
         {
             return View("Action");
+        }
+
+        [HttpPost]
+        public ActionResult ActionAdd(ModuleAction_Model moduleAction_Model)
+        {
+            if (moduleAction_Model.ActionStatus == null || string.IsNullOrEmpty(moduleAction_Model.ActionName) || moduleAction_Model.ModuleID == null)
+            {
+                ViewBag.AddError = "Error";
+                return View("Action");
+            }
+            else
+            {
+                if (ModuleAction_.SaveAction(moduleAction_Model))
+                {
+                    Session["Success"] = moduleAction_Model.ActionName + " added successfully!!";
+                }
+                else
+                {
+                    Session["Error"] = moduleAction_Model.ActionName + " couldn't be added please retry!!";
+                }
+                return RedirectToAction("Action");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ActionEdit(string action, Int64 uaid)
+        {
+            if (string.IsNullOrEmpty(action) && uaid == 0)
+            {
+                Session["Error"] = " Action couldn't be found please retry!!";
+                return View("Action");
+            }
+            else
+            {
+                if (Module_.ModuleExists(uaid))
+                {
+                    ViewBag.EditDropDown = "Drop";
+                    return View("Action");
+                }
+                else
+                {
+                    Session["Error"] = " Action couldn't be found please retry!!";
+                    return View("Action");
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ActionUpdate(ModuleAction_Model moduleAction_Model)
+        {
+            if (string.IsNullOrWhiteSpace(moduleAction_Model.ActionName) || moduleAction_Model.ModuleID==null || moduleAction_Model.ActionStatus == null)
+            {
+                ViewBag.UpdateError = "Error";
+                ViewBag.UpdateData = moduleAction_Model.ModuleActionID;
+                return View("Action");
+            }
+            else
+            {
+                if (ModuleAction_.UpdateAction(moduleAction_Model))
+                {
+                    Session["Success"] = moduleAction_Model.ActionName + " updated successfully!!";
+                }
+                else
+                {
+                    Session["Error"] = moduleAction_Model.ActionName + " couldn't be updated please retry!!";
+                }
+                return View("Action");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ActionDelete(ModuleAction_Model moduleAction_Model)
+        {
+            var Action_Name = moduleAction_Model.ActionName;
+            try
+            {
+                if (ModuleAction_.DeleteAction(moduleAction_Model.ModuleActionID))
+                {
+                    return Json(Action_Name + " action has been deleted successfully");
+                }
+                else
+                {
+                    return Json("Error");
+                }
+            }
+            catch (Exception e)
+            {
+                return Json("Error" + e.ToString());
+            }
+
         }
     }
 }

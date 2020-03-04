@@ -524,6 +524,8 @@
     <Content Include="Views\Transaction\Transaction.cshtml" />
     <Content Include="Views\Module\Module_Add.cshtml" />
     <Content Include="Views\Module\Module_Update.cshtml" />
+    <Content Include="Views\Module\Action_Add.cshtml" />
+    <Content Include="Views\Module\Action_Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

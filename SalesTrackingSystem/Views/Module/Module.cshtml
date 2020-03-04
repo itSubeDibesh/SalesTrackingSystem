@@ -112,7 +112,7 @@
                                     <td style="text-align: center; color:@(ModuleItem.ModuleStatus==true?"green":"red");"> <i class="fas @(ModuleItem.ModuleStatus==true ?"fa-thumbs-up":"fa-thumbs-down")"></i> @(ModuleItem.ModuleStatus == true ? "Enabled" : "Disabled")</td>
                                     <td style="padding-left:15%;">
                                         <a href="~/Module/ModuleEdit?action=Update&uaid=@ModuleItem.ModuleID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                        <a href="javascript:void(0);" onclick="DeleteAndNotify(@ModuleItem.ModuleID,'@ModuleItem.ModuleName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                        <a href="#" onclick="DeleteAndNotify(@ModuleItem.ModuleID,'@ModuleItem.ModuleName')"><i class="fas fa-trash" style="color:red;"></i></a>
                                     </td>
                                 </tr>
                             }
