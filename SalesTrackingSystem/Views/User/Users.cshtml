@@ -1,336 +1,222 @@
-﻿@model Models.Users_Model
+﻿@using Services.Interface
+@using Services.Service
+@using Models;
+
+@{
+    Users_Interface users_ = new Users_Service();
+}
+
+@model Models.Users_Model
 
 @{
     ViewBag.Title = "Users";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Page = "Users";
     ViewBag.AppName = "Tinjure tea factory";
+    int SearialNumber = 1;
+    ViewBag.ActionNameUser = "Add";
+    ViewBag.ActionNameException = "Add";
 }
-    <div class="row">
-        <div class="col-12">
-            <div class="overview-wrap">
-                <div class="title-1">
-                    <h4><a href="">@ViewBag.AppName</a> > User > @ViewBag.Page</h4>
-                </div>
-            </div>
-            <br>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    Add <strong>User</strong>
-                        <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close User Form">
-                            <i class="fas fa-close"></i>
-                        </button>
-                </div>
-                <div class="card-body">
-                    <div class="col-12">
-                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="text-input" class=" form-control-label">Full Name</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <input type="text" id="text-input" name="text-input" placeholder="Full Name" class="form-control">
-                                </div>
-
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="email-input" class=" form-control-label">Email</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <input type="email" id="email-input" name="email-input" placeholder="Enter Email" class="form-control">
-                                    <small class="help-block form-text text-danger">Please enter your email</small>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="phone-input" class=" form-control-label">Mobile No</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <input type="number" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="select" class=" form-control-label">Status</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <select name="select" id="select" class="form-control">
-                                        <option selected disabled>Please select</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                            </div>                            
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="select" class=" form-control-label">User profile</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <select name="select" id="select" class="form-control">
-                                        <option selected disabled>Please select</option>
-                                        <option value="active">Admin</option>
-                                        <option value="inactive">Distrubitor</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="password-input" class=" form-control-label">Add individual access</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <div class="form-check">
-                                        <div class="checkbox">
-                                            <label for="checkbox1" class="form-check-label ">
-                                                <input type="checkbox" id="checkbox1" name="checkbox1" value="Yes" class="form-check-input">Yes
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="select" class=" form-control-label">Distrubitor Name</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <select name="select" id="select" class="form-control">
-                                        <option selected disabled>Please select</option>
-                                        <option value="active">Rohan </option>
-                                        <option value="inactive">Dibesh</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="select" class=" form-control-label">Photo</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <input type="file" id="file-input" name="file-input" class="dropify form-control-file">
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fa fa-paper-plane"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-trash"></i> Reset
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-close"></i> Cancel
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <hr />
-                    <div class="col-12">
-                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                            <div class="row form-group">
-                                <input type="hidden" name="UserID" value="2" />
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="text-input" class=" form-control-label">Full Name</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <input type="text" id="text-input" name="text-input" disabled value="Dibesh Raj Subedi" class="form-control">
-                                </div>
-
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="email-input" class=" form-control-label">Module Name</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <select name="select" id="select" class="form-control">
-                                        <option selected disabled>Please select</option>
-                                        <option value="active">Login</option>
-                                        <option value="inactive">Create</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="phone-input" class=" form-control-label">Action Name</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <select name="select" id="select" class="form-control">
-                                        <option selected disabled>Please select</option>
-                                        <option value="active">Create</option>
-                                        <option value="inactive">Forget</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="select" class=" form-control-label">Status</label>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <select name="select" id="select" class="form-control">
-                                        <option selected disabled>Please select</option>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-6">
-                                    <label for="password-input" class=" form-control-label">Description</label>
-                                </div>
-                                <div class="col-md-9 col-sm-6">
-                                    <textarea name="textarea-input" id="textarea-input" rows="15" placeholder="Content..." class="form-control"></textarea>
-                                </div>
-                             </div>                           
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fa fa-paper-plane"></i> Submit
-                                </button>
-                                <button type="reset" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-trash"></i> Reset
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-close"></i> Cancel
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <br />
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <strong> Individual access List</strong>
-                                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add individual access">
-                                    <i class="fas fa-plus"></i> Add
-                                </button>
-                            </div>
-                            <div class="card-body card-block">
-                                <table class="dynamic-table-action table table-bordered table-hover">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th style="text-align: center;">SN</th>
-                                            <th style="text-align: center;">Full Name</th>
-                                            <th style="text-align: center;">Modul Name</th>
-                                            <th style="text-align: center;">Action Name</th>
-                                            <th style="text-align: center;">User Status</th>
-                                            <th style="text-align: center;">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="text-align: center;">1</td>
-                                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                                            <td style="text-align: center;">Login</td>
-                                            <td style="text-align: center;">Create</td>
-                                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                                            <td style="padding-left:4%;">
-                                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">1</td>
-                                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                                            <td style="text-align: center;">Forget</td>
-                                            <td style="text-align: center;">Create</td>
-                                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                                            <td style="padding-left:4%;">
-                                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;">1</td>
-                                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                                            <td style="text-align: center;">Reset</td>
-                                            <td style="text-align: center;">Create</td>
-                                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                                            <td style="padding-left:4%;">
-                                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <strong> Profile Details List</strong>
-                    <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add user profile">
-                        <i class="fas fa-plus"></i> Add
-                    </button>
-                </div>
-                <div class="card-body card-block">
-                    <table class="dynamic-table table table-bordered table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th style="text-align: center;">SN</th>
-                                <th style="text-align: center;">User Profile</th>
-                                <th style="text-align: center;">Full Name</th>
-                                <th style="text-align: center;">Image</th>
-                                <th style="text-align: center;">Email</th>
-                                <th style="text-align: center;">Is Distrubitor</th>
-                                <th style="text-align: center;">User Status</th>
-                                <th style="text-align: center;">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td style="text-align: center;">1</td>
-                                <td style="text-align: center;">Admin</td>
-                                <td style="text-align: center;">Dibesh Raj Subedi</td>
-                                <td style="text-align: center;"><img src="~/images/icon/avatar-01.jpg" alt="Alternate Text" style="max-height:50px; width:auto;" /></td>
-                                <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
-                                <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ True</td>
-                                <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                                <td style="padding-left:4%;">
-                                    <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                    <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;">2</td>
-                                <td style="text-align: center;">User </td>
-                                <td style="text-align: center;">Rohan Puri</td>
-                                <td style="text-align: center;"><img src="~/images/icon/avatar-01.jpg" alt="Alternate Text" style="max-height:50px; width:auto;" /></td>
-                                <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
-                                <td style="text-align: center; color:green;"> <i class="fas fa-thumbs-up"></i> True</td>
-                                <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                                <td style="padding-left:4%;">
-                                    <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                    <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="text-align: center;">3</td>
-                                <td style="text-align: center;">Admin </td>
-                                <td style="text-align: center;">Rohan Puri</td>
-                                <td style="text-align: center;"><img src="~/images/icon/avatar-01.jpg" alt="Alternate Text" style="max-height:50px; width:auto;" /></td>
-                                <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
-                                <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ True</td>
-                                <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                                <td style="padding-left:4%;">
-                                    <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                    <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
+<div class="row">
+    <div class="col-12">
+        <div class="overview-wrap">
+            <div class="title-1">
+                <h4><a href="">@ViewBag.AppName</a> > User > @ViewBag.Page</h4>
             </div>
         </div>
     </div>
+    <br>
+    <br>
+</div>
+
+
+
+@if (ViewBag.AddUserError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#UsersAdd').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.EditUserDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#UsersUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateUserError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#UsersUpdate').slideDown();
+        }
+    </script>
+}
+
+@if (ViewBag.AddExceptionError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ExceptionUsersAdd').slideDown();
+        }
+    </script>
+}
+<div class="row">
+    @if (ViewBag.ActionNameUser == "Add")
+    {
+        @Html.Partial("Users_Add")
+    }
+
+    @if (Request.Params.Get("action") == "UserUpdate")
+    {
+        if (users_.UserExists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("Users_Update", users_.GetModelById(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " User couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.UpdateUserData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateUserData);
+        if (users_.UserExists(uaid))
+        {
+            @Html.Partial("Users_Update", users_.GetModelById(uaid));
+        }
+        else
+        {
+            Session["Error"] = " User couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.ActionNameException == "Add")
+    {
+        @Html.Partial("ExceptionUser_Add")
+    }
+    <div class="col-sm-7">
+        <div class="card">
+            <div class="card-header">
+                <strong> Users List</strong>
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add User" onclick="javascript: $('#UsersAdd').slideDown()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-table table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Profile</th>
+                            <th style="text-align: center;">Name</th>
+                            <th style="text-align: center;">Image</th>
+                            <th style="text-align: center;">Email</th>
+                            <th style="text-align: center;">User Status</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var UserItem in users_.DisplayTable())
+                        {
+                            if (users_.DisplayTable() != null)
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SearialNumber++)</td>
+                                    <td style="text-align: center;">@UserItem.ProfileName</td>
+                                    <td style="text-align: center;">@UserItem.FullName</td>
+                                    <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)"  alt="Not Found" style="max-height:50px; width:auto;" /></td>
+                                    <td style="text-align: center;"><a href="mailto:@(UserItem.Email)">@UserItem.Email</a></td>
+                                    <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":UserItem.UsersStatus==3?"red":"black");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Activated" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" :  UserItem.UsersStatus == 3 ? "Blocked" : "Reset")</td>
+                                    <td style="padding-left:4%;">
+                                        <a href="~/User/UserEdit?action=UserUpdate&uaid=@UserItem.UserID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                        <a href="#"><i class="fas fa-trash" style="color:red;"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-5">
+        <div class="card">
+            <div class="card-header">
+                <strong> Individual access List</strong>
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add individual access " onclick="javascript: $('#ExceptionUsersAdd').slideDown()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-table-action table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Full Name</th>
+                            <th style="text-align: center;">Modul Name</th>
+                            <th style="text-align: center;">Action Name</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Dibesh Raj Subedi</td>
+                            <td style="text-align: center;">Login</td>
+                            <td style="text-align: center;">Create</td>
+                            <td style="padding-left:4%;">
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Dibesh Raj Subedi</td>
+                            <td style="text-align: center;">Forget</td>
+                            <td style="text-align: center;">Create</td>
+                            <td style="padding-left:4%;">
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">1</td>
+                            <td style="text-align: center;">Dibesh Raj Subedi</td>
+                            <td style="text-align: center;">Reset</td>
+                            <td style="text-align: center;">Create</td>
+                            <td style="padding-left:4%;">
+                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @section scripts{
-    <script>       
-         $(function() {
-        $('.dynamic-table').DataTable({
-            responsive: true,           
-            lengthMenu: [
-                [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "All"]
-            ],
+    <script>
+        $(function () {
+            $('.dynamic-table').DataTable({
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
 
+            });
         });
-    });
-     $(function() {
+        $(function () {
             $('.dynamic-table-action').DataTable({
                 responsive: !0,
                 scrollY: "65vh",
@@ -340,7 +226,7 @@
                     [5, 10, 25, 50, -1],
                     [5, 10, 25, 50, "All"]
                 ],
-                drawCallback: function(e) {
+                drawCallback: function (e) {
                     var t = this.api(),
                         l = t.rows({
                             page: "current"
@@ -348,7 +234,7 @@
                         c = null;
                     t.column(1, {
                         page: "current"
-                    }).data().each(function(e, t) {
+                    }).data().each(function (e, t) {
                         c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
                     })
                 }

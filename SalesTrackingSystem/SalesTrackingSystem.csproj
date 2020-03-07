@@ -370,6 +370,8 @@
     <Content Include="Images\icon\avatar-big-01.jpg" />
     <Content Include="Images\icon\logo.png" />
     <Content Include="Images\icon\Untitled-1.jpg" />
+    <Content Include="Images\icon\user.png" />
+    <Content Include="Views\Shared\EmailTemplateNormal.html" />
     <Content Include="Views\Shared\EmailTemplate.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -530,6 +532,9 @@
     <Content Include="Views\User\UserProfileDetails_Add.cshtml" />
     <Content Include="Views\User\UserProfile_Update.cshtml" />
     <Content Include="Views\User\UserProfileDetails_Update.cshtml" />
+    <Content Include="Views\User\Users_Add.cshtml" />
+    <Content Include="Views\User\Users_Update.cshtml" />
+    <Content Include="Views\User\ExceptionUser_Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

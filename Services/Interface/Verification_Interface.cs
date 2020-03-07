@@ -15,6 +15,7 @@ namespace Services.Interface
         bool updateResetAuthentication(Int64 userId, DateTime dateTriggered, string resetToken);
         Verification_Model checkReset(Int64 userId, string resetToken);
         bool CheckReset(Int64 userId, string resetToken);
+        Int64 GetNewVerificationId();
 
     }
 }

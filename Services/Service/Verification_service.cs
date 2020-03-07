@@ -91,6 +91,23 @@ namespace Services.Service
             }
         }
 
+        public long GetNewVerificationId()
+        {
+            try
+            {
+                using (var _context = new SalesTrackingSystemEntities())
+                {
+                    var data = _context.Verifications.Max(u => u.VerificationID);
+                    Int64 id = Convert.ToInt64(data) + 1;
+                    return id;
+                }
+            }
+            catch (Exception)
+            {
+                return 1;
+            }
+        }
+
         public bool updateCheckedVerification(long userId, byte isVerified)
         {
             using (var _dbContext = new SalesTrackingSystemEntities())

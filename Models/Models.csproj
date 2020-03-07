@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Distributor_Model.cs" />
     <Compile Include="ExceptionUserProfile_Model.cs" />
     <Compile Include="Module_Model.cs" />
     <Compile Include="ModuleAction_Model.cs" />

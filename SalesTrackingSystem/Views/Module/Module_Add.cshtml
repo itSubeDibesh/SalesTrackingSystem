@@ -3,9 +3,7 @@
     <div class="card">
         <div class="card-header">
             <strong>Add</strong> Module
-            <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Module" onclick=" $('#ModuleAdd').slideUp();">
-                <i class="fas fa-close"></i>
-            </button>
+            <a href="~/Module/Module" class="btn btn-danger " style="float: right;color:white;" data-toggle="tooltip" data-placement="right" title="Close Module Add"><i class="fas fa-close"></i></a>
         </div>
         <div class="card-body card-block">
             @using (Html.BeginForm("ModuleAdd", "Module", FormMethod.Post))
@@ -55,9 +53,7 @@
                         <button type="submit" class="btn btn-success btn-sm">
                             <i class="fa fa-paper-plane"></i> Submit
                         </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash"></i> Reset
-                        </button>
+                        <a href="~/Module/Module" class="btn btn-danger btn-sm" style="color:white;"><i class="fa fa-trash"></i> Reset</a>
                     </div>
                 </div>
             }

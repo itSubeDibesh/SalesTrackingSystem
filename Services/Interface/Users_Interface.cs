@@ -18,5 +18,13 @@ namespace Services.Interface
         Users_Model GetModelByEmail(string email);
         bool checkEmail(string email);
         bool resetpassword(Int64 userId, string password);
+        List<Users_Model> DisplayTable();
+        string GeneratePassword(int minLength = 8, int maxLength = 15);
+        string GenerateRandomNumber(int minLength = 2, int maxLength = 8);
+        bool SaveUserAccount(Users_Model users_Model);
+        Int64 GetNewUserId();
+        bool checkMobileNo(long number);
+        bool UserExists(Int64 userId);
+        bool UpdateUserAccount(Users_Model users_Model);
     }
 }
