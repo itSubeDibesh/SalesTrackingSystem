@@ -21,7 +21,7 @@ namespace Services.Service
                                 select new Verification_Model()
                                 {
                                     VerificationID = verificationAction.VerificationID,
-                                    UserID = verificationAction.UserID,                                   
+                                    UserID = verificationAction.UserID,
                                     ResetTriggered = verificationAction.ResetTriggered,
                                     ResetToken = verificationAction.ResetToken,
                                     DateCreated = verificationAction.DateCreated,
@@ -46,22 +46,24 @@ namespace Services.Service
                     var data = (from verificationAction in _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId && verificationAction.ResetToken == resetToken)
                                 select new Verification_Model()
                                 {
-                                    VerificationID=verificationAction.VerificationID,
-                                    UserID=verificationAction.UserID,
-                                    ResetToken=verificationAction.ResetToken
+                                    VerificationID = verificationAction.VerificationID,
+                                    UserID = verificationAction.UserID,
+                                    ResetToken = verificationAction.ResetToken
                                 }).FirstOrDefault();
                     if (data.UserID == userId && data.ResetToken == resetToken)
                     {
                         return true;
-                    }else{
+                    }
+                    else
+                    {
                         return false;
-                    }                  
+                    }
                 }
                 catch (Exception)
                 {
                     return false;
                 }
-            }           
+            }
         }
 
         public Verification_Model checkVerification(long userId, string verifiedtoken)
@@ -69,23 +71,41 @@ namespace Services.Service
             using (var _dbContext = new SalesTrackingSystemEntities())
             {
                 try
-                {                          
-                    var data = (from verificationAction in _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId && verificationAction.VerifiedToken == verifiedtoken)                                    
-                                      select new Verification_Model()
-                                      {
-                                          VerificationID= verificationAction.VerificationID,
-                                          UserID= verificationAction.UserID,
-                                          IsVerified= verificationAction.IsVerified,
-                                          DateVerified= verificationAction.DateVerified,
-                                          VerifiedToken= verificationAction.VerifiedToken,                                        
-                                          DateCreated = verificationAction.DateCreated,
-                                          DateUpdated = verificationAction.DateUpdated
-                                      }).FirstOrDefault();
+                {
+                    var data = (from verificationAction in _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId && verificationAction.VerifiedToken == verifiedtoken)
+                                select new Verification_Model()
+                                {
+                                    VerificationID = verificationAction.VerificationID,
+                                    UserID = verificationAction.UserID,
+                                    IsVerified = verificationAction.IsVerified,
+                                    DateVerified = verificationAction.DateVerified,
+                                    VerifiedToken = verificationAction.VerifiedToken,
+                                    DateCreated = verificationAction.DateCreated,
+                                    DateUpdated = verificationAction.DateUpdated
+                                }).FirstOrDefault();
                     return data;
                 }
                 catch (Exception)
                 {
 
+                    throw;
+                }
+            }
+        }
+
+        public bool DeleteVerification(long userId)
+        {
+            using (var _context = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _context.Verifications.Where(act => act.UserID == userId).FirstOrDefault();
+                    _context.Verifications.Remove(data);
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
                     throw;
                 }
             }
@@ -114,8 +134,8 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId).FirstOrDefault();                   
-                    data.IsVerified = Convert.ToBoolean(isVerified);                  
+                    var data = _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId).FirstOrDefault();
+                    data.IsVerified = Convert.ToBoolean(isVerified);
                     _dbContext.SaveChanges();
                     return true;
                 }
@@ -134,7 +154,7 @@ namespace Services.Service
                 {
                     var data = _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId).FirstOrDefault();
                     data.ResetTriggered = dateTriggered;
-                    data.ResetToken =resetToken;                   
+                    data.ResetToken = resetToken;
                     _dbContext.SaveChanges();
                     return true;
                 }
@@ -155,8 +175,37 @@ namespace Services.Service
                     data.VerifiedToken = verifiedtoken;
                     data.IsVerified = Convert.ToBoolean(isVerified);
                     data.DateVerified = dateVerified;
-                   _dbContext.SaveChanges();                 
+                    _dbContext.SaveChanges();
                     return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool VerificationExists(long userId)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from verificationAction in _dbContext.Verifications.Where(verificationAction => verificationAction.UserID == userId)
+                                select new Verification_Model()
+                                {
+                                    VerificationID = verificationAction.VerificationID,
+                                    UserID = verificationAction.UserID,
+                                    ResetToken = verificationAction.ResetToken
+                                }).FirstOrDefault();
+                    if (data.UserID == userId)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (Exception)
                 {

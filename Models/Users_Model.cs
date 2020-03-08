@@ -56,7 +56,7 @@ namespace Models
 
         [Required(ErrorMessage = "User Status is required")]
         [Display(Name = "User Status")]
-        public Nullable<byte> UsersStatus { get; set; }
+        public Nullable<int> UsersStatus { get; set; }
 
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }

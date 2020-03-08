@@ -111,6 +111,24 @@ namespace Services.Service
             }
         }
 
+        public bool DeleteUser(long userId)
+        {
+            using (var _context = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _context.Users.Where(act => act.UserID == userId).FirstOrDefault();
+                    _context.Users.Remove(data);
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
         public List<Users_Model> DisplayTable()
         {
             using (var _dbContext = new SalesTrackingSystemEntities())
@@ -328,6 +346,38 @@ namespace Services.Service
             }
         }
 
+        public Users_Model GetModelOnlyById(long userID)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from actionUser in _dbContext.Users.Where(actionUser => actionUser.UserID == userID)
+                                select new Users_Model()
+                                {
+                                    UserID = actionUser.UserID,
+                                    DistrubitorID = actionUser.DistrubitorID,
+                                    ExeceptionProfile = actionUser.ExeceptionProfile,
+                                    FullName = actionUser.FullName,
+                                    PasswordHash = actionUser.PasswordHash,
+                                    Email = actionUser.Email,
+                                    Token = actionUser.Token,
+                                    MobileNo = actionUser.MobileNo,
+                                    ImageString = actionUser.ImageString,
+                                    UsersStatus = actionUser.UsersStatus,
+                                    DateCreated = actionUser.DateCreated,
+                                    DateUpdated = actionUser.DateUpdated
+                                }).FirstOrDefault();
+                    return data;
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
         public long GetNewUserId()
         {
             try
@@ -342,6 +392,25 @@ namespace Services.Service
             catch (Exception)
             {
                 return 1;
+            }
+        }
+
+        public bool MakeDistrubitorNull(long userId)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _dbContext.Users.Where(a => a.UserID == userId).FirstOrDefault();
+                    data.DistrubitorID = null;
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+
+                }
             }
         }
 
@@ -409,7 +478,7 @@ namespace Services.Service
             }
         }
 
-        public Users_Model UpdateOnLogin(string email, string password, string token = null, byte status = 1)
+        public Users_Model UpdateOnLogin(string email, string password, string token = null, int status = 1)
         {
             using (var _dbContext = new SalesTrackingSystemEntities())
             {
@@ -458,7 +527,7 @@ namespace Services.Service
             }
         }
 
-        public bool UpdateOnLogout(string email, string password, string token = null, byte status = 2)
+        public bool UpdateOnLogout(string email, string password, string token = null, int status = 2)
         {
             using (var _dbContext = new SalesTrackingSystemEntities())
             {
@@ -488,7 +557,7 @@ namespace Services.Service
                     data.UserProfileID = users_Model.UserProfileID;
                     data.DistrubitorID = users_Model.DistrubitorID;
                     data.FullName = users_Model.FullName;
-                    if (users_Model.UsersStatus==4)
+                    if (users_Model.UsersStatus==0)
                     {
                         data.PasswordHash = users_Model.PasswordHash;
                         data.Token = users_Model.Token;

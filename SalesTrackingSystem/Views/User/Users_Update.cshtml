@@ -57,13 +57,12 @@
                             <div class="col-md-3 col-sm-6">
                                 <select name="UsersStatus" id="UsersStatus" class="form-control">
                                     <option disabled>Please select</option>
-                                    <option @(Model.UsersStatus == 0 ? "selected" : "") value="0">Not Activated</option>
+                                    <option @(Model.UsersStatus == 0 ? "selected" : "") value="0">Reset</option>
                                     <option @(Model.UsersStatus == 1 ? "selected" : "") value="1">Active</option>
                                     <option @(Model.UsersStatus == 2 ? "selected" : "") value="2">Inactive</option>
-                                    <option @(Model.UsersStatus == 3 ? "selected" : "") value="3">Blocked</option>
-                                    <option @(Model.UsersStatus == 4 ? "selected" : "") value="4">Reset</option>
-                                    @Html.ValidationMessageFor(model => model.UsersStatus, "", new { @class = "text-danger" })
+                                    <option @(Model.UsersStatus == 3 ? "selected" : "") value="3">Blocked</option>                           
                                 </select>
+                                @Html.ValidationMessageFor(model => model.UsersStatus, "", new { @class = "text-danger" })
                             </div>
                         </div>
 

@@ -16,6 +16,8 @@ namespace Services.Interface
         Verification_Model checkReset(Int64 userId, string resetToken);
         bool CheckReset(Int64 userId, string resetToken);
         Int64 GetNewVerificationId();
+        bool VerificationExists(Int64 userId);
+        bool DeleteVerification(Int64 userId);
 
     }
 }

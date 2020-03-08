@@ -8,5 +8,6 @@ namespace Services.Interface
 {
     public interface ExceptionUserProfile_Interface
     {
+        bool BulkDeleteExeceptionByUserID(Int64 userId);
     }
 }

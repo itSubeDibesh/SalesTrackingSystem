@@ -429,7 +429,7 @@ namespace SalesTrackingSystem.Controllers
                     Datas.MobileNo = users_.MobileNo;
                     Datas.UsersStatus = users_.UsersStatus;
                    
-                    if (users_.UsersStatus == 4)
+                    if (users_.UsersStatus == 0)
                     {
                         Datas.PasswordHash = null;
                         Datas.Token = null;
@@ -478,21 +478,25 @@ namespace SalesTrackingSystem.Controllers
                         {
                             Directory.CreateDirectory(RootDir);
                         }
-
-                        if (!Directory.Exists(UserDirectory))
-                        {
-                            Directory.CreateDirectory(UserDirectory);
-                            if (Directory.Exists(UserDirectory))
+                        else{
+                            if (!Directory.Exists(UserDirectory))
                             {
-                                Directory.CreateDirectory(ImageDirectory);
-                                if (ImageString != null)
-                                {
-                                    string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + FullName.Trim() + "_Images/" + ImageName));
-                                    ImageString.SaveAs(imagePath);
-                                }
-                                Directory.CreateDirectory(FileDirectory);
+                                Directory.CreateDirectory(UserDirectory);
                             }
-                        }
+                            else
+                            {
+                                if (Directory.Exists(UserDirectory))
+                                {
+                                    Directory.CreateDirectory(ImageDirectory);
+                                    if (ImageString != null)
+                                    {
+                                        string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + FullName.Trim() + "_Images/" + ImageName));
+                                        ImageString.SaveAs(imagePath);
+                                    }
+                                    Directory.CreateDirectory(FileDirectory);
+                                }
+                            }
+                        }                      
                     }
                     Session["Success"] = "Account has been Updated successfully.";
                     return RedirectToAction("Users");
@@ -507,18 +511,67 @@ namespace SalesTrackingSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult UserDelete(UserProfile_Model userProfile_)
+        public ActionResult UserDelete(Users_Model user_)
         {
-            var Module_Name = userProfile_.ProfileName;
+            var User_Name = user_.FullName;
+            var UserData = new Users_Model();
+            Verification_Interface verification_ = new Verification_service();
+            ExceptionUserProfile_Interface exceptionUserProfile_ = new ExceptionUserProfile_Service();
+            var Message = "";
             try
             {
-                if (UserProfile_Interface_.DeleteUserProfile(userProfile_.UserProfileID))
+                if (Users_Interface_.UserExists(user_.UserID))
                 {
-                    return Json(Module_Name + " profile has been deleted successfully");
+                    UserData = Users_Interface_.GetModelOnlyById(user_.UserID);
+                    if (UserData.DistrubitorID != null)
+                    {
+                        if (Users_Interface_.MakeDistrubitorNull(user_.UserID))
+                        {
+                            Message = ", distributor account unlinked";
+                        }
+                        //make distributor null first
+                    }
+                    if (UserData.ExeceptionProfile != null && UserData.ExeceptionProfile != false)
+                    {
+                        if (exceptionUserProfile_.BulkDeleteExeceptionByUserID(user_.UserID))
+                        {
+                            Message += ", individual access removed";
+                        }
+                        //Bulk delete exception profile first
+                    }
+                    if (verification_.VerificationExists(user_.UserID))
+                    {
+                        if (verification_.DeleteVerification(user_.UserID))
+                        {
+                            Message += ", verification details removed";
+                        }
+                        //delete verification first
+                    }
+                    /*delede user folder*/
+                    string Root = "~/UserInformation";
+                    string Email = UserData.Email;
+                    string RootDir = Server.MapPath(Root + "/" + Email);
+                    if (Directory.Exists(RootDir))
+                    {
+                        Directory.Delete(RootDir, true);
+                        Message += ", user directory deleted";
+                    }
+
+                    if (Users_Interface_.DeleteUser(user_.UserID))
+                    {
+                        /*delete user*/
+                        Message += " and user deleted finally.";
+                        return Json(User_Name + "'s " + Message);
+                    }
+                    else
+                    {
+                        return Json("Error");
+                    }
                 }
                 else
                 {
-                    return Json("Error");
+                    Session["Error"] = User_Name + " not found!!";
+                    return View("Users");
                 }
             }
             catch (Exception e)

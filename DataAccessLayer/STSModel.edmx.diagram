@@ -5,21 +5,21 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="3c2cfdaab6f74b2aad2cd5e288e88003" Name="Diagram1" DisplayType="true" ZoomLevel="103">
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.Batch" Width="1.5" PointX="15.25" PointY="4.5" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.DistributonArea" Width="1.5" PointX="3" PointY="9.25" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Batch" Width="1.5" PointX="19.25" PointY="4.5" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.DistributonArea" Width="1.5" PointX="3" PointY="21.625" />
         <EntityTypeShape EntityType="SalesTrackingSystemModel.Distributor" Width="1.5" PointX="0.75" PointY="11" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.ExceptionUserProfile" Width="1.5" PointX="8.25" PointY="18.625" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.Module" Width="1.5" PointX="5.25" PointY="8.625" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.ModuleAction" Width="1.5" PointX="5.25" PointY="21.25" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.ProductCategory" Width="2.375" PointX="6.875" PointY="4.625" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.Product" Width="1.5" PointX="10" PointY="4.5" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.Reseller" Width="1.5" PointX="3" PointY="20.625" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.TransactionDetail" Width="1.5" PointX="12.25" PointY="4.875" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.Transaction" Width="1.5" PointX="10" PointY="0.75" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.UserProfile" Width="1.5" PointX="5.25" PointY="13" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.UserProfileDetail" Width="1.5" PointX="7.5" PointY="14.125" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.User" Width="1.5" PointX="3" PointY="14" />
-        <EntityTypeShape EntityType="SalesTrackingSystemModel.Verification" Width="1.5" PointX="5.25" PointY="16.75" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.ExceptionUserProfile" Width="1.5" PointX="11.25" PointY="11.625" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Module" Width="1.5" PointX="9" PointY="21.75" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.ModuleAction" Width="1.5" PointX="9" PointY="6" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.ProductCategory" Width="1.5" PointX="11.75" PointY="4.625" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Product" Width="1.5" PointX="14" PointY="4.5" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Reseller" Width="1.5" PointX="3" PointY="9.25" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.TransactionDetail" Width="1.5" PointX="16.25" PointY="4.875" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Transaction" Width="1.5" PointX="14" PointY="0.75" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.UserProfile" Width="1.5" PointX="8.25" PointY="18" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.UserProfileDetail" Width="1.5" PointX="10.5" PointY="16.125" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.User" Width="1.5" PointX="6" PointY="11" />
+        <EntityTypeShape EntityType="SalesTrackingSystemModel.Verification" Width="1.5" PointX="8.25" PointY="10" />
         <AssociationConnector Association="SalesTrackingSystemModel.FK_Batch_ProductCategory" />
         <AssociationConnector Association="SalesTrackingSystemModel.FK_Batch_Products" />
         <AssociationConnector Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors" />

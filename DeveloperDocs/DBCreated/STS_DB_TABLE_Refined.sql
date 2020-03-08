@@ -213,7 +213,7 @@ CREATE TABLE Users(
 	Token				VARCHAR(250)	NULL,	
 	MobileNo			BIGINT			NOT NULL		UNIQUE,
 	ImageString			VARCHAR(200)	NULL,
-	UsersStatus			TINYINT			DEFAULT(1),		/* 1=Active, 2=Inactive, 2=Blocked*/
+	UsersStatus			Int				DEFAULT(1),		/* 1=Active, 2=Inactive, 2=Blocked*/
 	DateCreated			DATETIME		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );

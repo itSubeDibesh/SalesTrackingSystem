@@ -132,10 +132,10 @@
                                     <td style="text-align: center;">@UserItem.FullName</td>
                                     <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)"  alt="Not Found" style="max-height:50px; width:auto;" /></td>
                                     <td style="text-align: center;"><a href="mailto:@(UserItem.Email)">@UserItem.Email</a></td>
-                                    <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":UserItem.UsersStatus==3?"red":"black");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Activated" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" :  UserItem.UsersStatus == 3 ? "Blocked" : "Reset")</td>
+                                    <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":"red");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Verified" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" :  "Blocked")</td>
                                     <td style="padding-left:4%;">
                                         <a href="~/User/UserEdit?action=UserUpdate&uaid=@UserItem.UserID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                        <a href="#"><i class="fas fa-trash" style="color:red;"></i></a>
+                                        <a href="#" onclick="DeleteAndNotify(@UserItem.UserID,'@UserItem.FullName')"><i class="fas fa-trash" style="color:red;"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -240,5 +240,37 @@
                 }
             });
         });
+        function DeleteAndNotify(id, value) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " from User list, all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.UserID = id;
+                        data.FullName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/User/UserDelete",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/User/Users"
+                                });
+                            }
+                        });
+                    }
+                });
+        }
     </script>
 }
