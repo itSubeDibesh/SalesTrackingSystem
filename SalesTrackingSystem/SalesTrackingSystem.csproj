@@ -534,7 +534,6 @@
     <Content Include="Views\User\UserProfileDetails_Update.cshtml" />
     <Content Include="Views\User\Users_Add.cshtml" />
     <Content Include="Views\User\Users_Update.cshtml" />
-    <Content Include="Views\User\ExceptionUser_Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

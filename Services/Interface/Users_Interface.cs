@@ -29,5 +29,6 @@ namespace Services.Interface
         bool MakeDistrubitorNull(Int64 userId);
         bool DeleteUser(Int64 userId);
         Users_Model GetModelOnlyById(Int64 userID);
+        bool CheckNewAccount(string email, string password);
     }
 }

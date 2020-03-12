@@ -17,8 +17,6 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.ExceptionUserProfiles = new HashSet<ExceptionUserProfile>();
-            this.ExceptionUserProfiles1 = new HashSet<ExceptionUserProfile>();
             this.UserProfiles = new HashSet<UserProfile>();
             this.UserProfileDetails = new HashSet<UserProfileDetail>();
             this.Verifications = new HashSet<Verification>();
@@ -27,7 +25,6 @@ namespace DataAccessLayer
         public long UserID { get; set; }
         public Nullable<long> UserProfileID { get; set; }
         public Nullable<long> DistrubitorID { get; set; }
-        public Nullable<bool> ExeceptionProfile { get; set; }
         public string FullName { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
@@ -39,10 +36,6 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         public virtual Distributor Distributor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExceptionUserProfile> ExceptionUserProfiles { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExceptionUserProfile> ExceptionUserProfiles1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfile> UserProfiles { get; set; }
         public virtual UserProfile UserProfile { get; set; }

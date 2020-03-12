@@ -111,6 +111,36 @@ namespace Services.Service
             }
         }
 
+        public bool CheckNewAccount(string email, string password)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from actions in _dbContext.Users.Where(actions => actions.Email == email && actions.PasswordHash==password)
+                                select new Users_Model()
+                                {
+                                    FullName = actions.FullName,
+                                    Email = actions.Email,
+                                    PasswordHash = actions.PasswordHash,
+                                    UsersStatus = actions.UsersStatus
+                                }).FirstOrDefault();
+                    if (data.Email == email && data.UsersStatus==0)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
         public bool DeleteUser(long userId)
         {
             using (var _context = new SalesTrackingSystemEntities())
@@ -142,7 +172,6 @@ namespace Services.Service
                                     UserID = Users.UserID,
                                     UserProfileID = Users.UserProfileID,
                                     DistrubitorID = Users.DistrubitorID,
-                                    ExeceptionProfile = Users.ExeceptionProfile,
                                     FullName = Users.FullName,
                                     PasswordHash = Users.PasswordHash,
                                     Email = Users.Email,
@@ -224,8 +253,7 @@ namespace Services.Service
                                 {
                                     UserID = actionUser.UserID,
                                     UserProfileID = actionUserProfile.UserProfileID,
-                                    DistrubitorID = actionUser.DistrubitorID,
-                                    ExeceptionProfile = actionUser.ExeceptionProfile,
+                                    DistrubitorID = actionUser.DistrubitorID,                                   
                                     FullName = actionUser.FullName,
                                     PasswordHash = actionUser.PasswordHash,
                                     Email = actionUser.Email,
@@ -269,8 +297,7 @@ namespace Services.Service
                                 {
                                     UserID = actionUser.UserID,
                                     UserProfileID = actionUserProfile.UserProfileID,
-                                    DistrubitorID = actionUser.DistrubitorID,
-                                    ExeceptionProfile = actionUser.ExeceptionProfile,
+                                    DistrubitorID = actionUser.DistrubitorID,                                   
                                     FullName = actionUser.FullName,
                                     PasswordHash = actionUser.PasswordHash,
                                     Email = actionUser.Email,
@@ -314,11 +341,10 @@ namespace Services.Service
                                       {
                                           UserID = actionUser.UserID,
                                           UserProfileID = actionUserProfile.UserProfileID,
-                                          DistrubitorID = actionUser.DistrubitorID,
-                                          ExeceptionProfile = actionUser.ExeceptionProfile,
+                                          DistrubitorID = actionUser.DistrubitorID,                                         
                                           FullName = actionUser.FullName,
                                           PasswordHash = actionUser.PasswordHash,
-                                          Email = actionUser.Email,
+                                          Email = actionUser.Email, 
                                           Token = actionUser.Token,
                                           MobileNo = actionUser.MobileNo,
                                           ImageString = actionUser.ImageString,
@@ -356,8 +382,7 @@ namespace Services.Service
                                 select new Users_Model()
                                 {
                                     UserID = actionUser.UserID,
-                                    DistrubitorID = actionUser.DistrubitorID,
-                                    ExeceptionProfile = actionUser.ExeceptionProfile,
+                                    DistrubitorID = actionUser.DistrubitorID,                                   
                                     FullName = actionUser.FullName,
                                     PasswordHash = actionUser.PasswordHash,
                                     Email = actionUser.Email,
@@ -445,8 +470,7 @@ namespace Services.Service
                         var UserData = new User()
                         {
                             UserID = GetNewUserId(),
-                            UserProfileID = users_Model.UserProfileID,
-                            ExeceptionProfile = users_Model.ExeceptionProfile,
+                            UserProfileID = users_Model.UserProfileID,                           
                             FullName = users_Model.FullName,
                             PasswordHash = users_Model.PasswordHash,
                             Email = users_Model.Email,
@@ -495,8 +519,7 @@ namespace Services.Service
                                       {
                                           UserID = actionUser.UserID,
                                           UserProfileID = actionUserProfile.UserProfileID,
-                                          DistrubitorID = actionUser.DistrubitorID,
-                                          ExeceptionProfile = actionUser.ExeceptionProfile,
+                                          DistrubitorID = actionUser.DistrubitorID,                                         
                                           FullName = actionUser.FullName,
                                           PasswordHash = actionUser.PasswordHash,
                                           Email = actionUser.Email,
@@ -556,12 +579,7 @@ namespace Services.Service
                     var data = _dbContext.Users.Where(act=> act.UserID == users_Model.UserID).FirstOrDefault();
                     data.UserProfileID = users_Model.UserProfileID;
                     data.DistrubitorID = users_Model.DistrubitorID;
-                    data.FullName = users_Model.FullName;
-                    if (users_Model.UsersStatus==0)
-                    {
-                        data.PasswordHash = users_Model.PasswordHash;
-                        data.Token = users_Model.Token;
-                    }
+                    data.FullName = users_Model.FullName;                  
                     data.MobileNo = users_Model.MobileNo;
                     if (users_Model.ImageString!=null)
                     {

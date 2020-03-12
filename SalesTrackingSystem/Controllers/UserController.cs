@@ -8,9 +8,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using static SalesTrackingSystem.Helpers.AppAuthAttribute;
 
 namespace SalesTrackingSystem.Controllers
 {
+    [Authorization]
     public class UserController : Controller
     {
         // GET: User
@@ -25,7 +27,7 @@ namespace SalesTrackingSystem.Controllers
         }
 
         public ActionResult UserProfile()
-        {
+        {           
             return View();
         }
 
@@ -212,7 +214,6 @@ namespace SalesTrackingSystem.Controllers
 
         }
 
-
         private string EmailBody(string SubjectTitle, string Subject, string UserName, string Message, string WarningMessage, string AppLink, string CopyrightDate)
         {
             string body = string.Empty;
@@ -248,9 +249,8 @@ namespace SalesTrackingSystem.Controllers
             return body;
         }
 
-
         public ActionResult Users()
-        {
+        {           
             return View();
         }
 
@@ -277,8 +277,8 @@ namespace SalesTrackingSystem.Controllers
                     string FullName = users_.FullName;
                     string RootDir = Server.MapPath(Root);
                     string UserDirectory = Server.MapPath(Root + "/" + Email);
-                    string ImageDirectory = Server.MapPath(Root + "/" + Email + "/" + FullName + "_Images");
-                    string FileDirectory = Server.MapPath(Root + "/" + Email + "/" + FullName + "_Documents");
+                    string ImageDirectory = Server.MapPath(Root + "/" + Email + "/" + "Images");
+                    string FileDirectory = Server.MapPath(Root + "/" + Email + "/" +  "Documents");
                     var ImageName="";                    
 
                     if (users_.ImageString!=null)
@@ -293,7 +293,7 @@ namespace SalesTrackingSystem.Controllers
                     Datas.Email = users_.Email;
                     Datas.MobileNo = users_.MobileNo;
                     Datas.UsersStatus = users_.UsersStatus;
-                    Datas.ImageString = "/UserInformation/" +Email+ "/" + FullName.Trim() + "_Images/" + ImageName;
+                    Datas.ImageString = "/UserInformation/" +Email+ "/" + "Images/" + ImageName;
                     if (Users_Interface_.SaveUserAccount(Datas))
                     {
                         if (!Directory.Exists(RootDir))
@@ -309,7 +309,7 @@ namespace SalesTrackingSystem.Controllers
                                 Directory.CreateDirectory(ImageDirectory);
                                 if (ImageString != null)
                                 {
-                                    string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + FullName.Trim() + "_Images/" + ImageName));
+                                    string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + "Images/" + ImageName));
                                     ImageString.SaveAs(imagePath);
                                 }
                                 Directory.CreateDirectory(FileDirectory);
@@ -410,14 +410,14 @@ namespace SalesTrackingSystem.Controllers
                     string FullName = users_.FullName;
                     string RootDir = Server.MapPath(Root);
                     string UserDirectory = Server.MapPath(Root + "/" + Email);
-                    string ImageDirectory = Server.MapPath(Root + "/" + Email + "/" + FullName + "_Images");
-                    string FileDirectory = Server.MapPath(Root + "/" + Email + "/" + FullName + "_Documents");
+                    string ImageDirectory = Server.MapPath(Root + "/" + Email + "/" + "Images");
+                    string FileDirectory = Server.MapPath(Root + "/" + Email + "/" + "Documents");
                     var ImageName = "";
 
                     if (users_.ImageString != null)
                     {
                         ImageName = RandomNumber + Path.GetExtension(ImageString.FileName).ToString();
-                        Datas.ImageString = "/UserInformation/" + Email + "/" + FullName.Trim() + "_Images/" + ImageName;
+                        Datas.ImageString = "/UserInformation/" + Email + "/" + "Images/" + ImageName;
                     }
 
                     Datas.UserID = users_.UserID;
@@ -428,50 +428,7 @@ namespace SalesTrackingSystem.Controllers
                     Datas.Email = users_.Email;
                     Datas.MobileNo = users_.MobileNo;
                     Datas.UsersStatus = users_.UsersStatus;
-                   
-                    if (users_.UsersStatus == 0)
-                    {
-                        Datas.PasswordHash = null;
-                        Datas.Token = null;
-                        string subject = "Account Restoration!";
-                        string subjectTitle = "Account Restoration";
-                        string userName = FullName;
-                        string message = "We have dissabled your login access for security purpose. Please reset your <b>Password form the link below</b> to activate your service.";
-                        string redirectUrl = "https://" + Request.ServerVariables["HTTP_HOST"] + "/Auth/Forget";
-                        string warningMessage = "Keep a strong password containing atleast one capital case, one unique character and minimum 8 digits.";
-                        string appLink = "https://" + Request.ServerVariables["HTTP_HOST"];
-                        string copyrightDate = DateTime.Now.Year.ToString();
-                        try
-                        {
-                            //Configuring webMail class to send emails  
-                            //gmail smtp server  
-                            WebMail.SmtpServer = "smtp.gmail.com";
-
-                            //gmail port to send emails  
-                            WebMail.SmtpPort = 587;
-                            WebMail.SmtpUseDefaultCredentials = true;
-
-                            //sending emails with secure protocol  
-                            WebMail.EnableSsl = true;
-
-                            //EmailId used to send emails from application  
-                            WebMail.UserName = "jkclaws325@gmail.com";
-                            WebMail.Password = "joker9813570528";
-
-                            //Sender email address.  
-                            WebMail.From = "jkclaws325@gmail.com";
-
-                            //Send email  
-                            WebMail.Send(to: Email, subject: subject, body: EmailBodyReset(subjectTitle, subject, userName, message, redirectUrl, warningMessage, appLink, copyrightDate), isBodyHtml: true);
-                            Session["Success"] = "An account has been created and email has been sent to " + Email + ".";                           
-                        }
-                        catch (Exception)
-                        {
-                            Session["Error"] = "Problem while sending email but account has been created.";
-                            return View("Users");
-                        }
-                    }
-
+                                     
                     if (Users_Interface_.UpdateUserAccount(Datas))
                     {
                         if (!Directory.Exists(RootDir))
@@ -490,7 +447,7 @@ namespace SalesTrackingSystem.Controllers
                                     Directory.CreateDirectory(ImageDirectory);
                                     if (ImageString != null)
                                     {
-                                        string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + FullName.Trim() + "_Images/" + ImageName));
+                                        string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/"  + "Images/" + ImageName));
                                         ImageString.SaveAs(imagePath);
                                     }
                                     Directory.CreateDirectory(FileDirectory);
@@ -516,7 +473,6 @@ namespace SalesTrackingSystem.Controllers
             var User_Name = user_.FullName;
             var UserData = new Users_Model();
             Verification_Interface verification_ = new Verification_service();
-            ExceptionUserProfile_Interface exceptionUserProfile_ = new ExceptionUserProfile_Service();
             var Message = "";
             try
             {
@@ -530,15 +486,7 @@ namespace SalesTrackingSystem.Controllers
                             Message = ", distributor account unlinked";
                         }
                         //make distributor null first
-                    }
-                    if (UserData.ExeceptionProfile != null && UserData.ExeceptionProfile != false)
-                    {
-                        if (exceptionUserProfile_.BulkDeleteExeceptionByUserID(user_.UserID))
-                        {
-                            Message += ", individual access removed";
-                        }
-                        //Bulk delete exception profile first
-                    }
+                    }                    
                     if (verification_.VerificationExists(user_.UserID))
                     {
                         if (verification_.DeleteVerification(user_.UserID))
@@ -580,6 +528,5 @@ namespace SalesTrackingSystem.Controllers
             }
 
         }
-
     }
 }

@@ -62,9 +62,6 @@
     <Compile Include="Distributor.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ExceptionUserProfile.cs">
-      <DependentUpon>STSModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Module.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>

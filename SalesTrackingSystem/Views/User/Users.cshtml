@@ -18,6 +18,7 @@
     ViewBag.ActionNameException = "Add";
 }
 @Html.Partial("~/Views/Shared/_Alert.cshtml")
+
 <div class="row">
     <div class="col-12">
         <div class="overview-wrap">
@@ -29,8 +30,6 @@
     <br>
     <br>
 </div>
-
-
 
 @if (ViewBag.AddUserError != null)
 {
@@ -96,11 +95,8 @@
         }
     }
 
-    @if (ViewBag.ActionNameException == "Add")
-    {
-        @Html.Partial("ExceptionUser_Add")
-    }
-    <div class="col-sm-7">
+
+    <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <strong> Users List</strong>
@@ -130,9 +126,9 @@
                                     <td style="text-align: center;">@(SearialNumber++)</td>
                                     <td style="text-align: center;">@UserItem.ProfileName</td>
                                     <td style="text-align: center;">@UserItem.FullName</td>
-                                    <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)"  alt="Not Found" style="max-height:50px; width:auto;" /></td>
+                                    <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)" alt="Not Found" style="max-height:50px; width:auto;" /></td>
                                     <td style="text-align: center;"><a href="mailto:@(UserItem.Email)">@UserItem.Email</a></td>
-                                    <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":"red");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Verified" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" :  "Blocked")</td>
+                                    <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":"red");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Verified" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" : "Blocked")</td>
                                     <td style="padding-left:4%;">
                                         <a href="~/User/UserEdit?action=UserUpdate&uaid=@UserItem.UserID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
                                         <a href="#" onclick="DeleteAndNotify(@UserItem.UserID,'@UserItem.FullName')"><i class="fas fa-trash" style="color:red;"></i></a>
@@ -144,63 +140,7 @@
                 </table>
             </div>
         </div>
-    </div>
-
-    <div class="col-sm-5">
-        <div class="card">
-            <div class="card-header">
-                <strong> Individual access List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add individual access " onclick="javascript: $('#ExceptionUsersAdd').slideDown()">
-                    <i class="fas fa-plus"></i> Add
-                </button>
-            </div>
-            <div class="card-body card-block">
-                <table class="dynamic-table-action table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="text-align: center;">SN</th>
-                            <th style="text-align: center;">Full Name</th>
-                            <th style="text-align: center;">Modul Name</th>
-                            <th style="text-align: center;">Action Name</th>
-                            <th style="text-align: center;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                            <td style="text-align: center;">Login</td>
-                            <td style="text-align: center;">Create</td>
-                            <td style="padding-left:4%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                            <td style="text-align: center;">Forget</td>
-                            <td style="text-align: center;">Create</td>
-                            <td style="padding-left:4%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                            <td style="text-align: center;">Reset</td>
-                            <td style="text-align: center;">Create</td>
-                            <td style="padding-left:4%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    </div>   
 </div>
 
 
@@ -214,30 +154,6 @@
                     [5, 10, 25, 50, "All"]
                 ],
 
-            });
-        });
-        $(function () {
-            $('.dynamic-table-action').DataTable({
-                responsive: !0,
-                scrollY: "65vh",
-                scrollCollapse: !0,
-                responsive: true,
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
-                ],
-                drawCallback: function (e) {
-                    var t = this.api(),
-                        l = t.rows({
-                            page: "current"
-                        }).nodes(),
-                        c = null;
-                    t.column(1, {
-                        page: "current"
-                    }).data().each(function (e, t) {
-                        c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
-                    })
-                }
             });
         });
         function DeleteAndNotify(id, value) {

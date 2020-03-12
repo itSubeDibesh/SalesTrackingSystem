@@ -58,20 +58,6 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
-        <EntityType Name="ExceptionUserProfile">
-          <Key>
-            <PropertyRef Name="ExceptionProfileID" />
-          </Key>
-          <Property Name="ExceptionProfileID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="bigint" />
-          <Property Name="ModuleID" Type="bigint" />
-          <Property Name="ModuleActionID" Type="bigint" />
-          <Property Name="ExceptionProfileStatus" Type="bit" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="CreatedBy" Type="bigint" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="DateUpdated" Type="datetime" />
-        </EntityType>
         <EntityType Name="Module">
           <Key>
             <PropertyRef Name="ModuleID" />
@@ -202,7 +188,6 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="UserProfileID" Type="bigint" />
           <Property Name="DistrubitorID" Type="bigint" />
-          <Property Name="ExeceptionProfile" Type="bit" />
           <Property Name="FullName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
@@ -264,58 +249,6 @@
             </Principal>
             <Dependent Role="DistributonArea">
               <PropertyRef Name="DistrubitorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Module">
-          <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Module">
-              <PropertyRef Name="ModuleID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_ModuleAction">
-          <End Role="ModuleAction" Type="Self.ModuleAction" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModuleAction">
-              <PropertyRef Name="ModuleActionID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleActionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_SelectedUser">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -507,7 +440,6 @@
           <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributonArea" EntityType="Self.DistributonArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ExceptionUserProfile" EntityType="Self.ExceptionUserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModuleAction" EntityType="Self.ModuleAction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
@@ -530,22 +462,6 @@
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="Self.FK_DistributonArea_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
             <End Role="DistributonArea" EntitySet="DistributonArea" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Module" Association="Self.FK_ExceptionUserProfile_Module">
-            <End Role="Module" EntitySet="Module" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_ModuleAction" Association="Self.FK_ExceptionUserProfile_ModuleAction">
-            <End Role="ModuleAction" EntitySet="ModuleAction" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_SelectedUser" Association="Self.FK_ExceptionUserProfile_SelectedUser">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Users" Association="Self.FK_ExceptionUserProfile_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
           </AssociationSet>
           <AssociationSet Name="FK_ModuleAction_Module" Association="Self.FK_ModuleAction_Module">
             <End Role="Module" EntitySet="Module" />
@@ -612,7 +528,6 @@
           <EntitySet Name="Batches" EntityType="SalesTrackingSystemModel.Batch" />
           <EntitySet Name="DistributonAreas" EntityType="SalesTrackingSystemModel.DistributonArea" />
           <EntitySet Name="Distributors" EntityType="SalesTrackingSystemModel.Distributor" />
-          <EntitySet Name="ExceptionUserProfiles" EntityType="SalesTrackingSystemModel.ExceptionUserProfile" />
           <EntitySet Name="Modules" EntityType="SalesTrackingSystemModel.Module" />
           <EntitySet Name="ModuleActions" EntityType="SalesTrackingSystemModel.ModuleAction" />
           <EntitySet Name="ProductCategories" EntityType="SalesTrackingSystemModel.ProductCategory" />
@@ -643,22 +558,6 @@
           <AssociationSet Name="FK_Users_Distributors" Association="SalesTrackingSystemModel.FK_Users_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Module" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module">
-            <End Role="Module" EntitySet="Modules" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_ModuleAction" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction">
-            <End Role="ModuleAction" EntitySet="ModuleActions" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_SelectedUser" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Users" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
           </AssociationSet>
           <AssociationSet Name="FK_ModuleAction_Module" Association="SalesTrackingSystemModel.FK_ModuleAction_Module">
             <End Role="Module" EntitySet="Modules" />
@@ -768,24 +667,6 @@
           <NavigationProperty Name="Resellers" Relationship="SalesTrackingSystemModel.FK_Resellers_Distributors" FromRole="Distributor" ToRole="Reseller" />
           <NavigationProperty Name="Users" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="Distributor" ToRole="User" />
         </EntityType>
-        <EntityType Name="ExceptionUserProfile">
-          <Key>
-            <PropertyRef Name="ExceptionProfileID" />
-          </Key>
-          <Property Name="ExceptionProfileID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int64" />
-          <Property Name="ModuleID" Type="Int64" />
-          <Property Name="ModuleActionID" Type="Int64" />
-          <Property Name="ExceptionProfileStatus" Type="Boolean" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int64" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Module" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module" FromRole="ExceptionUserProfile" ToRole="Module" />
-          <NavigationProperty Name="ModuleAction" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction" FromRole="ExceptionUserProfile" ToRole="ModuleAction" />
-          <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser" FromRole="ExceptionUserProfile" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users" FromRole="ExceptionUserProfile" ToRole="User" />
-        </EntityType>
         <EntityType Name="Module">
           <Key>
             <PropertyRef Name="ModuleID" />
@@ -797,7 +678,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ExceptionUserProfiles" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module" FromRole="Module" ToRole="ExceptionUserProfile" />
           <NavigationProperty Name="ModuleActions" Relationship="SalesTrackingSystemModel.FK_ModuleAction_Module" FromRole="Module" ToRole="ModuleAction" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Module" FromRole="Module" ToRole="UserProfileDetail" />
         </EntityType>
@@ -812,7 +692,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ExceptionUserProfiles" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction" FromRole="ModuleAction" ToRole="ExceptionUserProfile" />
           <NavigationProperty Name="Module" Relationship="SalesTrackingSystemModel.FK_ModuleAction_Module" FromRole="ModuleAction" ToRole="Module" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_ModuleAction" FromRole="ModuleAction" ToRole="UserProfileDetail" />
         </EntityType>
@@ -940,7 +819,6 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="UserProfileID" Type="Int64" />
           <Property Name="DistrubitorID" Type="Int64" />
-          <Property Name="ExeceptionProfile" Type="Boolean" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
@@ -951,8 +829,6 @@
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="User" ToRole="Distributor" />
-          <NavigationProperty Name="ExceptionUserProfiles" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser" FromRole="User" ToRole="ExceptionUserProfile" />
-          <NavigationProperty Name="ExceptionUserProfiles1" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users" FromRole="User" ToRole="ExceptionUserProfile" />
           <NavigationProperty Name="UserProfiles" Relationship="SalesTrackingSystemModel.FK_UserProfile_Users" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfile" Relationship="SalesTrackingSystemModel.FK_Users_UserProfile" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Users" FromRole="User" ToRole="UserProfileDetail" />
@@ -1038,58 +914,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="DistrubitorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Module">
-          <End Type="SalesTrackingSystemModel.Module" Role="Module" Multiplicity="0..1" />
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Module">
-              <PropertyRef Name="ModuleID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_ModuleAction">
-          <End Type="SalesTrackingSystemModel.ModuleAction" Role="ModuleAction" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModuleAction">
-              <PropertyRef Name="ModuleActionID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleActionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_SelectedUser">
-          <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Users">
-          <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1311,21 +1135,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ExceptionUserProfiles">
-            <EntityTypeMapping TypeName="SalesTrackingSystemModel.ExceptionUserProfile">
-              <MappingFragment StoreEntitySet="ExceptionUserProfile">
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ExceptionProfileStatus" ColumnName="ExceptionProfileStatus" />
-                <ScalarProperty Name="ModuleActionID" ColumnName="ModuleActionID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ExceptionProfileID" ColumnName="ExceptionProfileID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Modules">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Module">
               <MappingFragment StoreEntitySet="Module">
@@ -1470,7 +1279,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="ExeceptionProfile" ColumnName="ExeceptionProfile" />
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
                 <ScalarProperty Name="UserProfileID" ColumnName="UserProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

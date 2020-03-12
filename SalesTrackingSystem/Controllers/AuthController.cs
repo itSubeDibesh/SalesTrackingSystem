@@ -80,57 +80,79 @@ namespace SalesTrackingSystem.Controllers
             {
                 string Remembered;
                 var LoginSalt = "SHA1" + email + "SalesTrackingSystem";
-                var HashedValue = Crypto.SHA1(LoginSalt + password);
-                var LoginSession = (Users_Model)Session["auth"];
-                string CheckLogin = Users.CheckLogin(email, HashedValue);
-                if (CheckLogin == "ValidUserActiveStatus")
+                var HashedValue = Crypto.SHA1(LoginSalt + password);                            
+                if (Users.CheckNewAccount(email, HashedValue))
                 {
-                    if (remember != "")
+                    /* Send to reset password page*/
+                    var ChekingSession = Users.GetModelByEmail(email);
+                    string generatedToken = Users.GenerateRandomString(20, 80);
+                    if (Verification.updateResetAuthentication(ChekingSession.UserID, DateTime.Now, generatedToken))
                     {
-                        Remembered = Users.GenerateRandomString();
+                        Session["Warning"] = "Please reset you'r password on first login!!";
+                        return RedirectToAction("Reset", "Auth", new { uac = email, uid = generatedToken });
                     }
                     else
                     {
-                        Remembered = null;
+                        Session["Error"] = "Problem creating reset environment. Please try again!!";
+                        return View("Login");
                     }
-
-                    Session["auth"] = Users.UpdateOnLogin(email, HashedValue, Remembered);
-                    LoginSession = (Users_Model)Session["auth"];
-                    Session["Success"] = "Hello " + LoginSession.FullName + ", Hope you hade a wonderfull day.";
-                    /*Redirect to different assigned page*/
-                    return RedirectToAction("Index", "Home");
-                }
-                else if (CheckLogin == "ValidUserInactiveStatus")
-                {
-                    if (remember != "")
-                    {
-                        Remembered = Users.GenerateRandomString();
-                    }
-                    else
-                    {
-                        Remembered = null;
-                    }
-                    Session["auth"] = Users.UpdateOnLogin(email, HashedValue, Remembered, 1);
-                    LoginSession = (Users_Model)Session["auth"];
-                    Session["Success"] = "Hello " + LoginSession.FullName + ", Nice to see you back!.";
-                    /*Redirect to different assigned page*/
-                    return RedirectToAction("Index", "Home");
-                }
-                else if (CheckLogin == "ValidUserBlockedStatus")
-                {
-                    Session["Warning"] = "Your Account has been blocked please contact admin.";
-                    return View("Login");
-                }
-                else if (CheckLogin == "InvalidUser")
-                {
-                    Session["Error"] = "Invalid email or password.";
-                    return View("Login");
                 }
                 else
                 {
-                    Session["Error"] = "Email or password incorrect!!";
-                    return View("Login");
+                    /* Normal login */
+                    var LoginSession = (Users_Model)Session["auth"];
+                    string CheckLogin = Users.CheckLogin(email, HashedValue);
+                    if (CheckLogin == "ValidUserActiveStatus")
+                    {
+                        if (remember != "")
+                        {
+                            Remembered = Users.GenerateRandomString();
+                        }
+                        else
+                        {
+                            Remembered = null;
+                        }
+
+                        Session["auth"] = Users.UpdateOnLogin(email, HashedValue, Remembered);
+                        LoginSession = (Users_Model)Session["auth"];
+                        Session["Success"] = "Hello " + LoginSession.FullName + ", Hope you hade a wonderfull day.";
+                        /*Redirect to different assigned page*/
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else if (CheckLogin == "ValidUserInactiveStatus")
+                    {
+                        if (remember != "")
+                        {
+                            Remembered = Users.GenerateRandomString();
+                        }
+                        else
+                        {
+                            Remembered = null;
+                        }
+                        Session["auth"] = Users.UpdateOnLogin(email, HashedValue, Remembered, 1);
+                        LoginSession = (Users_Model)Session["auth"];
+                        Session["Success"] = "Hello " + LoginSession.FullName + ", Nice to see you back!.";
+                        /*Redirect to different assigned page*/
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else if (CheckLogin == "ValidUserBlockedStatus")
+                    {
+                        Session["Warning"] = "Your Account has been blocked please contact admin.";
+                        return View("Login");
+                    }
+                    else if (CheckLogin == "InvalidUser")
+                    {
+                        Session["Error"] = "Invalid email or password.";
+                        return View("Login");
+                    }
+                    else
+                    {
+                        Session["Error"] = "Email or password incorrect!!";
+                        return View("Login");
+                    }
+                   
                 }
+               
             }
             else
             {

@@ -182,31 +182,10 @@ BEGIN
     ON UserProfileDetails.UserProfileDetailID = d.UserProfileDetailID
 END
 GO
-CREATE TABLE ExceptionUserProfile(
-	ExceptionProfileID	BIGINT			PRIMARY KEY		IDENTITY(1,1),
-	UserID				BIGINT			NULL,			/*FK*/
-	ModuleID			BIGINT			NULL,			/*FK*/
-	ModuleActionID		BIGINT			NULL,			/*FK*/
-	ExceptionProfileStatus	BIT				NULL,
-	Description			NVARCHAR(MAX)	NULL,
-	CreatedBy			BIGINT			NULL,			/*FK*/
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
-	DateUpdated			DATETIME		NULL
-);
-GO
-CREATE TRIGGER Trigger_UPDATE_ExceptionUserProfile on ExceptionUserProfile FOR UPDATE AS            
-BEGIN
-    UPDATE ExceptionUserProfile
-    SET DateUpdated=getdate()
-    FROM ExceptionUserProfile INNER JOIN deleted d
-    ON ExceptionUserProfile.ExceptionProfileID = d.ExceptionProfileID
-END
-GO
 CREATE TABLE Users(
 	UserID				BIGINT			PRIMARY KEY,
 	UserProfileID		BIGINT			NULL,			/*FK*/
 	DistrubitorID		BIGINT			NULL,			/*FK*/
-	ExeceptionProfile   BIT				DEFAULT(0),
 	FullName			VARCHAR(100)	NOT NULL,
 	PasswordHash		VARCHAR(200)	NOT NULL,
 	Email				VARCHAR(200)	NOT NULL		UNIQUE,	
@@ -367,31 +346,8 @@ ALTER TABLE UserProfileDetails
       ON UPDATE NO ACTION
 GO
 
-/*---------------------------------10	FK_ExceptionUserProfile_SelectedUser	-------------------------------------*/
-ALTER TABLE ExceptionUserProfile
-   ADD CONSTRAINT FK_ExceptionUserProfile_SelectedUser FOREIGN KEY (UserID)
-      REFERENCES Users (UserID)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE
-GO
 
-/*---------------------------------11	FK_ExceptionUserProfile_ModuleAction	-------------------------------------*/
-ALTER TABLE ExceptionUserProfile
-   ADD CONSTRAINT FK_ExceptionUserProfile_ModuleAction FOREIGN KEY (ModuleActionID)
-      REFERENCES ModuleAction (ModuleActionID)
-      ON DELETE CASCADE
-      ON UPDATE CASCADE
-GO
-
-/*---------------------------------12	FK_ExceptionUserProfile_Users	-------------------------------------*/
-ALTER TABLE ExceptionUserProfile
-   ADD CONSTRAINT FK_ExceptionUserProfile_Users FOREIGN KEY (CreatedBy)
-      REFERENCES Users (UserID)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
-GO
-
-/*---------------------------------13	FK_Users_UserProfile	-------------------------------------*/
+/*---------------------------------10	FK_Users_UserProfile	-------------------------------------*/
 ALTER TABLE Users
    ADD CONSTRAINT FK_Users_UserProfile FOREIGN KEY (UserProfileID)
       REFERENCES UserProfile (UserProfileID)
@@ -399,7 +355,7 @@ ALTER TABLE Users
       ON UPDATE NO ACTION
 GO
 
-/*---------------------------------14	FK_Users_Distributors	-------------------------------------*/
+/*---------------------------------11	FK_Users_Distributors	-------------------------------------*/
 ALTER TABLE Users
    ADD CONSTRAINT FK_Users_Distributors FOREIGN KEY (DistrubitorID)
       REFERENCES Distributors (DistrubitorID)
@@ -407,7 +363,7 @@ ALTER TABLE Users
       ON UPDATE CASCADE
 GO
 
-/*---------------------------------15	FK_Resellers_Distributors	-------------------------------------*/
+/*---------------------------------12	FK_Resellers_Distributors	-------------------------------------*/
 ALTER TABLE Resellers
    ADD CONSTRAINT FK_Resellers_Distributors FOREIGN KEY (DistrubitorID)
       REFERENCES Distributors (DistrubitorID)
@@ -415,7 +371,7 @@ ALTER TABLE Resellers
       ON UPDATE CASCADE
 GO
 
-/*---------------------------------16	FK_TransactionDetails_Transactions	-------------------------------------*/
+/*---------------------------------13	FK_TransactionDetails_Transactions	-------------------------------------*/
 ALTER TABLE TransactionDetails
    ADD CONSTRAINT FK_TransactionDetails_Transactions FOREIGN KEY (TransactionID)
       REFERENCES Transactions (TransactionID)
@@ -423,7 +379,7 @@ ALTER TABLE TransactionDetails
       ON UPDATE CASCADE
 GO
 
-/*---------------------------------17	FK_TransactionDetails_Products	-------------------------------------*/
+/*---------------------------------14	FK_TransactionDetails_Products	-------------------------------------*/
 ALTER TABLE TransactionDetails
    ADD CONSTRAINT FK_TransactionDetails_Products FOREIGN KEY (ProductID)
       REFERENCES Products (ProductID)
@@ -431,16 +387,7 @@ ALTER TABLE TransactionDetails
       ON UPDATE CASCADE
 GO
 
-/*---------------------------------18	FK_ExceptionUserProfile_Module	-------------------------------------*/
-ALTER TABLE ExceptionUserProfile
-   ADD CONSTRAINT FK_ExceptionUserProfile_Module FOREIGN KEY (ModuleID)
-      REFERENCES Module (ModuleID)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
-GO
-
-
-/*---------------------------------18	FK_UserProfileDetails_Module	-------------------------------------*/
+/*---------------------------------15	FK_UserProfileDetails_Module	-------------------------------------*/
 ALTER TABLE UserProfileDetails
    ADD CONSTRAINT FK_UserProfileDetails_Module FOREIGN KEY (ModuleID)
       REFERENCES Module (ModuleID)
@@ -467,7 +414,7 @@ BEGIN
     ON Verification.VerificationID = d.VerificationID
 END
 GO
-/*---------------------------------19	FK_Verification_Users	-------------------------------------*/
+/*---------------------------------16	FK_Verification_Users	-------------------------------------*/
 ALTER TABLE Verification
    ADD CONSTRAINT FK_Verification_Users FOREIGN KEY (UserID)
       REFERENCES Users (UserID)
@@ -477,7 +424,7 @@ GO
 Alter TABLE Batch
 ADD ProductID BIGINT NULL
 GO
-/*---------------------------------20	FK_Batch_Products	-------------------------------------*/
+/*---------------------------------17	FK_Batch_Products	-------------------------------------*/
 Alter TABLE Batch
 ADD CONSTRAINT FK_Batch_Products FOREIGN KEY (ProductID)
       REFERENCES Products (ProductID)
