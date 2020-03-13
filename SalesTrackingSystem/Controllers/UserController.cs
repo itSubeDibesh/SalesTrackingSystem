@@ -230,25 +230,7 @@ namespace SalesTrackingSystem.Controllers
             body = body.Replace("{CopyrightDate}", CopyrightDate);
             return body;
         }
-
-        private string EmailBodyReset(string SubjectTitle, string Subject, string UserName, string Message, string RedirectURL, string WarningMessage, string AppLink, string CopyrightDate)
-        {
-            string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/Shared/EmailTemplate.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            body = body.Replace("{SubjectTitle}", SubjectTitle);
-            body = body.Replace("{Subject}", Subject);
-            body = body.Replace("{UserName}", UserName);
-            body = body.Replace("{Message}", Message);
-            body = body.Replace("{RedirectURL}", RedirectURL);
-            body = body.Replace("{WarningMessage}", WarningMessage);
-            body = body.Replace("{AppLink}", AppLink);
-            body = body.Replace("{CopyrightDate}", CopyrightDate);
-            return body;
-        }
-
+      
         public ActionResult Users()
         {           
             return View();

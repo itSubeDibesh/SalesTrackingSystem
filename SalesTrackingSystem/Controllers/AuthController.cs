@@ -388,33 +388,42 @@ namespace SalesTrackingSystem.Controllers
             if (uat != 0 && uid != null)
             {
                 var verificationModel = Verification.checkVerification(uat, uid);
-                if (verificationModel.IsVerified == false)
+                if (verificationModel != null)
                 {
-                    DateTime verifiedDate = Convert.ToDateTime(verificationModel.DateVerified);
-                    DateTime currentDate = DateTime.Now;
-                    var LoginSession = (Users_Model)Session["auth"];
-                    if ((verifiedDate - currentDate).Minutes <= 50)
+                    if (verificationModel.IsVerified == false)
                     {
-                        if (Verification.updateCheckedVerification(uat, 1))
+                        DateTime verifiedDate = Convert.ToDateTime(verificationModel.DateVerified);
+                        DateTime currentDate = DateTime.Now;
+                        var LoginSession = (Users_Model)Session["auth"];
+                        if ((verifiedDate - currentDate).Minutes <= 50)
                         {
-                            Session["auth"] = Users.GetModelById(uat);
-                            return RedirectToAction("Login");
+                            if (Verification.updateCheckedVerification(uat, 1))
+                            {
+                                Session["auth"] = Users.GetModelById(uat);
+                                return RedirectToAction("Login");
+                            }
+                            else
+                            {
+                                Session["Error"] = "Problem while activating account.";
+                                return View("LongTimeVerification");
+                            }
                         }
                         else
                         {
-                            Session["Error"] = "Problem while activating account.";
                             return View("LongTimeVerification");
                         }
                     }
                     else
                     {
-                        return View("LongTimeVerification");
+                        return RedirectToAction("Login");
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Login");
+                    Session["Error"] = "Your account will not be verified with this link please try another link.";
+                    return View("ForgetPassword");
                 }
+               
             }
             else
             {

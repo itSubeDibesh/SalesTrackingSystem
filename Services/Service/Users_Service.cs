@@ -141,6 +141,36 @@ namespace Services.Service
             }
         }
 
+        public bool CheckReset(string email, string password)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from actions in _dbContext.Users.Where(actions => actions.Email == email && actions.PasswordHash==password)
+                                select new Users_Model()
+                                {
+                                    FullName = actions.FullName,
+                                    Email = actions.Email,
+                                    PasswordHash = actions.PasswordHash,
+                                    UsersStatus = actions.UsersStatus
+                                }).FirstOrDefault();
+                    if (data.Email == email && data.PasswordHash==password)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+
         public bool DeleteUser(long userId)
         {
             using (var _context = new SalesTrackingSystemEntities())
@@ -587,6 +617,30 @@ namespace Services.Service
                     }
                     data.UsersStatus = users_Model.UsersStatus;
 
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+
+                }
+            }
+        }
+
+        public bool UpdateUserProfile(Users_Model users_Model)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _dbContext.Users.Where(act => act.UserID == users_Model.UserID).FirstOrDefault();
+                    data.FullName = users_Model.FullName;
+                    data.MobileNo = users_Model.MobileNo;
+                    if (users_Model.ImageString != null)
+                    {
+                        data.ImageString = users_Model.ImageString;
+                    }
                     _dbContext.SaveChanges();
                     return true;
                 }

@@ -104,8 +104,8 @@
                                 @Html.LabelFor(model => model.ImageString, htmlAttributes: new { @class = "form-control-label" })
                             </div>
                             <div class="col-md-3 col-sm-6">
-                                <input type="file" id="file-input-max-fs" name="ImageString" class="dropify form-control-file" data-max-file-size="2M" data-allowed-file-extensions="jpg jpeg png">
-                                <p for="ImageString">Image (2MB)</p>
+                                <input type="file" id="file-input-max-fs" name="ImageString" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                                <p for="ImageString">Image (5MB)</p>
                             </div>
                             @if (Model.ImageString != null)
                             {

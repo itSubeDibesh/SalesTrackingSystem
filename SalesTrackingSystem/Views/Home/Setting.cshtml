@@ -1,0 +1,348 @@
+﻿@model Models.Users_Model
+@using Models
+@{
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+}
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
+@{
+//ViewBag.UserInfo = true;
+//ViewBag.ServerInfo = true;
+//ViewBag.ServerDebug = true;
+}
+@Html.Partial("~/Views/Shared/_Debug.cshtml")
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title mb-3">Profile Details</strong>
+                <a class="btn btn-primary btn-md text-white" style="float: right;" href="#" data-toggle="modal" data-target="#ProfileDetails">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            </div>
+            <div class="card-body row">
+                <div class="mx-auto d-block">
+                    <img class="rounded-circle mx-auto d-block" src="@(SessionVariable.ImageString == null ? "Https://" + Request.ServerVariables["HTTP_HOST"] + "/images/icon/user.png" : "Https://" + Request.ServerVariables["HTTP_HOST"] + SessionVariable.ImageString+"")" alt="Https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:250px; width:auto;"/>
+                    <div class="row" style="text-align:center;">
+                        <div class="col-sm-12">
+                            <h5>@SessionVariable.FullName </h5>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Email:</b></div>
+                        <div class="col-sm-6">
+                            <p>@SessionVariable.Email</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Mobile No:</b></div>
+                        <div class="col-sm-6">
+                            <p>@SessionVariable.MobileNo</p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <a class="col-sm-12 btn-md text-white" href="#" data-toggle="modal" data-target="#ResetPassword" onclick="resetPasswordFiled();">
+                    <div class=" col-sm-12 btn-success text-center">
+                        <i class="fas fa-lock"></i> Reset Password
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title mb-3">Distrubitor Details</strong>
+                <a class="btn btn-primary btn-md text-white" style="float: right;" href="#" data-toggle="modal" data-target="#DistributorDetails">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            </div>
+            <div class="card-body row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Distrubitor name:</b></div>
+                        <div class="col-sm-6">
+                            <p>Rolay Distributors</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Owner Name:</b></div>
+                        <div class="col-sm-6">
+                            <p>Rajan Kumar Latea</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Regestration No:</b></div>
+                        <div class="col-sm-6">
+                            <p>9878667129800812</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Mobile No:</b></div>
+                        <div class="col-sm-6">
+                            <p>9816125433</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Phone no:</b></div>
+                        <div class="col-sm-6">
+                            <p>981716154</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Email:</b></div>
+                        <div class="col-sm-6">
+                            <p>Lala@lal.lal</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>State:</b></div>
+                        <div class="col-sm-6">
+                            <p>Bagmati</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>District:</b></div>
+                        <div class="col-sm-6">
+                            <p>Bagmati</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-6"><b>Address:</b></div>
+                        <div class="col-sm-6">
+                            <p>Gaushala, Pinglasthan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section aboveMain{
+    <div style="margin-top:10%;" class="modal fade" id="ResetPassword">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Reset Password</h4>
+                    <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
+                        <i class="fas fa-close" style="color:white;background-color:red;"></i>
+                    </a>
+                </div>
+                <div class="modal-body" style="text-align:center;">
+                    <span>
+                        <b> Note : </b>
+                        <code class="text-danger">
+                            &nbsp;You will get logged out once you reset your password!!
+                        </code>
+                    </span>                   
+                </div>
+                <form action="~/Home/Reset" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4 control-label"><b>Old Password:</b></div>
+                                    <div class="col-sm-8 input-group">
+                                        <input type="password"  name="OldPassword" id="OldPasssword" class="au-input au-input--full"  minlength="8">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4 control-label"><b>New Password:</b></div>
+                                    <div class="col-sm-8 input-group">
+                                        <input type="password" name="NewPassword" id="password" class="au-input au-input--full"  minlength="8">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4 control-label"><b>Retype Password:</b></div>
+                                    <div class="col-sm-8 input-group">
+                                        <input type="password" id="confirm_password" class="au-input au-input--full"  minlength="8">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-paper-plane"></i> Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:10%;" class="modal fade" id="ProfileDetails">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Profile Details</h4>
+                    <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
+                        <i class="fas fa-close" style="color:white;background-color:red;"></i>
+                    </a>
+                </div>
+                <form action="~/Home/UpdateProfile" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "form-control-label" })
+                                    </div>
+                                    <div class="col-md-9 col-sm-6">
+                                        <input type="text" class="form-control" name="FullName" value="@SessionVariable.FullName">                                       
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "form-control-label" })
+                                    </div>
+                                    <div class="col-md-9 col-sm-6">                  
+                                        <input type="number" class="form-control" name="MobileNo" value="@SessionVariable.MobileNo">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        @Html.LabelFor(model => model.ImageString, htmlAttributes: new { @class = "form-control-label" })
+                                    </div>
+                                    <div class="col-md-4 col-sm-6">
+                                        <input type="file" id="file-input-max-fs" name="ImageString" class="dropify form-control-file" data-max-file-size="5M" data-allowed-file-extensions="jpg jpeg png">
+                                        <p for="ImageString">Image (5MB)</p>
+                                    </div>
+                                    @if (SessionVariable.ImageString != null)
+                                    {
+                                        <div class="col-md-5 col-sm-6">
+                                            <img src="https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:200px; width:auto;" alt="@SessionVariable.FullName" />
+                                            <p>Previous Image</p>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-paper-plane"></i> Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top:10%;" class="modal fade" id="DistributorDetails">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Distributors Details</h4>
+                    <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
+                        <i class="fas fa-close" style="color:white;background-color:red;"></i>
+                    </a>
+                </div>
+                <form action="lol.ppp" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4 control-label"><b>Distributor Name:</b></div>
+                                    <div class="col-sm-8 input-group">
+                                        <input type="text" class="form-control" name="FullName" value="Dibesh Raj Subedi">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4 control-label"><b>Phone Number:</b></div>
+                                    <div class="col-sm-8 input-group">
+                                        <input type="number" class="form-control" name="Phone No">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-4 control-label"><b>Image:</b></div>
+                                    <div class="col-sm-4 input-group">
+                                        <input type="password" class="form-control" name="RetypePassword">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-paper-plane"></i> Confirm
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<script>
+var password=document.getElementById("password"),confirm_password=document.getElementById("confirm_password");
+function validatePassword(){
+  if(password.value != confirm_password.value) {
+    confirm_password.setCustomValidity("Passwords Don't Match");
+  } else {
+    confirm_password.setCustomValidity('');
+  }
+}
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+</script>
+<script>
+    function resetPasswordFiled() {
+        var currentPassword = document.getElementById("password"), confirmPassword = document.getElementById("confirm_password"), oldPasssword = document.getElementById("oldPasssword");
+        currentPassword.value = null;
+        confirmPassword.value = null;
+        oldPasssword.value = null;
+    }
+</script>

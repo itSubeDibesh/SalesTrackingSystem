@@ -9,7 +9,7 @@ CREATE TABLE Batch(
 	StockLeft			BIGINT			NULL,
 	DateProduced		DATETIME		NOT NULL,
 	ExpiryDate			DATETIME		NOT NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -34,9 +34,8 @@ CREATE TABLE Distributors(
 	District			VARCHAR(50)		NULL,
 	Address				VARCHAR(50)		NULL,
 	Latitude			VARCHAR(50)		NULL,
-	Longitude			VARCHAR(50)		NULL,
-	IsDeleted			BIT				NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	Longitude			VARCHAR(50)		NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -56,9 +55,8 @@ CREATE TABLE DistributonArea(
 	Ciry				VARCHAR(50)		NULL,
 	Address				VARCHAR(50)		NULL,
 	Latitude			VARCHAR(50)		NULL,
-	Longitude			VARCHAR(50)		NULL,
-	IsDeleted			BIT				DEFAULT(0),	
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	Longitude			VARCHAR(50)		NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL	
 );
 GO
@@ -76,7 +74,7 @@ CREATE TABLE Module(
 	ControllerName		VARCHAR(100)	NOT NULL		UNIQUE,
 	ModuleStatus		BIT				DEFAULT(0),	
 	Description			NVARCHAR(MAX)	NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL	
 );
 GO
@@ -94,7 +92,7 @@ CREATE TABLE ModuleAction(
 	ActionName			VARCHAR(100)	NOT NULL,	
 	ActionStatus		BIT				DEFAULT(0),	
 	Description			NVARCHAR(MAX)	NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL	
 );
 GO
@@ -112,7 +110,7 @@ CREATE TABLE ProductCategory(
 	IsSubCategory		BIT				DEFAULT(0),
 	SubCategoryOf		BIGINT			NULL,
 	CategoryStatus		BIT				NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -130,9 +128,8 @@ CREATE TABLE Products(
 	ProductName			VARCHAR(200)	NOT NULL,
 	Description			NVARCHAR(MAX)	NULL,
 	PackRate			DECIMAL(10,2)	NOT NULL,
-	PackSize			DECIMAL(10,2)	NOT NULL,
-	IsDeleted			BIT				NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	PackSize			DECIMAL(10,2)	NOT NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -150,7 +147,7 @@ CREATE TABLE UserProfile(
 	UserProfileStatus	BIT				DEFAULT(0),	
 	Description			NVARCHAR(MAX)	NULL,
 	CreatedBy			BIGINT			NULL,			/*FK*/
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -165,12 +162,12 @@ GO
 CREATE TABLE UserProfileDetails(
 	UserProfileDetailID	BIGINT			PRIMARY KEY		IDENTITY(1,1),
 	UserProfileID		BIGINT			NULL,			/*FK*/
-	ModuleID		BIGINT			NULL,			/*FK*/
+	ModuleID			BIGINT			NULL,			/*FK*/
 	ModuleActionID		BIGINT			NULL,			/*FK*/
 	ProfileDetailStatus	BIT				NULL,
 	Description			NVARCHAR(MAX)	NULL,
 	CreatedBy			BIGINT			NULL,			/*FK*/
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -193,7 +190,7 @@ CREATE TABLE Users(
 	MobileNo			BIGINT			NOT NULL		UNIQUE,
 	ImageString			VARCHAR(200)	NULL,
 	UsersStatus			Int				DEFAULT(1),		/* 1=Active, 2=Inactive, 2=Blocked*/
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -218,9 +215,8 @@ CREATE TABLE Resellers(
 	District			VARCHAR(50)		NULL,
 	Address				VARCHAR(50)		NULL,
 	Latitude			VARCHAR(50)		NULL,
-	Longitude			VARCHAR(50)		NULL,
-	IsDeleted			BIT				NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	Longitude			VARCHAR(50)		NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -240,7 +236,7 @@ CREATE TABLE Transactions(
 	InvoiceNo			VARCHAR(100)	NOT NULL,
 	InvoiceDate			DATE			NOT NULL,
 	InvoiceEntryDate	DATETIME		DEFAULT			GETDATE(),	
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO
@@ -258,7 +254,7 @@ CREATE TABLE TransactionDetails(
 	ProductID				BIGINT			NULL,			/*FK*/
 	Quantity				DECIMAL(10,2)	NOT NULL,
 	Units					DECIMAL(10,2)	NOT NULL,
-	DateCreated				DATETIME		DEFAULT			GETDATE(),
+	DateCreated				DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated				DATETIME		NULL
 );
 GO
@@ -402,7 +398,7 @@ CREATE TABLE Verification(
 	VerifiedToken		VARCHAR(200)	NULL,
 	ResetToken			VARCHAR(200)	NULL,
 	ResetTriggered		DATETIME		NULL,
-	DateCreated			DATETIME		DEFAULT			GETDATE(),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
 GO

@@ -26,9 +26,12 @@ namespace Services.Interface
         bool checkMobileNo(long number);
         bool UserExists(Int64 userId);
         bool UpdateUserAccount(Users_Model users_Model);
+        bool UpdateUserProfile(Users_Model users_Model);
         bool MakeDistrubitorNull(Int64 userId);
         bool DeleteUser(Int64 userId);
         Users_Model GetModelOnlyById(Int64 userID);
         bool CheckNewAccount(string email, string password);
+        bool CheckReset(string email, string password);
+
     }
 }
