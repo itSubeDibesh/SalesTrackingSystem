@@ -22,7 +22,7 @@ namespace Models
 
         public string Description { get; set; }
         public Nullable<long> CreatedBy { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
 
     }

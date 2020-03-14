@@ -1,12 +1,19 @@
-﻿@using Services.Interface
+﻿@model Models.Users_Model
+@using Models
+@{
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+}
+@using Services.Interface
 @using Services.Service
 @using Models;
 
 @{
     Users_Interface users_ = new Users_Service();
 }
-
-@model Models.Users_Model
 
 @{
     ViewBag.Title = "Users";
@@ -56,14 +63,6 @@
     </script>
 }
 
-@if (ViewBag.AddExceptionError != null)
-{
-    <script>
-        window.onload = function () {
-            $('#ExceptionUsersAdd').slideDown();
-        }
-    </script>
-}
 <div class="row">
     @if (ViewBag.ActionNameUser == "Add")
     {
@@ -118,29 +117,57 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var UserItem in users_.DisplayTable())
+                        @if (SessionVariable.ProfileName == "Developer")
                         {
-                            if (users_.DisplayTable() != null)
+                            foreach (var UserItem in users_.DisplayTable())
                             {
-                                <tr>
-                                    <td style="text-align: center;">@(SearialNumber++)</td>
-                                    <td style="text-align: center;">@UserItem.ProfileName</td>
-                                    <td style="text-align: center;">@UserItem.FullName</td>
-                                    <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)" alt="Not Found" style="max-height:50px; width:auto;" /></td>
-                                    <td style="text-align: center;"><a href="mailto:@(UserItem.Email)">@UserItem.Email</a></td>
-                                    <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":"red");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Verified" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" : "Blocked")</td>
-                                    <td style="padding-left:4%;">
-                                        <a href="~/User/UserEdit?action=UserUpdate&uaid=@UserItem.UserID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                        <a href="#" onclick="DeleteAndNotify(@UserItem.UserID,'@UserItem.FullName')"><i class="fas fa-trash" style="color:red;"></i></a>
-                                    </td>
-                                </tr>
+                                if (users_.DisplayTable() != null)
+                                {
+                                    <tr>
+                                        <td style="text-align: center;">@(SearialNumber++)</td>
+                                        <td style="text-align: center;">@UserItem.ProfileName</td>
+                                        <td style="text-align: center;">@UserItem.FullName</td>
+                                        <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)" alt="Not Found" style="max-height:50px; width:auto;" /></td>
+                                        <td style="text-align: center;"><a href="mailto:@(UserItem.Email)">@UserItem.Email</a></td>
+                                        <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":"red");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Verified" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" : "Blocked")</td>
+                                        <td style="padding-left:4%;">
+                                            <a href="~/User/UserEdit?action=UserUpdate&uaid=@UserItem.UserID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                            <a href="#" onclick="DeleteAndNotify(@UserItem.UserID,'@UserItem.FullName')"><i class="fas fa-trash" style="color:red;"></i></a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var UserItem in users_.DisplayTable())
+                            {
+                                if (users_.DisplayTable() != null)
+                                {
+                                    if (SessionVariable.UserID != UserItem.UserID && UserItem.ProfileName != "Developer")
+                                    {
+                                        <tr>
+                                            <td style="text-align: center;">@(SearialNumber++)</td>
+                                            <td style="text-align: center;">@UserItem.ProfileName</td>
+                                            <td style="text-align: center;">@UserItem.FullName</td>
+                                            <td style="text-align: center;"><img src="@(UserItem.ImageString==null?"Https://"+Request.ServerVariables["HTTP_HOST"]+"/images/icon/user.png":"Https://"+Request.ServerVariables["HTTP_HOST"]+UserItem.ImageString)" alt="Not Found" style="max-height:50px; width:auto;" /></td>
+                                            <td style="text-align: center;"><a href="mailto:@(UserItem.Email)">@UserItem.Email</a></td>
+                                            <td style="text-align: center; color:@(UserItem.UsersStatus==0?"purple":UserItem.UsersStatus==1?"green":UserItem.UsersStatus==2?"blue":"red");"> <i class="fas fa-circle"></i> @(UserItem.UsersStatus == 0 ? "Not Verified" : UserItem.UsersStatus == 1 ? "Active" : UserItem.UsersStatus == 2 ? "Inactive" : "Blocked")</td>
+                                            <td style="padding-left:4%;">
+                                                <a href="~/User/UserEdit?action=UserUpdate&uaid=@UserItem.UserID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                                <a href="#" onclick="DeleteAndNotify(@UserItem.UserID,'@UserItem.FullName')"><i class="fas fa-trash" style="color:red;"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
                             }
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 
 

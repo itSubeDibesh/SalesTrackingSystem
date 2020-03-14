@@ -21,7 +21,7 @@ namespace DataAccessLayer
         public string VerifiedToken { get; set; }
         public string ResetToken { get; set; }
         public Nullable<System.DateTime> ResetTriggered { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         public virtual User User { get; set; }

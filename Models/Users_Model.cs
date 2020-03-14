@@ -16,8 +16,7 @@ namespace Models
         public Nullable<long> UserProfileID { get; set; }
       
         [Display(Name = "Distributor Name")]
-        public Nullable<long> DistrubitorID { get; set; }
-        public Nullable<bool> ExeceptionProfile { get; set; }
+        public Nullable<long> DistrubitorID { get; set; }       
         public string ProfileName { get; set; }
         public string Description { get; set; }
         public Nullable<long> CreatedBy { get; set; }
@@ -58,12 +57,8 @@ namespace Models
         [Display(Name = "User Status")]
         public Nullable<int> UsersStatus { get; set; }
 
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
 
-
-     
-      
-      
     }
 }

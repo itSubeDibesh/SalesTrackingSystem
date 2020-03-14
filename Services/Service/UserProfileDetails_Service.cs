@@ -75,6 +75,7 @@ namespace Services.Service
                         ModuleActionID = userProfileDetails.ModuleActionID,
                         ProfileDetailStatus = userProfileDetails.ProfileDetailStatus,
                         Description = userProfileDetails.Description,
+                        DateCreated=DateTime.Now
                         //CreatedBy = userProfileDetails.CreatedBy
                     };
                     _dbContext.UserProfileDetails.Add(data);
@@ -101,6 +102,7 @@ namespace Services.Service
                     data.ModuleActionID = userProfileDetails.ModuleActionID;
                     data.ProfileDetailStatus = userProfileDetails.ProfileDetailStatus;
                     data.Description = userProfileDetails.Description;
+                    data.DateUpdated = DateTime.Now;
                     //data.CreatedBy = userProfileDetails.CreatedBy;
                     _context.SaveChanges();
                     return true;

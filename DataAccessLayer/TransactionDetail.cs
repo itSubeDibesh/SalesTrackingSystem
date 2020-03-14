@@ -19,7 +19,7 @@ namespace DataAccessLayer
         public Nullable<long> ProductID { get; set; }
         public decimal Quantity { get; set; }
         public decimal Units { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         public virtual Product Product { get; set; }

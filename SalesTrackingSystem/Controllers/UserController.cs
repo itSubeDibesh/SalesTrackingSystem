@@ -246,101 +246,111 @@ namespace SalesTrackingSystem.Controllers
             }
             else
             {
-                if (!Users_Interface_.checkEmail(users_.Email)&& !Users_Interface_.checkMobileNo(users_.MobileNo))
+                if (Users_Interface_.checkEmail(users_.Email)==false)
                 {
-                    var Datas = new Users_Model();
-                    string GeneratedPassword = Users_Interface_.GeneratePassword();
-                    string RandomNumber = Users_Interface_.GenerateRandomNumber();
-                    var Salt = "SHA1" + users_.Email + "SalesTrackingSystem";
-                    var UserPassword = Crypto.SHA1(Salt + GeneratedPassword);
-
-                    string Root = "~/UserInformation";
-                    string Email = users_.Email;
-                    string FullName = users_.FullName;
-                    string RootDir = Server.MapPath(Root);
-                    string UserDirectory = Server.MapPath(Root + "/" + Email);
-                    string ImageDirectory = Server.MapPath(Root + "/" + Email + "/" + "Images");
-                    string FileDirectory = Server.MapPath(Root + "/" + Email + "/" +  "Documents");
-                    var ImageName="";                    
-
-                    if (users_.ImageString!=null)
+                    if (Users_Interface_.checkMobileNo(users_.MobileNo)==false)
                     {
-                        ImageName = RandomNumber+Path.GetExtension(ImageString.FileName).ToString();
-                    }
+                        var Datas = new Users_Model();
+                        string GeneratedPassword = Users_Interface_.GeneratePassword();
+                        string RandomNumber = Users_Interface_.GenerateRandomNumber();
+                        var Salt = "SHA1" + users_.Email + "SalesTrackingSystem";
+                        var UserPassword = Crypto.SHA1(Salt + GeneratedPassword);
 
-                    Datas.DistrubitorID = users_.DistrubitorID;
-                    Datas.UserProfileID = users_.UserProfileID;                  
-                    Datas.FullName = users_.FullName;
-                    Datas.PasswordHash = UserPassword;
-                    Datas.Email = users_.Email;
-                    Datas.MobileNo = users_.MobileNo;
-                    Datas.UsersStatus = users_.UsersStatus;
-                    Datas.ImageString = "/UserInformation/" +Email+ "/" + "Images/" + ImageName;
-                    if (Users_Interface_.SaveUserAccount(Datas))
-                    {
-                        if (!Directory.Exists(RootDir))
+                        string Root = "~/UserInformation";
+                        string Email = users_.Email;
+                        string FullName = users_.FullName;
+                        string RootDir = Server.MapPath(Root);
+                        string UserDirectory = Server.MapPath(Root + "/" + Email);
+                        string ImageDirectory = Server.MapPath(Root + "/" + Email + "/" + "Images");
+                        string FileDirectory = Server.MapPath(Root + "/" + Email + "/" + "Documents");
+                        var ImageName = "";
+
+                        if (users_.ImageString != null)
                         {
-                            Directory.CreateDirectory(RootDir);
+                            ImageName = RandomNumber + Path.GetExtension(ImageString.FileName).ToString();
                         }
-                        
-                        if (!Directory.Exists(UserDirectory))
+
+                        Datas.DistrubitorID = users_.DistrubitorID;
+                        Datas.UserProfileID = users_.UserProfileID;
+                        Datas.FullName = users_.FullName;
+                        Datas.PasswordHash = UserPassword;
+                        Datas.Email = users_.Email;
+                        Datas.MobileNo = users_.MobileNo;
+                        Datas.UsersStatus = users_.UsersStatus;
+                        Datas.ImageString = "/UserInformation/" + Email + "/" + "Images/" + ImageName;
+                        if (Users_Interface_.SaveUserAccount(Datas))
                         {
-                            Directory.CreateDirectory(UserDirectory);
-                            if (Directory.Exists(UserDirectory))
+                            if (!Directory.Exists(RootDir))
                             {
-                                Directory.CreateDirectory(ImageDirectory);
-                                if (ImageString != null)
+                                Directory.CreateDirectory(RootDir);
+                            }
+
+                            if (!Directory.Exists(UserDirectory))
+                            {
+                                Directory.CreateDirectory(UserDirectory);
+                                if (Directory.Exists(UserDirectory))
                                 {
-                                    string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + "Images/" + ImageName));
-                                    ImageString.SaveAs(imagePath);
+                                    Directory.CreateDirectory(ImageDirectory);
+                                    if (ImageString != null)
+                                    {
+                                        string imagePath = Path.Combine(Server.MapPath(Root + "/" + Email + "/" + "Images/" + ImageName));
+                                        ImageString.SaveAs(imagePath);
+                                    }
+                                    Directory.CreateDirectory(FileDirectory);
                                 }
-                                Directory.CreateDirectory(FileDirectory);
                             }
                         }
+
+                        string subject = "Account Setup!";
+                        string subjectTitle = "Account Setup";
+                        string userName = FullName;
+                        string message = "Your account has been registered to our server. Please enter <b>" + GeneratedPassword + "</b> as your password on first Login.";
+                        string warningMessage = "If this wasn't you please ignore this email. Verifying the email will only activate your account.";
+                        string appLink = "https://" + Request.ServerVariables["HTTP_HOST"];
+                        string copyrightDate = DateTime.Now.Year.ToString();
+                        try
+                        {
+                            //Configuring webMail class to send emails  
+                            //gmail smtp server  
+                            WebMail.SmtpServer = "smtp.gmail.com";
+
+                            //gmail port to send emails  
+                            WebMail.SmtpPort = 587;
+                            WebMail.SmtpUseDefaultCredentials = true;
+
+                            //sending emails with secure protocol  
+                            WebMail.EnableSsl = true;
+
+                            //EmailId used to send emails from application  
+                            WebMail.UserName = "jkclaws325@gmail.com";
+                            WebMail.Password = "joker9813570528";
+
+                            //Sender email address.  
+                            WebMail.From = "jkclaws325@gmail.com";
+
+                            //Send email  
+                            WebMail.Send(to: Email, subject: subject, body: EmailBody(subjectTitle, subject, userName, message, warningMessage, appLink, copyrightDate), isBodyHtml: true);
+                            Session["Success"] = "An account has been created and email has been sent to " + Email + ".";
+                            return RedirectToAction("Users");
+                        }
+                        catch (Exception)
+                        {
+                            Session["Error"] = "Problem while sending email but account has been created.";
+                            return View("Users");
+                        }
                     }
-
-                    string subject = "Account Setup!";
-                    string subjectTitle = "Account Setup";
-                    string userName = FullName;
-                    string message = "Your account has been registered to our server. Please enter <b>"+ GeneratedPassword + "</b> as your password on first Login.";                 
-                    string warningMessage = "If this wasn't you please ignore this email. Verifying the email will only activate your account.";
-                    string appLink = "https://" + Request.ServerVariables["HTTP_HOST"];
-                    string copyrightDate = DateTime.Now.Year.ToString();
-                    try
+                    else
                     {
-                        //Configuring webMail class to send emails  
-                        //gmail smtp server  
-                        WebMail.SmtpServer = "smtp.gmail.com";
-
-                        //gmail port to send emails  
-                        WebMail.SmtpPort = 587;
-                        WebMail.SmtpUseDefaultCredentials = true;
-
-                        //sending emails with secure protocol  
-                        WebMail.EnableSsl = true;
-
-                        //EmailId used to send emails from application  
-                        WebMail.UserName = "jkclaws325@gmail.com";
-                        WebMail.Password = "joker9813570528";
-
-                        //Sender email address.  
-                        WebMail.From = "jkclaws325@gmail.com";
-
-                        //Send email  
-                        WebMail.Send(to: Email, subject: subject, body: EmailBody(subjectTitle, subject, userName, message, warningMessage, appLink, copyrightDate), isBodyHtml: true);
-                        Session["Success"] = "An account has been created and email has been sent to "+ Email + ".";
-                        return RedirectToAction("Users");
-                    }
-                    catch (Exception)
-                    {
-                        Session["Error"] = "Problem while sending email but account has been created.";
+                        ViewBag.AddUserError = "Error";
+                        Session["Error"] =  users_.MobileNo + " exists please try different  mobile number!!";
                         return View("Users");
                     }
+                 
                 }
                 else
                 {
                     ViewBag.AddUserError = "Error";
-                    Session["Error"] = users_.Email + " exists please try different email or mobile number!!";
+                    Session["Error"] = users_.Email + "exists please try different email !!";
                     return View("Users");                   
                 }
               

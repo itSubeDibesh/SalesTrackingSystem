@@ -25,7 +25,7 @@ namespace DataAccessLayer
         public string ActionName { get; set; }
         public Nullable<bool> ActionStatus { get; set; }
         public string Description { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         public virtual Module Module { get; set; }

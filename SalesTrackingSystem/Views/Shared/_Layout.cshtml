@@ -92,38 +92,50 @@
                                 <i class="zmdi zmdi-store-24 zmdi-hc-lg" style="color:@(ViewBag.Page == "Reseller" ? "royalblue" : "")"></i>Reseller
                             </a>
                         </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "royalblue" : "")">
-                                <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="~/Module/Module"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
-                                </li>
-                                <li>
-                                    <a href="~/Module/Action"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "royalblue" : "")">
-                                <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="~/User/UserProfile"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
-                                </li>
-                                <li>
-                                    <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (SessionVariable.ProfileName == "Developer" && SessionVariable.UserProfileStatus==true)
+                        {
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "royalblue" : "")">
+                                    <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                    <li>
+                                        <a href="~/Module/Module"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Module/Action"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "royalblue" : "")">
+                                    <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                    <li>
+                                        <a href="~/User/UserProfile"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="~/User/Users">
+                                    <i class="zmdi zmdi-accounts-list zmdi-hc-lg" style="color:@(ViewBag.Page == "Users" ? "royalblue" : "")"></i>Users
+                                </a>
+                            </li>
+                        }
+
                         <li>
                             <a href="~/Transaction/Transaction">
                                 <i class="zmdi zmdi-file-text zmdi-hc-lg" style="color:@(ViewBag.Page == "Transaction" ? "royalblue" : "")"></i>Transaction
@@ -202,38 +214,48 @@
                                 <i class="zmdi zmdi-store-24 zmdi-hc-lg"></i>Reseller
                             </a>
                         </li>
-                        <li class="has-sub @(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "active" : " ")">
-                            <a class="js-arrow" href="#">
-                                <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="~/Module/Module"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
-                                </li>
-                                <li>
-                                    <a href="~/Module/Action"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="has-sub @(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "active" : " ")">
-                            <a class="js-arrow" href="#">
-                                <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="~/User/Userprofile"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
-                                </li>
-                                <li>
-                                    <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (SessionVariable.ProfileName == "Developer" && SessionVariable.UserProfileStatus==true)
+                        {
+                            <li class="has-sub @(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "active" : " ")">
+                                <a class="js-arrow" href="#">
+                                    <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="~/Module/Module"><i class="zmdi zmdi-apps zmdi-hc-lg"></i> Module</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Module/Action"><i class="zmdi zmdi-accounts-list-alt zmdi-hc-lg"></i> Action</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="has-sub @(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "active" : " ")">
+                                <a class="js-arrow" href="#">
+                                    <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="~/User/Userprofile"><i class="zmdi zmdi-folder-person zmdi-hc-lg"></i> User Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="@(ViewBag.Page == "Users" ? "active" : " ")">
+                                <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
+                            </li>
+                        }
+
 
                         <li class="@(ViewBag.Page == "Transaction" ? "active" : " ")">
                             <a href="~/Transaction/Transaction">

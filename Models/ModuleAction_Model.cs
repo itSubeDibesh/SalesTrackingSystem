@@ -29,7 +29,7 @@ namespace Models
         public Nullable<bool> ModuleStatus { get; set; }
         public string ControllerName { get; set; }
 
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     }
 }

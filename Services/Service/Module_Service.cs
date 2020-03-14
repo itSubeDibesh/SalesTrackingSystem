@@ -115,7 +115,8 @@ namespace Services.Service
                         ModuleName = model.ModuleName,
                         ControllerName = model.ControllerName,
                         ModuleStatus=model.ModuleStatus,
-                        Description = model.Description
+                        Description = model.Description,
+                        DateCreated=DateTime.Now
                     };
                     _dbContext.Modules.Add(data);
                     _dbContext.SaveChanges();
@@ -139,6 +140,7 @@ namespace Services.Service
                     data.ControllerName = model.ControllerName;
                     data.ModuleStatus = model.ModuleStatus;
                     data.Description = model.Description;
+                    data.DateUpdated = DateTime.Now;
                     _context.SaveChanges();
                     return true;
                 }

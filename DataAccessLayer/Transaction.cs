@@ -27,7 +27,7 @@ namespace DataAccessLayer
         public string InvoiceNo { get; set; }
         public System.DateTime InvoiceDate { get; set; }
         public Nullable<System.DateTime> InvoiceEntryDate { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

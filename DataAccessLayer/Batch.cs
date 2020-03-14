@@ -22,7 +22,7 @@ namespace DataAccessLayer
         public Nullable<long> StockLeft { get; set; }
         public System.DateTime DateProduced { get; set; }
         public System.DateTime ExpiryDate { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<long> ProductID { get; set; }
     

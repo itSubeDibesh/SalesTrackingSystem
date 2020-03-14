@@ -506,7 +506,8 @@ namespace Services.Service
                             Email = users_Model.Email,
                             MobileNo = users_Model.MobileNo,
                             ImageString = users_Model.ImageString,
-                            UsersStatus = users_Model.UsersStatus
+                            UsersStatus = users_Model.UsersStatus,  
+                            DateCreated= DateTime.Now
                         };
                         db_Context.Users.Add(UserData);
                         db_Context.SaveChanges();
@@ -516,7 +517,8 @@ namespace Services.Service
                         {
                             VerificationID = verification_.GetNewVerificationId(),
                             UserID = userId,
-                            IsVerified=false
+                            IsVerified=false,
+                            DateCreated= DateTime.Now
                         };
                         db_Context.Verifications.Add(DataVarification);
                         db_Context.SaveChanges();

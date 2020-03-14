@@ -60,9 +60,10 @@ namespace Services.Service
                 {
                     var data = new UserProfile()
                     {
-                        ProfileName=userProfile.ProfileName,
-                        UserProfileStatus=userProfile.UserProfileStatus,                       
-                        Description = userProfile.Description
+                        ProfileName = userProfile.ProfileName,
+                        UserProfileStatus = userProfile.UserProfileStatus,
+                        Description = userProfile.Description,
+                        DateCreated = DateTime.Now
                        //CreatedBy = userProfile.CreatedBy
                     };
                     _dbContext.UserProfiles.Add(data);

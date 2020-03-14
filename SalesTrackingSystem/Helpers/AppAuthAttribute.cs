@@ -11,7 +11,7 @@ namespace SalesTrackingSystem.Helpers
 {
     public class AppAuthAttribute
     {
-        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true),AsyncTimeout(1000)]
+        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true),AsyncTimeout(100)]
         public class Authorization : AuthorizeAttribute
         {
             private new readonly Users_Interface Users = new Users_Service();
@@ -26,11 +26,42 @@ namespace SalesTrackingSystem.Helpers
                     filterContext.Result = new RedirectResult("~/Auth/Login");                  
                 }
 
-                if (HttpContext.Current.Session["auth"] != null && LoginSession.IsVerified.Value == false)
+                if (LoginSession!=null)
                 {
-                    filterContext.Result = new RedirectResult("~/Auth/CheckVerification");
+                    if (HttpContext.Current.Session["auth"] != null && LoginSession.IsVerified.Value == false)
+                    {
+                        filterContext.Result = new RedirectResult("~/Auth/CheckVerification");
+                    }
+
+                    if (LoginSession.ProfileName != "Developer")
+                    {
+                        if (HttpContext.Current.Request.Url.AbsolutePath.StartsWith("/Module/"))
+                        {
+                            filterContext.Result = new RedirectResult("~/Error/E401");
+                        }
+                        if (HttpContext.Current.Request.Url.AbsolutePath == "/User/UserProfile")
+                        {
+                            filterContext.Result = new RedirectResult("~/Error/E401");
+                        }
+                    }                   
+
                 }
-               
+
+                if (HttpContext.Current.Response.StatusCode==404)
+                {
+                    filterContext.Result = new RedirectResult("~/Error/E404");
+                }
+
+                if (HttpContext.Current.Response.StatusCode == 401)
+                {
+                    filterContext.Result = new RedirectResult("~/Error/E401");
+                }
+
+                if (HttpContext.Current.Response.StatusCode == 500)
+                {
+                    filterContext.Result = new RedirectResult("~/Error/E500");
+                }
+              
             }
 
         }

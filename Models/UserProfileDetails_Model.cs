@@ -34,7 +34,7 @@ namespace Models
         public string ModuleName { get; set; }
         public string ActionName { get; set; }
 
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     }
 }
