@@ -9,6 +9,72 @@
 <body>   
     <div class="main">
         @RenderBody()
+        <div id="devtool-status"></div>
+        <div id="devtools-status"></div>
     </div>
 </body>
 </html>
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeypress = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+    }
+    document.onmousedown = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+    }
+    document.onkeydown = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+        else if (event.ctrlKey && event.keyCode == 85) {
+            return false;
+        }
+        else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
+            return false;
+        }
+        else if (event.ctrlKey && event.shiftKey && event.keyCode == 74) {
+            return false;
+        }
+        else if (event.ctrlKey && event.shiftKey && event.keyCode == 67) {
+            return false;
+        }
+    }
+     var checkStatus;
+     var element = new Image();
+    // var element = document.createElement('any');
+    element.__defineGetter__('id', function () {
+        checkStatus = 'on';
+    });
+
+    setInterval(function () {
+        checkStatus = 'off';
+        console.log(element);
+        console.clear();
+        if (checkStatus == "off") {
+            window.location="https://@Request.ServerVariables["HTTP_HOST"]/Home/Index";
+        }
+    }, 1000)
+
+     var checkStatus1;
+     var element1 = new Image();
+    // var element = document.createElement('any');
+    element1.__defineGetter__('id', function () {
+        checkStatus1 = 'on';
+    });
+
+    setInterval(function () {
+        checkStatus1 = 'off';
+        console.log(element);
+        console.clear();
+        if (checkStatus1 == "off") {
+            window.location="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401";
+        }
+    }, 900)
+</script>

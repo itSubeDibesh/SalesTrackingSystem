@@ -20,8 +20,59 @@
 </head>
 <body class="animsition">
     @RenderBody()
+    <div id="devtool-status"></div>
 </body>
+
 @Scripts.Render("~/bundles/js")
 @RenderSection("scripts", required: false)
 </html>
+<script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeypress = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+    }
+    document.onmousedown = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+    }
+    document.onkeydown = function (event) {
+        event = (event || window.event);
+        if (event.keyCode == 123) {
+            return false;
+        }
+        else if (event.ctrlKey && event.keyCode == 85) {
+            return false;
+        }
+        else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
+            return false;
+        }
+        else if (event.ctrlKey && event.shiftKey && event.keyCode == 74) {
+            return false;
+        }
+        else if (event.ctrlKey && event.shiftKey && event.keyCode == 67) {
+            return false;
+        }
+    }
+    var checkStatus;
+
+    var element = new Image();
+    // var element = document.createElement('any');
+    element.__defineGetter__('id', function () {
+        checkStatus = 'on';
+    });
+
+    setInterval(function () {
+        checkStatus = 'off';
+        console.log(element);
+        console.clear();
+        if (checkStatus == "on") {
+            window.location="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401";
+        }
+    }, 1000)
+</script>
 <!-- end document-->

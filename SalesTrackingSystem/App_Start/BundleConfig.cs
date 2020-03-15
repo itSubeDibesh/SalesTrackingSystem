@@ -27,7 +27,8 @@ namespace SalesTrackingSystem
                    "~/Assets/vendor/dropify/js/dropify.min.js",
                    "~/Assets/vendor/data-tables/dataTables.min.js",
                    "~/Assets/vendor/data-tables/extensions/responsive/js/dataTables.responsive.min.js",
-                   "~/Assets/js/custom.js"                
+                   "~/Assets/js/custom.js"
+                   
                 ));
             bundles.Add(new ScriptBundle("~/bundles/detect/js").Include(                  
                    "~/Assets/js/detect.js"

@@ -125,7 +125,120 @@
                     <i class="fas fa-close"></i>
                 </button>
             </div>
-            <div class="container"id="invoice">
+            @* Printing Bill *@
+            <div class="container d-none" id="invoice">
+                <div class="card-body card-block">                    
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <p>
+                                <Strong>Invoice No: </Strong> 98614516
+                            </p>
+                            <p>
+                                <Strong>Date Issued: </Strong> 09/08/2020
+                            </p>
+                            <p>
+                                <Strong>Due Date: </Strong> 09/08/2020
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <span>
+                                <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                            </span>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <br />
+                            <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
+                            <hr />
+                        </div>
+                        <div class="col-sm-6">
+                            <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
+                            <hr />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-12">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th style="text-align: center;">SN</th>
+                                        <th style="text-align: center;">Product Name</th>
+                                        <th style="text-align: center;">Cost (NRS)</th>
+                                        <th style="text-align: center;">Units</th>
+                                        <th style="text-align: center;">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">1</td>
+                                        <td style="text-align: center;">Mac Book Pro</td>
+                                        <td style="text-align: center;">50000</td>
+                                        <td style="text-align: center;">500</td>
+                                        <td style="text-align: center;">5000000</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">2</td>
+                                        <td style="text-align: center;">Mac Book Pro</td>
+                                        <td style="text-align: center;">50000</td>
+                                        <td style="text-align: center;">500</td>
+                                        <td style="text-align: center;">5000000</td>
+                                    </tr>                                               
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr />
+                        <br />
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-sm-6">
+                            <br />
+                            <p>Thanks for your business.</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <br />
+                                <br />
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Subtotal</p></div>
+                                <div class="col-6"><p>NRS 10000000</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Discount</p></div>
+                                <div class="col-6"><p>-NRS 50</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Tax</p></div>
+                                <div class="col-6"><p>13%</p></div>
+                            </div>
+                            <hr style="width:90%;" />
+                            <div class="row">
+                                <div class="col-6"><p>Invoice Total</p></div>
+                                <div class="col-6"><p> NRS 100000000</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Discount</p></div>
+                                <div class="col-6"><p> NRS 0</p></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6"><p>Balance(NRS)</p></div>
+                                <div class="col-6"><p>NRS 100000000</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Displaying Bill *@
+            <div class="container">
                 <div class="card-body card-block">
                     <div class="row form-group">
                         <div class="col-sm-12">
@@ -198,7 +311,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-sm-6">
-                            <p>Thanks for your business.</p>                       
+                            <p>Thanks for your business.</p>
                         </div>
                         <div class="col-sm-6">
                             <div class="row">
@@ -229,16 +342,11 @@
                         </div>
                     </div>
                 </div>
-             
-               
             </div>
-            <div class="card-footer">
-                <button type="submit" class="btn btn-success btn-sm">
-                    <i class="fa fa-print"></i> Save
-                </button>               
-                <button type="reset" class="btn btn-danger btn-sm">
-                    <i class="fa fa-close"></i> Cancel
-                </button>
+            <div class="card-footer text-white">
+                <a onclick="printDiv('invoice')" class="btn btn-success btn-sm">
+                    <i class="fa fa-file-pdf bg-danger"></i> Save / <i class="fa fa-print"></i> Print
+                </a>
             </div>
         </div>
     </div>
@@ -339,12 +447,12 @@
 <!--#endregion Forms ends-->
 @section scripts{
     <script>
-        $(function() {
+        $(function () {
             $('.dynamic-scroable-table-module').DataTable({
-                responsive: !0,
+                 responsive: !0,
                 scrollY: "65vh",
                 scrollCollapse: !0,
-                paging: !1,
+                paging: false,
                 "searching": false,
                 "bPaginate": false,
                 "bLengthChange": false,
@@ -376,6 +484,19 @@
                 }
             });
         });
+
+        function printDiv(divName){
+			var printContents = document.getElementById(divName).innerHTML;
+			var originalContents = document.body.innerHTML;
+
+			document.body.innerHTML = printContents;
+
+			window.print();
+
+			document.body.innerHTML = originalContents;
+
+        } 
+
     </script>
 }
 

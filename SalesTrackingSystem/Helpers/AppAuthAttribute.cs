@@ -11,7 +11,7 @@ namespace SalesTrackingSystem.Helpers
 {
     public class AppAuthAttribute
     {
-        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true),AsyncTimeout(100)]
+        [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true)]
         public class Authorization : AuthorizeAttribute
         {
             private new readonly Users_Interface Users = new Users_Service();
