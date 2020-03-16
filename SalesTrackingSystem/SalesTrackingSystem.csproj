@@ -535,6 +535,7 @@
     <Content Include="Views\User\Users_Add.cshtml" />
     <Content Include="Views\User\Users_Update.cshtml" />
     <Content Include="Views\Home\Setting.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

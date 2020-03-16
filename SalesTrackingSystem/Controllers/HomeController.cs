@@ -141,5 +141,10 @@ namespace SalesTrackingSystem.Controllers
                 return View("Setting");
             }           
         }
+
+        public ActionResult Dashboard()
+        {
+            return View("Dashboard");
+        }
     }
 }
