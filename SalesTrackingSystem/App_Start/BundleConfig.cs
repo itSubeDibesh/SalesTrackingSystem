@@ -26,6 +26,8 @@ namespace SalesTrackingSystem
                    "~/Assets/vendor/dropify/js/dropify.min.js",
                    "~/Assets/vendor/data-tables/dataTables.min.js",
                    "~/Assets/vendor/data-tables/extensions/responsive/js/dataTables.responsive.min.js",
+                   "~/Assets/vendor/sweetalert/sweetalert.min.js",
+                   "~/Assets/vendor/jquery.nepaliDatePicker.js",
                    "~/Assets/js/custom.js"                
                 ));
             bundles.Add(new ScriptBundle("~/bundles/detect/js").Include(                  
@@ -49,7 +51,9 @@ namespace SalesTrackingSystem
                  "~/Assets/vendor/data-tables/dataTables.css",
                  "~/Assets/vendor/data-tables/dataTables.min.css",
                  "~/Assets/vendor/dropify/css/dropify.min.css",
-                 "~/Assets/css/theme.css"
+                 "~/Assets/css/theme.css",
+                 "~/Assets/vendor/nepaliDatePicker.css",
+                 "~/Assets/css/custom.css"
                ));
 
             bundles.Add(new StyleBundle("~/bundles/error").Include(

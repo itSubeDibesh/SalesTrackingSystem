@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,6 +17,19 @@ namespace SalesTrackingSystem.Controllers
         public ActionResult Action()
         {
             return View("Action");
+        }
+        [HttpPost]
+        public ActionResult Action(Module_Model module_Model)
+        {
+            if(module_Model.ModuleID!=0)
+            {
+                return RedirectToAction("Products", "Products");
+            }            
+            else
+            {
+                ViewBag.Modalstate = "Error";
+                return View();
+            }
         }
     }
 }

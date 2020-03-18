@@ -19,6 +19,7 @@ namespace DataAccessLayer
         {
             this.Batches = new HashSet<Batch>();
             this.ProductCategory1 = new HashSet<ProductCategory>();
+            this.Products = new HashSet<Product>();
         }
     
         public long ProductCategoryID { get; set; }
@@ -34,6 +35,7 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductCategory> ProductCategory1 { get; set; }
         public virtual ProductCategory ProductCategory2 { get; set; }
-        public virtual Product Product { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

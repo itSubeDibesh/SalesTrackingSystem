@@ -21,7 +21,7 @@
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="ProductID" Type="bigint" />
         </EntityType>
-        <EntityType Name="DistributonArea">
+        <EntityType Name="DistributorArea">
           <Key>
             <PropertyRef Name="DistributonAreaID" />
           </Key>
@@ -29,7 +29,7 @@
           <Property Name="DistrubitorID" Type="bigint" />
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="District" Type="varchar" MaxLength="50" />
-          <Property Name="Ciry" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" />
@@ -169,6 +169,13 @@
           <Property Name="DateCreated" Type="datetime" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserProfile">
           <Key>
             <PropertyRef Name="UserProfileID" />
@@ -257,12 +264,12 @@
           <End Role="Distributors" Type="Self.Distributors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="DistributonArea" Type="Self.DistributonArea" Multiplicity="*" />
+          <End Role="DistributorArea" Type="Self.DistributorArea" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Distributors">
               <PropertyRef Name="DistrubitorID" />
             </Principal>
-            <Dependent Role="DistributonArea">
+            <Dependent Role="DistributorArea">
               <PropertyRef Name="DistrubitorID" />
             </Dependent>
           </ReferentialConstraint>
@@ -346,14 +353,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_ProductCategory">
-          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
               <PropertyRef Name="ProductCategoryID" />
             </Principal>
             <Dependent Role="Products">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="ProductCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -505,7 +512,7 @@
         </Association>
         <EntityContainer Name="SalesTrackingSystemModelStoreContainer">
           <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DistributonArea" EntityType="Self.DistributonArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistributorArea" EntityType="Self.DistributorArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExceptionUserProfile" EntityType="Self.ExceptionUserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
@@ -515,6 +522,7 @@
           <EntitySet Name="Resellers" EntityType="Self.Resellers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileDetails" EntityType="Self.UserProfileDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -529,7 +537,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="Self.FK_DistributonArea_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
-            <End Role="DistributonArea" EntitySet="DistributonArea" />
+            <End Role="DistributorArea" EntitySet="DistributorArea" />
           </AssociationSet>
           <AssociationSet Name="FK_ExceptionUserProfile_Module" Association="Self.FK_ExceptionUserProfile_Module">
             <End Role="Module" EntitySet="Module" />
@@ -610,7 +618,7 @@
       <Schema Namespace="SalesTrackingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SalesTrackingSystemEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Batches" EntityType="SalesTrackingSystemModel.Batch" />
-          <EntitySet Name="DistributonAreas" EntityType="SalesTrackingSystemModel.DistributonArea" />
+          <EntitySet Name="DistributorAreas" EntityType="SalesTrackingSystemModel.DistributorArea" />
           <EntitySet Name="Distributors" EntityType="SalesTrackingSystemModel.Distributor" />
           <EntitySet Name="ExceptionUserProfiles" EntityType="SalesTrackingSystemModel.ExceptionUserProfile" />
           <EntitySet Name="Modules" EntityType="SalesTrackingSystemModel.Module" />
@@ -620,6 +628,7 @@
           <EntitySet Name="Resellers" EntityType="SalesTrackingSystemModel.Reseller" />
           <EntitySet Name="TransactionDetails" EntityType="SalesTrackingSystemModel.TransactionDetail" />
           <EntitySet Name="Transactions" EntityType="SalesTrackingSystemModel.Transaction" />
+          <EntitySet Name="Units" EntityType="SalesTrackingSystemModel.Unit" />
           <EntitySet Name="UserProfiles" EntityType="SalesTrackingSystemModel.UserProfile" />
           <EntitySet Name="UserProfileDetails" EntityType="SalesTrackingSystemModel.UserProfileDetail" />
           <EntitySet Name="Users" EntityType="SalesTrackingSystemModel.User" />
@@ -634,7 +643,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
-            <End Role="DistributonArea" EntitySet="DistributonAreas" />
+            <End Role="DistributorArea" EntitySet="DistributorAreas" />
           </AssociationSet>
           <AssociationSet Name="FK_Resellers_Distributors" Association="SalesTrackingSystemModel.FK_Resellers_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
@@ -727,7 +736,7 @@
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="Batch" ToRole="ProductCategory" />
           <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Batch" ToRole="Product" />
         </EntityType>
-        <EntityType Name="DistributonArea">
+        <EntityType Name="DistributorArea">
           <Key>
             <PropertyRef Name="DistributonAreaID" />
           </Key>
@@ -735,14 +744,14 @@
           <Property Name="DistrubitorID" Type="Int64" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Ciry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="DistributonArea" ToRole="Distributor" />
+          <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="DistributorArea" ToRole="Distributor" />
         </EntityType>
         <EntityType Name="Distributor">
           <Key>
@@ -764,7 +773,7 @@
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DistributonAreas" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="Distributor" ToRole="DistributonArea" />
+          <NavigationProperty Name="DistributorAreas" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="Distributor" ToRole="DistributorArea" />
           <NavigationProperty Name="Resellers" Relationship="SalesTrackingSystemModel.FK_Resellers_Distributors" FromRole="Distributor" ToRole="Reseller" />
           <NavigationProperty Name="Users" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="Distributor" ToRole="User" />
         </EntityType>
@@ -830,7 +839,7 @@
           <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="ProductCategory" ToRole="Batch" />
           <NavigationProperty Name="ProductCategory1" Relationship="SalesTrackingSystemModel.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
           <NavigationProperty Name="ProductCategory2" Relationship="SalesTrackingSystemModel.FK_ProductCategory_ProductCategory" FromRole="ProductCategory1" ToRole="ProductCategory" />
-          <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+          <NavigationProperty Name="Products" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -899,6 +908,13 @@
           <Property Name="DateCreated" Type="DateTime" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Transactions" FromRole="Transaction" ToRole="TransactionDetail" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -1003,12 +1019,12 @@
           <End Type="SalesTrackingSystemModel.Distributor" Role="Distributor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="SalesTrackingSystemModel.DistributonArea" Role="DistributonArea" Multiplicity="*" />
+          <End Type="SalesTrackingSystemModel.DistributorArea" Role="DistributorArea" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Distributor">
               <PropertyRef Name="DistrubitorID" />
             </Principal>
-            <Dependent Role="DistributonArea">
+            <Dependent Role="DistributorArea">
               <PropertyRef Name="DistrubitorID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1146,14 +1162,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_ProductCategory">
-          <End Type="SalesTrackingSystemModel.ProductCategory" Role="ProductCategory" Multiplicity="1" />
-          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductCategory">
               <PropertyRef Name="ProductCategoryID" />
             </Principal>
             <Dependent Role="Product">
-              <PropertyRef Name="ProductID" />
+              <PropertyRef Name="ProductCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1272,16 +1288,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DistributonAreas">
-            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DistributonArea">
-              <MappingFragment StoreEntitySet="DistributonArea">
+          <EntitySetMapping Name="DistributorAreas">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DistributorArea">
+              <MappingFragment StoreEntitySet="DistributorArea">
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Ciry" ColumnName="Ciry" />
+                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
@@ -1427,6 +1443,14 @@
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="TransactionLevel" ColumnName="TransactionLevel" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

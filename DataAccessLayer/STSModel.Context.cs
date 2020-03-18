@@ -26,7 +26,7 @@ namespace DataAccessLayer
         }
     
         public virtual DbSet<Batch> Batches { get; set; }
-        public virtual DbSet<DistributonArea> DistributonAreas { get; set; }
+        public virtual DbSet<DistributorArea> DistributorAreas { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<ExceptionUserProfile> ExceptionUserProfiles { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
@@ -36,6 +36,7 @@ namespace DataAccessLayer
         public virtual DbSet<Reseller> Resellers { get; set; }
         public virtual DbSet<TransactionDetail> TransactionDetails { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserProfileDetail> UserProfileDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ namespace Models
     public class Module_Model
     {
         public long ModuleID { get; set; }
+        [Required(ErrorMessage = "Enter Module name")]
+        [Display(Name ="ModuleName")]
         public string ModuleName { get; set; }
         public string ControllerName { get; set; }
         public Nullable<bool> ModuleStatus { get; set; }

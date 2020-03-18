@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DistributorAreaController.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\custom.css" />
     <Content Include="Assets\css\error.css" />
     <Content Include="Assets\css\font-face.css" />
     <Content Include="Assets\css\theme.css" />
@@ -246,6 +248,7 @@
     <Content Include="Assets\vendor\font-awesome-5\webfonts\fa-solid-900.svg" />
     <Content Include="Assets\vendor\jquery-3.2.1.min.js" />
     <Content Include="Assets\vendor\jquery-ui.min.js" />
+    <Content Include="Assets\vendor\jquery.nepaliDatePicker.js" />
     <Content Include="Assets\vendor\lightbox2\dist\css\lightbox.css" />
     <Content Include="Assets\vendor\lightbox2\dist\images\close.png" />
     <Content Include="Assets\vendor\lightbox2\dist\images\loading.gif" />
@@ -264,6 +267,7 @@
     <Content Include="Assets\vendor\mdi-font\css\material-design-iconic-font.css" />
     <Content Include="Assets\vendor\mdi-font\css\material-design-iconic-font.min.css" />
     <Content Include="Assets\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="Assets\vendor\nepaliDatePicker.css" />
     <Content Include="Assets\vendor\perfect-scrollbar\perfect-scrollbar.css" />
     <Content Include="Assets\vendor\perfect-scrollbar\perfect-scrollbar.js" />
     <Content Include="Assets\vendor\perfect-scrollbar\perfect-scrollbar.min.js" />
@@ -517,10 +521,25 @@
     <Content Include="Views\User\Users.cshtml" />
     <Content Include="Views\Distributor\Distributor.cshtml" />
     <Content Include="Views\Reseller\Reseller.cshtml" />
-    <Content Include="Views\Distributor\DistributonArea.cshtml" />
+    <Content Include="Views\DistributorArea\DistributorArea.cshtml" />
     <Content Include="Views\Products\Batch.cshtml" />
     <Content Include="Views\Products\Products.cshtml" />
     <Content Include="Views\Transaction\Transaction.cshtml" />
+    <Content Include="Views\Module\partial.cshtml" />
+    <Content Include="Views\Products\AddProductCategory.cshtml" />
+    <Content Include="Views\Products\Product_Action.cshtml" />
+    <Content Include="Views\Products\testCheck.cshtml" />
+    <Content Include="Views\Products\EditProductCategory.cshtml" />
+    <Content Include="Views\Products\AddProduct.cshtml" />
+    <Content Include="Views\Products\EditProduct.cshtml" />
+    <Content Include="Views\Products\AddBatch.cshtml" />
+    <Content Include="Views\Products\Unit.cshtml" />
+    <Content Include="Views\Distributor\AddDistributor.cshtml" />
+    <Content Include="Views\Distributor\EditDistributor.cshtml" />
+    <Content Include="Views\DistributorArea\AddDistributorArea.cshtml" />
+    <Content Include="Views\DistributorArea\EditDistributorArea.cshtml" />
+    <Content Include="Views\Reseller\AddReseller.cshtml" />
+    <Content Include="Views\Reseller\EditReseller.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

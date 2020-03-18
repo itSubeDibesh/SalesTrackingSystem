@@ -483,3 +483,12 @@ ADD CONSTRAINT FK_Batch_Products FOREIGN KEY (ProductID)
       REFERENCES Products (ProductID)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
+
+/*---------------------------------							-------------------------------------*/
+/*---------------------------------			Rohan			-------------------------------------*/
+/*---------------------------------							-------------------------------------*/
+create table Unit
+(
+UnitId bigint primary key identity(1,1) not null,
+UnitName varchar(50) not null
+)

@@ -51,17 +51,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\Batch_Interface.cs" />
+    <Compile Include="Interface\DistributorArea_Interface.cs" />
+    <Compile Include="Interface\Distributor_Interface.cs" />
     <Compile Include="Interface\ExceptionUserProfile_Interface.cs" />
     <Compile Include="Interface\ModuleAction_Interface.cs" />
     <Compile Include="Interface\Module_Interface.cs" />
+    <Compile Include="Interface\ProductCategory_Interface.cs" />
+    <Compile Include="Interface\Product_Interface.cs" />
+    <Compile Include="Interface\Reseller_Interface.cs" />
     <Compile Include="Interface\UserProfileDetails_Interface.cs" />
     <Compile Include="Interface\UserProfile_Interface.cs" />
     <Compile Include="Interface\Users_Interface.cs" />
     <Compile Include="Interface\Verification_Interface.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Batch_Service.cs" />
+    <Compile Include="Service\DistributorArea_Service.cs" />
+    <Compile Include="Service\Distributor_Service.cs" />
     <Compile Include="Service\ExceptionUserProfile_Service.cs" />
     <Compile Include="Service\ModuleAction_Service.cs" />
     <Compile Include="Service\Module_Service.cs" />
+    <Compile Include="Service\ProductCategory_Service.cs" />
+    <Compile Include="Service\Product_Service.cs" />
+    <Compile Include="Service\Reseller_Service.cs" />
     <Compile Include="Service\UserProfileDetails_Service.cs" />
     <Compile Include="Service\UserProfile_Service.cs" />
     <Compile Include="Service\Users_Service.cs" />

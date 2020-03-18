@@ -5,7 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Page = "Distributor";
     ViewBag.AppName = "Tinjure tea factory";
+    ViewBag.Action = "AddDistributor";
+    var SerialNumber = 1;
 }
+@using Services.Interface;
+@using Services.Service;
+@{
+    Distributor_Interface dist = new Distributor_Service();    
+}
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
 <div class="row">
     <div class="col-12">
         <div class="overview-wrap">
@@ -17,183 +25,99 @@
     </div>
 </div>
 <div class="row">
-
-    <div class="col-sm-12 col-md-12">
-        <div class="card">
-            <div class="card-header">
-                Add <strong>Distributor</strong>
-                    <button class="btn btn-danger " style="float: right;">
-                        <i class="fas fa-close"></i>
-                    </button>
-            </div>
-            <div class="card-body">
-                <div class="col-12">
-                    <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                        <div class="row form-group">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="text-input" class=" form-control-label">Distributor Name</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="text" id="text-input" name="text-input" placeholder="Full Name" class="form-control">
-                            </div>
-
-                            <div class="col-md-3 col-sm-6">
-                                <label for="text-input" class=" form-control-label">Owner Name</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="text" id="text-input" name="text-input" placeholder="Full Name" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">Regestration No</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
-                            </div>
-
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">Mobile No</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">Phone No</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
-                            </div>
-
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">Fax No</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="phone" id="phone-input" name="phone-input" placeholder="Mobile No" class="form-control">
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">Email</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <input type="email" id="phone-input" name="phone-input" placeholder="Email" class="form-control">
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">State</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <select name="select" id="select" class="form-control">
-                                    <option selected disabled>Please select</option>
-                                    <option value="active">Eastern </option>
-                                    <option value="inactive">Central</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3 col-sm-6">
-                                <label for="phone-input" class=" form-control-label">District</label>
-                            </div>
-                            <div class="col-md-3 col-sm-6">
-                                <select name="select" id="select" class="form-control">
-                                    <option selected disabled>Please select</option>
-                                    <option value="active">Mechi </option>
-                                    <option value="inactive">Koshi</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-success btn-sm">
-                                <i class="fa fa-paper-plane"></i> Submit
-                            </button>
-                            <button type="reset" class="btn btn-primary btn-sm">
-                                <i class="fa fa-trash"></i> Reset
-                            </button>
-                            <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-close"></i> Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>               
-        </div>
-    </div>
+    @if (ViewBag.AddDistributor != null)
+    {
+        <script>
+            window.onload = function () {
+                $('#AddDistributor').slideDown();
+            }
+        </script>
+    }
+    @if (ViewBag.DistriutorUpdateError != null)
+    {
+        <script>
+            window.onload = function () {
+                $('#EditDistributor').slideDown();
+            }
+        </script>
+    }
+    @*Add Update Distributor*@
+    @if (ViewBag.Action == "AddDistributor")
+    {
+        @Html.Partial("AddDistributor")
+    }
+    @if (Request.Params.Get("action") == "UpdateDistributor")
+    {
+        if (dist.DistributorExist(Convert.ToInt64(Request.Params.Get("dist"))))
+        {            
+            @Html.Partial("EditDistributor", dist.GetDistributorById(Convert.ToInt64(Request.Params.Get("dist"))));
+        }
+        else
+        {
+            Session["Error"] = " Distributor couldn't be found please retry!!";
+        }
+    }
+    @if (ViewBag.UpdateDistributorData != null)
+    {
+        Int64 distId = Convert.ToInt64(ViewBag.UpdateDistribuotrData);
+        if (dist.DistributorExist(distId))
+        {         
+            @Html.Partial("EditDistributor", dist.GetDistributorById(distId));
+        }
+        else
+        {
+            Session["Error"] = " Distributor couldn't be found please retry!!";
+        }
+    }
+    @*Add Update Distributor Ends*@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <strong> Distributors List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add distributor">
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" onclick="$('#AddDistributor').slideDown();" data-placement="left" title="Add distributor">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
             <div class="card-body card-block">
                 <table class="dynamic-table table table-bordered table-hover">
                     <thead class="thead-dark">
-                        <th style="text-align: center;">SN</th>
-                        <th style="text-align: center;">Distributor Name</th>
-                        <th style="text-align: center;">Owner Name</th>
-                        <th style="text-align: center;">Mobile No</th>
-                        <th style="text-align: center;">Phone No</th>
-                        <th style="text-align: center;">Fax</th>
-                        <th style="text-align: center;">Email</th>
-                        <th style="text-align: center;">Address</th>
-                        <th style="text-align: center;">Status</th>
-                        <th style="text-align: center;">Action</th>
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Distributor Name</th>
+                            <th style="text-align: center;">Owner Name</th>
+                            <th style="text-align: center;">Mobile No</th>
+                            <th style="text-align: center;">Phone No</th>
+                            <th style="text-align: center;">Fax</th>
+                            <th style="text-align: center;">Email</th>
+                            <th style="text-align: center;">Address</th>
+                            <th style="text-align: center;">State</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                            <td style="text-align: center;">Dibesh Raj Subedi</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
-                            <td style="text-align: center;">Gaushala Pinglasthan</td>
-                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                            <td>
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Rohan Raj Subedi</td>
-                            <td style="text-align: center;">Rohan Raj Subedi</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
-                            <td style="text-align: center;">Gaushala Pinglasthan</td>
-                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                            <td>
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Rohan Puri</td>
-                            <td style="text-align: center;">Rohan Puri</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;">9861315234</td>
-                            <td style="text-align: center;"><a href="mailto:kingraj530@gmail.com">Kingraj530@gmail.com</a></td>
-                            <td style="text-align: center;">Gaushala Pinglasthan</td>
-                            <td style="text-align: center; color:green;"> @*<i class="fas <?php echo " active"= ="active" ? "fa-thumbs-up" : "fa-thumbs-down" ?>"></i>*@ Active</td>
-                            <td>
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
+                        @foreach (var item in dist.ListAllData())
+                        {
+                            <tr>
+                                <td style="text-align: center;">@(SerialNumber++)</td>
+                                <td style="text-align: center;">@item.DistrubitorName</td>
+                                <td style="text-align: center;">@item.OwnerName</td>
+                                <td style="text-align: center;">@item.MobileNo</td>
+                                <td style="text-align: center;">@item.Phone</td>
+                                <td style="text-align: center;">@item.Fax</td>
+                                <td style="text-align: center;">@item.Email</td>
+                                <td style="text-align: center;">@item.Address</td>
+                                <td style="text-align: center;"> @item.State</td>
+                                <td>
+                                    <a href="~/Distributor/EditDistributor?action=UpdateDistributor&dist=@item.DistrubitorID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                    <a href="#" onclick="DeleteAndNotify(@item.DistrubitorID,'@item.DistrubitorName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 @section scripts{
@@ -233,5 +157,43 @@
                 }
             });
         });
+        function DeleteAndNotify(id, value) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " , all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.DistrubitorID = id;
+                        data.DistrubitorName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/Distributor/DeleteDistributor",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/Distributor/Distributor"
+                                });
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    }
+                });
+        }
     </script>
 }

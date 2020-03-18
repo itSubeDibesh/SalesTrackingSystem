@@ -17,7 +17,7 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Distributor()
         {
-            this.DistributonAreas = new HashSet<DistributonArea>();
+            this.DistributorAreas = new HashSet<DistributorArea>();
             this.Resellers = new HashSet<Reseller>();
             this.Users = new HashSet<User>();
         }
@@ -40,7 +40,7 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DistributonArea> DistributonAreas { get; set; }
+        public virtual ICollection<DistributorArea> DistributorAreas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reseller> Resellers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

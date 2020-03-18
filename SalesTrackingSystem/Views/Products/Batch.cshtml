@@ -3,7 +3,15 @@
     ViewBag.Page = "Batch";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.AppName = "Tinjure tea factory";
+    ViewBag.Action = "AddBatch";
+    var SerialNumber = 1;
 }
+@using Services.Interface;
+@using Services.Service;
+@{
+    Batch_Interface batch_ = new Batch_Service();
+}
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
 
 <div class="row">
     <div class="col-12">
@@ -15,156 +23,70 @@
         <br>
     </div>
 </div>
+@if (ViewBag.AddBatch != null)
+{
+    <script>
+        window.onload = function () {
+            $('#AddBatch').slideDown();
+        }
+    </script>
+}
 <!--#region Forms-->
 <div class="row">
+    @*Add Batch*@
+    @if (ViewBag.Action == "AddBatch")
+    {
+        @Html.Partial("AddBatch")
+    }
+    @*Add Batch*@
+
+    @*Listing Batch*@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <strong>Add</strong> Batch
-                <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Module Action">
-                    <i class="fas fa-close"></i>
-                </button>
-            </div>
-            <div class="card-body card-block">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Batch Name</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Product</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Product Category</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">Active</option>
-                                <option value="2">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="textarea-input" class=" form-control-label">Quantity Produced</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="number" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="textarea-input" class=" form-control-label">Unit Price</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="number" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="textarea-input" class=" form-control-label">Stock Left</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="number" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="textarea-input" class=" form-control-label">Date Produced</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="datetime" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="textarea-input" class=" form-control-label">Expiry Date</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="datetime" id="text-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <i class="fa fa-paper-plane"></i> Submit
-                        </button>
-                        <button type="reset" class="btn btn-primary btn-sm">
-                            <i class="fa fa-trash"></i> Reset
-                        </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-close"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <strong> Module Action List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add Module Action">
+                <strong> Batch List</strong>
+                <button class="btn btn-primary" onclick="javascript:$('#AddBatch').slideDown()" style="float: right;" data-toggle="tooltip" data-placement="right" title="Add Batch">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
             <div class="card-body card-block">
                 <table class="table dynamic-table table-bordered table-hover">
                     <thead class="thead-dark">
-                    <th style="text-align: center;">SN</th>
-                    <th style="text-align: center;">Batch Name</th>
-                    <th style="text-align: center;">Product Name</th>
-                    <th style="text-align: center;">Category Name</th>
-                    <th style="text-align: center;">Stock Left</th>
-                    <th style="text-align: center;">Action</th>
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Batch Name</th>
+                            <th style="text-align: center;">Product Name</th>
+                            <th style="text-align: center;">Category Name</th>
+                            <th style="text-align: center;">Stock Left</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Lolota</td>
-                            <td style="text-align: center;">Lolota99</td>
-                            <td style="text-align: center;">Lolota9d9</td>
-                            <td style="text-align: center;">987</td>
-                            <td style="padding-left:5%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Lolota</td>
-                            <td style="text-align: center;">Lolota99</td>
-                            <td style="text-align: center;">Lolota9d9</td>
-                            <td style="text-align: center;">987</td>
-                            <td style="padding-left:5%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Lolota</td>
-                            <td style="text-align: center;">Lolota99</td>
-                            <td style="text-align: center;">Lolota9d9</td>
-                            <td style="text-align: center;">987</td>
-                            <td style="padding-left:5%;">
-                                <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                            </td>
-                        </tr>
+                        @foreach (var item in batch_.ListAllData())
+                        {
+                            <tr>
+                                <td style="text-align: center;">@(SerialNumber++)</td>
+                                <td style="text-align: center;">@item.BatchName</td>
+                                <td style="text-align: center;">@item.ProductName</td>
+                                <td style="text-align: center;">@item.ProductCategoryName</td>
+                                <td style="text-align: center;">@item.StockLeft</td>
+                                <td style="padding-left:5%;">
+                                    <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                    <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    @*Listing Batch*@
+    
 </div>
 <!--#endregion Forms ends-->
+@{ ViewBag.ServerDebug = true;}
+@Html.Partial("~/Views/Shared/_Debug.cshtml")
 @section scripts{
     <script>
         $(function () {

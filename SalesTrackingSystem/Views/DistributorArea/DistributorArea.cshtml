@@ -1,0 +1,179 @@
+﻿@model Models.Users_Model
+
+@{
+    ViewBag.Title = "Distributon Area";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Page = "Distributon Area";
+    ViewBag.AppName = "Tinjure tea factory";
+    ViewBag.Action = "AddDistributorArea";
+
+    var SerialNumber = 1;
+}
+@using Services.Interface;
+@using Services.Service;
+@{
+    DistributorArea_Interface distArea = new DistributorArea_Service();
+}
+@if (Request.Params.Get("action") == "UpdateDistributorArea")
+{
+    if (distArea.DistributorAreaExist(Convert.ToInt64(Request.Params.Get("distAreaId"))))
+    {
+        @Html.Partial("EditDistributorArea", distArea.GetDistributorAreaById(Convert.ToInt64(Request.Params.Get("distAreaId"))));
+    }
+    else
+    {
+        Session["Error"] = " Distributor Area couldn't be found please retry!!";
+    }
+}
+@if (ViewBag.UpdateDistributorAreaData != null)
+{
+    Int64 distAreaId = Convert.ToInt64(ViewBag.UpdateDistributorAreaData);
+    if (distArea.DistributorAreaExist(distAreaId))
+    {
+        @Html.Partial("EditDistributorArea", distArea.GetDistributorAreaById(distAreaId));
+    }
+    else
+    {
+        Session["Error"] = " Distributor Area couldn't be found please retry!!";
+    }
+}
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
+<div class="row">
+    <div class="col-12">
+        <div class="overview-wrap">
+            <div class="title-1">
+                <h4><a href="">@ViewBag.AppName</a> > Distribution > @ViewBag.Page</h4>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<div class="row">
+    @*Add Update DistributorArea*@
+    @if (ViewBag.Action == "AddDistributorArea")
+    {
+        @Html.Partial("AddDistributorArea")
+
+    }
+    @*Add Update DistributorArea Ends*@
+    <div class="col-sm-12 col-md-12">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong> Distributon Area List</strong>
+                    <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" onclick="$('#AddDistributorArea').slideDown();" data-placement="left" title="Add Distributor Area">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+                <div class="card-body card-block">
+                    <table class="dynamic-table table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;">SN</th>
+                                <th style="text-align: center;">Distributor Name</th>
+                                <th style="text-align: center;">State</th>
+                                <th style="text-align: center;">City</th>
+                                <th style="text-align: center;">Address</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in distArea.ListAllData())
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SerialNumber++)</td>
+                                    <td style="text-align: center;">@item.DistributorName</td>
+                                    <td style="text-align: center;">@item.State</td>
+                                    <td style="text-align: center;">@item.City</td>
+                                    <td style="text-align: center;">@item.Address</td>
+                                    <td>
+                                        <a href="~/DistributorArea/EditDistributorArea?action=UpdateDistributorArea&distAreaId=@item.DistributonAreaID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                        <a href="#" onclick="DeleteAndNotify(@item.DistributonAreaID)"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+
+        $(function () {
+            $('.dynamic-table').DataTable({
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+
+            });
+        });
+        $(function () {
+            $('.dynamic-table-action').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+                drawCallback: function (e) {
+                    var t = this.api(),
+                        l = t.rows({
+                            page: "current"
+                        }).nodes(),
+                        c = null;
+                    t.column(1, {
+                        page: "current"
+                    }).data().each(function (e, t) {
+                        c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
+                    })
+                }
+            });
+        });
+
+        function DeleteAndNotify(id) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete ? All the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.DistributonAreaID = id;                        
+                        $.ajax({
+                            type: "POST",
+                            url: "/DistributorArea/DeleteDistributorArea",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/DistributorArea/DistributorArea"
+                                });
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
+}

@@ -56,10 +56,10 @@
     <Compile Include="Batch.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DistributonArea.cs">
+    <Compile Include="Distributor.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Distributor.cs">
+    <Compile Include="DistributorArea.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ExceptionUserProfile.cs">
@@ -100,6 +100,9 @@
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TransactionDetail.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Unit.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="User.cs">

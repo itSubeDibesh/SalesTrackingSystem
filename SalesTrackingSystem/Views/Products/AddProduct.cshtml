@@ -1,0 +1,94 @@
+﻿@model Models.Products_Model
+@using Services.Interface;
+@using Services.Service;
+@{
+    Product_Interface productService = new Product_Service();
+    ProductCategory_Interface productCategoryService = new ProductCategory_Service();
+}
+    <div class="col-sm-12 " id="AddProduct" style="display:none">
+        <div class="card">
+            <div class="card-header">
+                <strong>Add</strong> @ViewBag.Page
+            <a href="~/Products/Products" class="btn btn-danger " style="float: right;color:white;" data-toggle="tooltip" data-placement="right" title="Close Add Products"><i class="fas fa-close"></i></a>
+            </div>
+            <div class="card-body card-block">
+                @using (Html.BeginForm("AddProduct", "Products", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                @Html.LabelFor(model => model.ProductCategoryID, htmlAttributes: new { @class = "form-control-label" })
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <select name="ProductCategoryID" id="ProductCategoryID" class="form-control">
+                                    <option selected disabled>Please select</option>
+                                    @foreach (var item in productCategoryService.ListAllData())
+                                    {
+                                        <option value="@item.ProductCategoryID">@item.ProductCategoryName</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "form-control-label" })
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-md-3 col-sm-6">
+                                @Html.LabelFor(model => model.PackSize, htmlAttributes: new { @class = "form-control-label" })
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="row ">
+                                    <div class="col-sm-6 ">
+                                        @*@Html.EditorFor(model => model.PackSize, new { htmlAttributes = new { @class = "form-control" } })
+        Html.ValidationMessageFor(model => model.PackSize, "", new { @class = "text-danger" })*@
+                                        <input type="number" class="form-control p-r-10" name="name" value="" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select class="form-control">
+                                            <option value="">Kg</option>
+                                            <option value="">Gram</option>
+                                            <option value="">Ltr.</option>
+                                            <option value="">Dorzen</option>                                            
+                                        </select>
+                                    </div>
+                                </div>                                
+                            </div>                            
+                            <div class="col-md-3 col-sm-6">
+                                @Html.LabelFor(model => model.PackRate, htmlAttributes: new { @class = "form-control-label" })
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                @Html.EditorFor(model => model.PackRate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PackRate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3">
+                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-control-label" })
+                            </div>
+                            <div class="col-12 col-md-9">
+                                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fa fa-paper-plane"></i> Submit
+                            </button>
+                            <a href="~/Products/Products" class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i> Reset
+                            </a>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>

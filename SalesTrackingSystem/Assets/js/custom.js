@@ -1,16 +1,13 @@
-﻿tinymce.init({
-    selector: "textarea",
-    plugins: 'print preview searchreplace autolink directionality  visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount  imagetools textpattern help ',
-    toolbar: 'formatselect | bold italic strikethrough forecolor backcolor permanentpen formatpainter | link image media pageembed | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent | removeformat | addcomment',
-    paste_data_images: true,
-    menubar: true,
-    height: 500,
-    theme: 'silver',
-    mobile: {
-        theme: 'mobile',
-        plugins: ['autosave', 'lists', 'autolink'],
-        toolbar: ['undo', 'bold', 'italic', 'styleselect']
-    }
+﻿$(".bod-picker").nepaliDatePicker({
+    dateFormat: "%y-%m-%d",
+    closeOnDateSelect: true
+});
+
+$("#clear-DateProduce").on("click", function (event) {
+    $("#DateProduced").val('');
+});
+$("#clear-ExpiryDate").on("click", function (event) {
+    $("#ExpiryDate").val('');
 });
 
 $('.dropify').dropify({

@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Unit";
+    ViewBag.Page = "Unit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.AppName = "Tinjure tea factory";
+    ViewBag.Action = "AddUnit";
+    var SerialNumber = 1;
+}
+@using Services.Interface;
+@using Services.Service;
+@{
+    
+}
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
+
+<div class="row">
+    <div class="col-12">
+        <div class="overview-wrap">
+            <div class="title-1">
+                <h4><a href="">@ViewBag.AppName</a> > Products > @ViewBag.Page</h4>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+@if (ViewBag.AddUnit != null)
+{
+    <script>
+        window.onload = function () {
+            $('#AddUnit').slideDown();
+        }
+    </script>
+}
+<!--#region Forms-->
+<div class="row">
+    @*Add Batch*@
+    @if (ViewBag.Action == "AddUnit")
+    {
+        @Html.Partial("AddUnit")
+    }
+    @*Add Batch*@
+
+    @*Listing Batch*@
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <strong> UNit List</strong>
+                <button class="btn btn-primary" onclick="javascript:$('#AddUnit').slideDown()" style="float: right;" data-toggle="tooltip" data-placement="right" title="Add Batch">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="table dynamic-table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Unit Name</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                            <tr>
+                                <td style="text-align: center;">@(SerialNumber++)</td>
+                                <td style="text-align: center;">UnitName</td>
+                                <td style="padding-left:5%;">
+                                    <a href="#"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                    <a href="#"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                </td>
+                            </tr>                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @*Listing Batch*@
+
+</div>
+<!--#endregion Forms ends-->
+@{ ViewBag.ServerDebug = true;}
+@Html.Partial("~/Views/Shared/_Debug.cshtml")
+@section scripts{
+    <script>
+        $(function () {
+            $('.dynamic-table').DataTable({
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ],
+
+            });
+        });
+    </script>
+}
+
+
+
+
