@@ -21,6 +21,58 @@
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="ProductID" Type="bigint" />
         </EntityType>
+        <EntityType Name="Dashboard">
+          <Key>
+            <PropertyRef Name="DashboardID" />
+          </Key>
+          <Property Name="DashboardID" Type="bigint" Nullable="false" />
+          <Property Name="UserID" Type="bigint" />
+          <Property Name="DashboardTableId" Type="bigint" />
+          <Property Name="DashboardTypeId" Type="bigint" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="ShowInHome" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DashboardColumn">
+          <Key>
+            <PropertyRef Name="DashboardColumnId" />
+          </Key>
+          <Property Name="DashboardColumnId" Type="bigint" Nullable="false" />
+          <Property Name="DashboardTableId" Type="bigint" />
+          <Property Name="Color" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="DashboardID" Type="bigint" />
+          <Property Name="DashboardGivenColumnId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="DashboardGivenColumn">
+          <Key>
+            <PropertyRef Name="DashboardGivenColumnId" />
+          </Key>
+          <Property Name="DashboardGivenColumnId" Type="bigint" Nullable="false" />
+          <Property Name="DashboardTableId" Type="bigint" />
+          <Property Name="ColumnName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DashboardTable">
+          <Key>
+            <PropertyRef Name="DashboardTableId" />
+          </Key>
+          <Property Name="DashboardTableId" Type="bigint" Nullable="false" />
+          <Property Name="TableName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DashboardType">
+          <Key>
+            <PropertyRef Name="DashboardTypeID" />
+          </Key>
+          <Property Name="DashboardTypeID" Type="bigint" Nullable="false" />
+          <Property Name="TypeName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
         <EntityType Name="DistributonArea">
           <Key>
             <PropertyRef Name="DistributonAreaID" />
@@ -234,6 +286,100 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Dashboard_DashboardTable">
+          <End Role="DashboardTable" Type="Self.DashboardTable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dashboard" Type="Self.Dashboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardTable">
+              <PropertyRef Name="DashboardTableId" />
+            </Principal>
+            <Dependent Role="Dashboard">
+              <PropertyRef Name="DashboardTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dashboard_DashboardType">
+          <End Role="DashboardType" Type="Self.DashboardType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dashboard" Type="Self.Dashboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardType">
+              <PropertyRef Name="DashboardTypeID" />
+            </Principal>
+            <Dependent Role="Dashboard">
+              <PropertyRef Name="DashboardTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dashboard_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Dashboard" Type="Self.Dashboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Dashboard">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardColumn_Dashboard">
+          <End Role="Dashboard" Type="Self.Dashboard" Multiplicity="0..1" />
+          <End Role="DashboardColumn" Type="Self.DashboardColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dashboard">
+              <PropertyRef Name="DashboardID" />
+            </Principal>
+            <Dependent Role="DashboardColumn">
+              <PropertyRef Name="DashboardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardColumn_DashboardGivenColumn">
+          <End Role="DashboardGivenColumn" Type="Self.DashboardGivenColumn" Multiplicity="0..1" />
+          <End Role="DashboardColumn" Type="Self.DashboardColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardGivenColumn">
+              <PropertyRef Name="DashboardGivenColumnId" />
+            </Principal>
+            <Dependent Role="DashboardColumn">
+              <PropertyRef Name="DashboardGivenColumnId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardColumn_DashboardTable">
+          <End Role="DashboardTable" Type="Self.DashboardTable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DashboardColumn" Type="Self.DashboardColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardTable">
+              <PropertyRef Name="DashboardTableId" />
+            </Principal>
+            <Dependent Role="DashboardColumn">
+              <PropertyRef Name="DashboardTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardGivenColumn_DashboardTable">
+          <End Role="DashboardTable" Type="Self.DashboardTable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DashboardGivenColumn" Type="Self.DashboardGivenColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardTable">
+              <PropertyRef Name="DashboardTableId" />
+            </Principal>
+            <Dependent Role="DashboardGivenColumn">
+              <PropertyRef Name="DashboardTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DistributonArea_Distributors">
           <End Role="Distributors" Type="Self.Distributors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -434,6 +580,11 @@
         </Association>
         <EntityContainer Name="SalesTrackingSystemModelStoreContainer">
           <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dashboard" EntityType="Self.Dashboard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardColumn" EntityType="Self.DashboardColumn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardGivenColumn" EntityType="Self.DashboardGivenColumn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardTable" EntityType="Self.DashboardTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DashboardType" EntityType="Self.DashboardType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributonArea" EntityType="Self.DistributonArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
@@ -454,6 +605,34 @@
           <AssociationSet Name="FK_Batch_Products" Association="Self.FK_Batch_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="Batch" EntitySet="Batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dashboard_DashboardTable" Association="Self.FK_Dashboard_DashboardTable">
+            <End Role="DashboardTable" EntitySet="DashboardTable" />
+            <End Role="Dashboard" EntitySet="Dashboard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dashboard_DashboardType" Association="Self.FK_Dashboard_DashboardType">
+            <End Role="DashboardType" EntitySet="DashboardType" />
+            <End Role="Dashboard" EntitySet="Dashboard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dashboard_Users" Association="Self.FK_Dashboard_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Dashboard" EntitySet="Dashboard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardColumn_Dashboard" Association="Self.FK_DashboardColumn_Dashboard">
+            <End Role="Dashboard" EntitySet="Dashboard" />
+            <End Role="DashboardColumn" EntitySet="DashboardColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardColumn_DashboardGivenColumn" Association="Self.FK_DashboardColumn_DashboardGivenColumn">
+            <End Role="DashboardGivenColumn" EntitySet="DashboardGivenColumn" />
+            <End Role="DashboardColumn" EntitySet="DashboardColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardColumn_DashboardTable" Association="Self.FK_DashboardColumn_DashboardTable">
+            <End Role="DashboardTable" EntitySet="DashboardTable" />
+            <End Role="DashboardColumn" EntitySet="DashboardColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardGivenColumn_DashboardTable" Association="Self.FK_DashboardGivenColumn_DashboardTable">
+            <End Role="DashboardTable" EntitySet="DashboardTable" />
+            <End Role="DashboardGivenColumn" EntitySet="DashboardGivenColumn" />
           </AssociationSet>
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="Self.FK_DistributonArea_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
@@ -522,6 +701,11 @@
       <Schema Namespace="SalesTrackingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SalesTrackingSystemEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Batches" EntityType="SalesTrackingSystemModel.Batch" />
+          <EntitySet Name="Dashboards" EntityType="SalesTrackingSystemModel.Dashboard" />
+          <EntitySet Name="DashboardColumns" EntityType="SalesTrackingSystemModel.DashboardColumn" />
+          <EntitySet Name="DashboardGivenColumns" EntityType="SalesTrackingSystemModel.DashboardGivenColumn" />
+          <EntitySet Name="DashboardTables" EntityType="SalesTrackingSystemModel.DashboardTable" />
+          <EntitySet Name="DashboardTypes" EntityType="SalesTrackingSystemModel.DashboardType" />
           <EntitySet Name="DistributonAreas" EntityType="SalesTrackingSystemModel.DistributonArea" />
           <EntitySet Name="Distributors" EntityType="SalesTrackingSystemModel.Distributor" />
           <EntitySet Name="Modules" EntityType="SalesTrackingSystemModel.Module" />
@@ -542,6 +726,34 @@
           <AssociationSet Name="FK_Batch_Products" Association="SalesTrackingSystemModel.FK_Batch_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="Batch" EntitySet="Batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dashboard_DashboardTable" Association="SalesTrackingSystemModel.FK_Dashboard_DashboardTable">
+            <End Role="DashboardTable" EntitySet="DashboardTables" />
+            <End Role="Dashboard" EntitySet="Dashboards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dashboard_DashboardType" Association="SalesTrackingSystemModel.FK_Dashboard_DashboardType">
+            <End Role="DashboardType" EntitySet="DashboardTypes" />
+            <End Role="Dashboard" EntitySet="Dashboards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Dashboard_Users" Association="SalesTrackingSystemModel.FK_Dashboard_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Dashboard" EntitySet="Dashboards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardColumn_Dashboard" Association="SalesTrackingSystemModel.FK_DashboardColumn_Dashboard">
+            <End Role="Dashboard" EntitySet="Dashboards" />
+            <End Role="DashboardColumn" EntitySet="DashboardColumns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardColumn_DashboardGivenColumn" Association="SalesTrackingSystemModel.FK_DashboardColumn_DashboardGivenColumn">
+            <End Role="DashboardGivenColumn" EntitySet="DashboardGivenColumns" />
+            <End Role="DashboardColumn" EntitySet="DashboardColumns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardColumn_DashboardTable" Association="SalesTrackingSystemModel.FK_DashboardColumn_DashboardTable">
+            <End Role="DashboardTable" EntitySet="DashboardTables" />
+            <End Role="DashboardColumn" EntitySet="DashboardColumns" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DashboardGivenColumn_DashboardTable" Association="SalesTrackingSystemModel.FK_DashboardGivenColumn_DashboardTable">
+            <End Role="DashboardTable" EntitySet="DashboardTables" />
+            <End Role="DashboardGivenColumn" EntitySet="DashboardGivenColumns" />
           </AssociationSet>
           <AssociationSet Name="FK_DistributonArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
@@ -621,6 +833,71 @@
           <Property Name="ProductID" Type="Int64" />
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="Batch" ToRole="ProductCategory" />
           <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Batch" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Dashboard">
+          <Key>
+            <PropertyRef Name="DashboardID" />
+          </Key>
+          <Property Name="DashboardID" Type="Int64" Nullable="false" />
+          <Property Name="UserID" Type="Int64" />
+          <Property Name="DashboardTableId" Type="Int64" />
+          <Property Name="DashboardTypeId" Type="Int64" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="ShowInHome" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="DashboardTable" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardTable" FromRole="Dashboard" ToRole="DashboardTable" />
+          <NavigationProperty Name="DashboardType" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardType" FromRole="Dashboard" ToRole="DashboardType" />
+          <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_Dashboard_Users" FromRole="Dashboard" ToRole="User" />
+          <NavigationProperty Name="DashboardColumns" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_Dashboard" FromRole="Dashboard" ToRole="DashboardColumn" />
+        </EntityType>
+        <EntityType Name="DashboardColumn">
+          <Key>
+            <PropertyRef Name="DashboardColumnId" />
+          </Key>
+          <Property Name="DashboardColumnId" Type="Int64" Nullable="false" />
+          <Property Name="DashboardTableId" Type="Int64" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="DashboardID" Type="Int64" />
+          <Property Name="DashboardGivenColumnId" Type="Int64" />
+          <NavigationProperty Name="Dashboard" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_Dashboard" FromRole="DashboardColumn" ToRole="Dashboard" />
+          <NavigationProperty Name="DashboardGivenColumn" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_DashboardGivenColumn" FromRole="DashboardColumn" ToRole="DashboardGivenColumn" />
+          <NavigationProperty Name="DashboardTable" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_DashboardTable" FromRole="DashboardColumn" ToRole="DashboardTable" />
+        </EntityType>
+        <EntityType Name="DashboardGivenColumn">
+          <Key>
+            <PropertyRef Name="DashboardGivenColumnId" />
+          </Key>
+          <Property Name="DashboardGivenColumnId" Type="Int64" Nullable="false" />
+          <Property Name="DashboardTableId" Type="Int64" />
+          <Property Name="ColumnName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DashboardColumns" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_DashboardGivenColumn" FromRole="DashboardGivenColumn" ToRole="DashboardColumn" />
+          <NavigationProperty Name="DashboardTable" Relationship="SalesTrackingSystemModel.FK_DashboardGivenColumn_DashboardTable" FromRole="DashboardGivenColumn" ToRole="DashboardTable" />
+        </EntityType>
+        <EntityType Name="DashboardTable">
+          <Key>
+            <PropertyRef Name="DashboardTableId" />
+          </Key>
+          <Property Name="DashboardTableId" Type="Int64" Nullable="false" />
+          <Property Name="TableName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Dashboards" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardTable" FromRole="DashboardTable" ToRole="Dashboard" />
+          <NavigationProperty Name="DashboardColumns" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_DashboardTable" FromRole="DashboardTable" ToRole="DashboardColumn" />
+          <NavigationProperty Name="DashboardGivenColumns" Relationship="SalesTrackingSystemModel.FK_DashboardGivenColumn_DashboardTable" FromRole="DashboardTable" ToRole="DashboardGivenColumn" />
+        </EntityType>
+        <EntityType Name="DashboardType">
+          <Key>
+            <PropertyRef Name="DashboardTypeID" />
+          </Key>
+          <Property Name="DashboardTypeID" Type="Int64" Nullable="false" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Dashboards" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardType" FromRole="DashboardType" ToRole="Dashboard" />
         </EntityType>
         <EntityType Name="DistributonArea">
           <Key>
@@ -820,6 +1097,7 @@
           <Property Name="UsersStatus" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Dashboards" Relationship="SalesTrackingSystemModel.FK_Dashboard_Users" FromRole="User" ToRole="Dashboard" />
           <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="User" ToRole="Distributor" />
           <NavigationProperty Name="UserProfiles" Relationship="SalesTrackingSystemModel.FK_UserProfile_Users" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfile" Relationship="SalesTrackingSystemModel.FK_Users_UserProfile" FromRole="User" ToRole="UserProfile" />
@@ -864,6 +1142,100 @@
             </Principal>
             <Dependent Role="Batch">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dashboard_DashboardTable">
+          <End Type="SalesTrackingSystemModel.DashboardTable" Role="DashboardTable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SalesTrackingSystemModel.Dashboard" Role="Dashboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardTable">
+              <PropertyRef Name="DashboardTableId" />
+            </Principal>
+            <Dependent Role="Dashboard">
+              <PropertyRef Name="DashboardTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dashboard_DashboardType">
+          <End Type="SalesTrackingSystemModel.DashboardType" Role="DashboardType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SalesTrackingSystemModel.Dashboard" Role="Dashboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardType">
+              <PropertyRef Name="DashboardTypeID" />
+            </Principal>
+            <Dependent Role="Dashboard">
+              <PropertyRef Name="DashboardTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Dashboard_Users">
+          <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SalesTrackingSystemModel.Dashboard" Role="Dashboard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Dashboard">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardColumn_Dashboard">
+          <End Type="SalesTrackingSystemModel.Dashboard" Role="Dashboard" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.DashboardColumn" Role="DashboardColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dashboard">
+              <PropertyRef Name="DashboardID" />
+            </Principal>
+            <Dependent Role="DashboardColumn">
+              <PropertyRef Name="DashboardID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardColumn_DashboardGivenColumn">
+          <End Type="SalesTrackingSystemModel.DashboardGivenColumn" Role="DashboardGivenColumn" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.DashboardColumn" Role="DashboardColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardGivenColumn">
+              <PropertyRef Name="DashboardGivenColumnId" />
+            </Principal>
+            <Dependent Role="DashboardColumn">
+              <PropertyRef Name="DashboardGivenColumnId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardColumn_DashboardTable">
+          <End Type="SalesTrackingSystemModel.DashboardTable" Role="DashboardTable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SalesTrackingSystemModel.DashboardColumn" Role="DashboardColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardTable">
+              <PropertyRef Name="DashboardTableId" />
+            </Principal>
+            <Dependent Role="DashboardColumn">
+              <PropertyRef Name="DashboardTableId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DashboardGivenColumn_DashboardTable">
+          <End Type="SalesTrackingSystemModel.DashboardTable" Role="DashboardTable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SalesTrackingSystemModel.DashboardGivenColumn" Role="DashboardGivenColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DashboardTable">
+              <PropertyRef Name="DashboardTableId" />
+            </Principal>
+            <Dependent Role="DashboardGivenColumn">
+              <PropertyRef Name="DashboardTableId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1085,6 +1457,63 @@
                 <ScalarProperty Name="ProductCategoryId" ColumnName="ProductCategoryId" />
                 <ScalarProperty Name="BatchName" ColumnName="BatchName" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dashboards">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.Dashboard">
+              <MappingFragment StoreEntitySet="Dashboard">
+                <ScalarProperty Name="ShowInHome" ColumnName="ShowInHome" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DashboardTypeId" ColumnName="DashboardTypeId" />
+                <ScalarProperty Name="DashboardTableId" ColumnName="DashboardTableId" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DashboardID" ColumnName="DashboardID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashboardColumns">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DashboardColumn">
+              <MappingFragment StoreEntitySet="DashboardColumn">
+                <ScalarProperty Name="DashboardGivenColumnId" ColumnName="DashboardGivenColumnId" />
+                <ScalarProperty Name="DashboardID" ColumnName="DashboardID" />
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="DashboardTableId" ColumnName="DashboardTableId" />
+                <ScalarProperty Name="DashboardColumnId" ColumnName="DashboardColumnId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashboardGivenColumns">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DashboardGivenColumn">
+              <MappingFragment StoreEntitySet="DashboardGivenColumn">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ColumnName" ColumnName="ColumnName" />
+                <ScalarProperty Name="DashboardTableId" ColumnName="DashboardTableId" />
+                <ScalarProperty Name="DashboardGivenColumnId" ColumnName="DashboardGivenColumnId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashboardTables">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DashboardTable">
+              <MappingFragment StoreEntitySet="DashboardTable">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="DashboardTableId" ColumnName="DashboardTableId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DashboardTypes">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DashboardType">
+              <MappingFragment StoreEntitySet="DashboardType">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="DashboardTypeID" ColumnName="DashboardTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

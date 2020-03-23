@@ -12,39 +12,26 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class DashboardTable
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public DashboardTable()
         {
             this.Dashboards = new HashSet<Dashboard>();
-            this.UserProfiles = new HashSet<UserProfile>();
-            this.UserProfileDetails = new HashSet<UserProfileDetail>();
-            this.Verifications = new HashSet<Verification>();
+            this.DashboardColumns = new HashSet<DashboardColumn>();
+            this.DashboardGivenColumns = new HashSet<DashboardGivenColumn>();
         }
     
-        public long UserID { get; set; }
-        public Nullable<long> UserProfileID { get; set; }
-        public Nullable<long> DistrubitorID { get; set; }
-        public string FullName { get; set; }
-        public string PasswordHash { get; set; }
-        public string Email { get; set; }
-        public string Token { get; set; }
-        public long MobileNo { get; set; }
-        public string ImageString { get; set; }
-        public Nullable<int> UsersStatus { get; set; }
+        public long DashboardTableId { get; set; }
+        public string TableName { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dashboard> Dashboards { get; set; }
-        public virtual Distributor Distributor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserProfile> UserProfiles { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
+        public virtual ICollection<DashboardColumn> DashboardColumns { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserProfileDetail> UserProfileDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Verification> Verifications { get; set; }
+        public virtual ICollection<DashboardGivenColumn> DashboardGivenColumns { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace Services.Service
                 }
             }
         }
-            public List<ModuleAction_Model> DisplayTable()
+        public List<ModuleAction_Model> DisplayTable()
         {
             using (var _dbContext = new SalesTrackingSystemEntities())
             {
@@ -38,14 +38,14 @@ namespace Services.Service
                                 join module in _dbContext.Modules on moduleAction.ModuleID equals module.ModuleID
                                 select new ModuleAction_Model()
                                 {
-                                  ModuleActionID=moduleAction.ModuleActionID,
-                                  ModuleID=moduleAction.ModuleID,
-                                  ActionName=moduleAction.ActionName,
-                                  ActionStatus=moduleAction.ActionStatus,
-                                  Description=moduleAction.Description,
-                                  ModuleName = module.ModuleName,
-                                  ControllerName = module.ControllerName,
-                                  ModuleStatus=module.ModuleStatus
+                                    ModuleActionID = moduleAction.ModuleActionID,
+                                    ModuleID = moduleAction.ModuleID,
+                                    ActionName = moduleAction.ActionName,
+                                    ActionStatus = moduleAction.ActionStatus,
+                                    Description = moduleAction.Description,
+                                    ModuleName = module.ModuleName,
+                                    ControllerName = module.ControllerName,
+                                    ModuleStatus = module.ModuleStatus
                                 }).ToList();
                     return data;
                 }
@@ -98,7 +98,7 @@ namespace Services.Service
                                     ModuleID = moduleActions.ModuleID,
                                     ActionName = moduleActions.ActionName,
                                     ActionStatus = moduleActions.ActionStatus,
-                                    Description = moduleActions.Description,                  
+                                    Description = moduleActions.Description,
                                 }).FirstOrDefault();
                     return data;
                 }
@@ -116,10 +116,10 @@ namespace Services.Service
                 try
                 {
                     var data = new ModuleAction()
-                    {                       
+                    {
                         ModuleID = action.ModuleID,
                         ActionName = action.ActionName,
-                        ActionStatus = action.ActionStatus,                                          
+                        ActionStatus = action.ActionStatus,
                         Description = action.Description
                     };
                     _dbContext.ModuleActions.Add(data);

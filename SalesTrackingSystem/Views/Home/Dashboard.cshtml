@@ -1,16 +1,109 @@
-﻿
+﻿@model Models.Users_Model
+@using Models
+@{
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+}
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Page = "Dashboard";
 }
 
+<div class="row ">
+    <div class="col-sm-12 container">
+        <form action="#" method="post">
+            <div class="card ">
+                <div class="card-header">
+                    <strong class="card-title mb-3">Dashbord settings</strong>
+                    <a class="btn btn-danger btn-md text-white" style="float: right;" href="#">
+                        <i class="fas fa-close"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            <label for="" class="form-control-label">Plugin for (Table)</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="" id="" class="form-control">
+                                <option selected disabled>Please select table</option>
+                                <option value="">Distributor</option>
+                                <option value="">Reseller</option>
+                                <option value="">Product</option>
+                                <option value="">Distribution area</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="" class="form-control-label">Type</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="" id="" class="form-control">
+                                <option selected disabled>Please select</option>
+                                <option value="">Graph</option>
+                                <option value="">CountDown</option>
+                                <option value="">Chart</option>
+                                <option value="">Table</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            <label for="" class="form-control-label">Column 1</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="" id="" class="form-control">
+                                <option selected disabled>Please select</option>
+                                <option value="">Distributor</option>
+                                <option value="">Reseller</option>
+                                <option value="">Product</option>
+                                <option value="">Distribution area</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <label for="" class="form-control-label">Column 2</label>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="" id="" class="form-control">
+                                <option selected disabled>Please select</option>
+                                <option value="">Distributor</option>
+                                <option value="">Reseller</option>
+                                <option value="">Product</option>
+                                <option value="">Distribution area</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+                    <div class="col-sm-1 float-right btn-success text-center">
+                        <i class="fas fa-plus"></i> Add
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="row">
+    @if (SessionVariable.ProfileName=="Developer")
+    {
+        <div class="col-12 p-b-20">
+            <a href="~/Dashboard/Settings" class="btn btn-secondary text-white" style="float: right;">
+                <i class="fas fa-cogs"></i> Dashboard Settings
+            </a>
+        </div>
+    }
     <div class="col-md-12">
         <div class="overview-wrap">
             <h2 class="title-1">overview</h2>
-            <button class="au-btn au-btn-icon au-btn--blue">
-                <i class="zmdi zmdi-plus"></i>add item
+            <button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add item
             </button>
         </div>
     </div>

@@ -56,6 +56,21 @@
     <Compile Include="Batch.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dashboard.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardColumn.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardGivenColumn.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardTable.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DashboardType.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DistributonArea.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>

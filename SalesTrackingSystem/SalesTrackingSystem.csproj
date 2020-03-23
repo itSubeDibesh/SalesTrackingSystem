@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -536,6 +537,13 @@
     <Content Include="Views\User\Users_Update.cshtml" />
     <Content Include="Views\Home\Setting.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\Settings.cshtml" />
+    <Content Include="Views\Dashboard\TypeAdd.cshtml" />
+    <Content Include="Views\Dashboard\TypeEdit.cshtml" />
+    <Content Include="Views\Dashboard\TableAdd.cshtml" />
+    <Content Include="Views\Dashboard\TableEdit.cshtml" />
+    <Content Include="Views\Dashboard\ColumnAdd.cshtml" />
+    <Content Include="Views\Dashboard\ColumnEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

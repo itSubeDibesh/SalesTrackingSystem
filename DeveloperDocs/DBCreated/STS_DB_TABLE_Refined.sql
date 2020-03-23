@@ -7,8 +7,8 @@ CREATE TABLE Batch(
 	QunatityProduced	DECIMAL(10,2)	NOT NULL,
 	UnitPrice			DECIMAL(10,2)	NOT NULL,
 	StockLeft			BIGINT			NULL,
-	DateProduced		DATETIME		NOT NULL,
-	ExpiryDate			DATETIME		NOT NULL,
+	DateProduced		NVARCHAR(10)	NOT NULL,
+	ExpiryDate			NVARCHAR(10)	NOT NULL,
 	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
 	DateUpdated			DATETIME		NULL
 );
@@ -47,12 +47,12 @@ BEGIN
     ON Distributors.DistrubitorID = d.DistrubitorID
 END
 GO
-CREATE TABLE DistributonArea(
-	DistributonAreaID	BIGINT			PRIMARY KEY,
+CREATE TABLE DistributorArea(
+	DistributorAreaID	BIGINT			PRIMARY KEY,
 	DistrubitorID		BIGINT			NULL,			/*FK*/
 	State				VARCHAR(50)		NULL,
 	District			VARCHAR(50)		NULL,
-	Ciry				VARCHAR(50)		NULL,
+	City				VARCHAR(50)		NULL,
 	Address				VARCHAR(50)		NULL,
 	Latitude			VARCHAR(50)		NULL,
 	Longitude			VARCHAR(50)		NULL,	
@@ -60,12 +60,12 @@ CREATE TABLE DistributonArea(
 	DateUpdated			DATETIME		NULL	
 );
 GO
-CREATE TRIGGER Trigger_UPDATE_DistributonArea on DistributonArea FOR UPDATE AS            
+CREATE TRIGGER Trigger_UPDATE_DistributorArea on DistributorArea FOR UPDATE AS            
 BEGIN
-    UPDATE DistributonArea
+    UPDATE DistributorArea
     SET DateUpdated=getdate()
-    FROM DistributonArea INNER JOIN deleted d
-    ON DistributonArea.DistributonAreaID = d.DistributonAreaID
+    FROM DistributorArea INNER JOIN deleted d
+    ON DistributorArea.DistributorAreaID = d.DistributorAreaID
 END
 GO
 CREATE TABLE Module(
@@ -276,9 +276,9 @@ ALTER TABLE Batch
 GO
 
 
-/*---------------------------------2	FK_DistributonArea_Distributors	-------------------------------------*/
-ALTER TABLE DistributonArea
-   ADD CONSTRAINT FK_DistributonArea_Distributors FOREIGN KEY (DistrubitorID)
+/*---------------------------------2	FK_DistributorArea_Distributors	-------------------------------------*/
+ALTER TABLE DistributorArea
+   ADD CONSTRAINT FK_DistributorArea_Distributors FOREIGN KEY (DistrubitorID)
       REFERENCES Distributors (DistrubitorID)
       ON DELETE CASCADE
       ON UPDATE CASCADE
@@ -426,3 +426,139 @@ ADD CONSTRAINT FK_Batch_Products FOREIGN KEY (ProductID)
       REFERENCES Products (ProductID)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
+GO
+
+/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------(March 22 2020) Dashboard Add ---------------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+CREATE TABLE Dashboard(
+	DashboardID			BIGINT			PRIMARY KEY,
+	UserID				BIGINT			NULL,/*FK*/	
+	DashboardTableId	BIGINT			NULL,/*FK*/	
+	DashboardTypeId		BIGINT			NULL,/*FK*/	
+	ShowInHome			BIT				NOT NULL		DEFAULT(0),
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_Dashboard on Dashboard FOR UPDATE AS            
+BEGIN
+    UPDATE Dashboard
+    SET DateUpdated=getdate()
+    FROM Dashboard INNER JOIN deleted d
+    ON Dashboard.DashboardID = d.DashboardID
+END
+GO
+CREATE TABLE DashboardType(
+	DashboardTypeID		BIGINT			PRIMARY KEY,
+	TypeName			VARCHAR(100)	NOT NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_DashboardType on DashboardType FOR UPDATE AS            
+BEGIN
+    UPDATE DashboardType
+    SET DateUpdated=getdate()
+    FROM DashboardType INNER JOIN deleted d
+    ON DashboardType.DashboardTypeID = d.DashboardTypeID
+END
+GO
+CREATE TABLE DashboardTable(
+	DashboardTableId	BIGINT			PRIMARY KEY,
+	TableName			VARCHAR(100)	NOT NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_DashboardTable on DashboardTable FOR UPDATE AS            
+BEGIN
+    UPDATE DashboardTable
+    SET DateUpdated=getdate()
+    FROM DashboardTable INNER JOIN deleted d
+    ON DashboardTable.DashboardTableId = d.DashboardTableId
+END
+GO
+CREATE TABLE DashboardGivenColumn(
+	DashboardGivenColumnId	BIGINT			PRIMARY KEY,
+	DashboardTableId	BIGINT			NULL,/*FK*/	
+	ColumnName			VARCHAR(100)	NOT NULL,	
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_DashboardGivenColumn on DashboardGivenColumn FOR UPDATE AS            
+BEGIN
+    UPDATE DashboardGivenColumn
+    SET DateUpdated=getdate()
+    FROM DashboardGivenColumn INNER JOIN deleted d
+    ON DashboardGivenColumn.DashboardGivenColumnId = d.DashboardGivenColumnId
+END
+GO
+CREATE TABLE DashboardColumn(
+	DashboardColumnId	BIGINT			PRIMARY KEY,
+	DashboardTableId	BIGINT			NULL,/*FK*/	
+	DashboardID			BIGINT			NULL,/*FK*/	
+	DashboardGivenColumnId			BIGINT			NULL,/*FK*/	
+	Color				VARCHAR(100)	NOT NULL,
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_DashboardColumn on DashboardColumn FOR UPDATE AS            
+BEGIN
+    UPDATE DashboardColumn
+    SET DateUpdated=getdate()
+    FROM DashboardColumn INNER JOIN deleted d
+    ON DashboardColumn.DashboardColumnId = d.DashboardColumnId
+END
+GO
+/*---------------------------------18	FK_Dashboard_Users	-------------------------------------*/
+Alter TABLE Dashboard
+ADD CONSTRAINT FK_Dashboard_Users FOREIGN KEY (UserID)
+      REFERENCES Users (UserID)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+GO
+/*---------------------------------19	FK_Dashboard_DashboardTable	-------------------------------------*/
+Alter TABLE Dashboard
+ADD CONSTRAINT FK_Dashboard_DashboardTable FOREIGN KEY (DashboardTableId)
+      REFERENCES DashboardTable (DashboardTableId)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+GO
+/*---------------------------------20	FK_Dashboard_DashboardType	-------------------------------------*/
+Alter TABLE Dashboard
+ADD CONSTRAINT FK_Dashboard_DashboardType FOREIGN KEY (DashboardTypeId)
+      REFERENCES DashboardType (DashboardTypeId)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+GO
+/*---------------------------------21	FK_DashboardColumn_DashboardTable	-------------------------------------*/
+Alter TABLE DashboardColumn
+ADD CONSTRAINT FK_DashboardColumn_DashboardTable FOREIGN KEY (DashboardTableId)
+      REFERENCES DashboardTable (DashboardTableId)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+GO
+/*---------------------------------22	FK_DashboardColumn_Dashboard	-------------------------------------*/
+Alter TABLE DashboardColumn
+ADD CONSTRAINT FK_DashboardColumn_Dashboard FOREIGN KEY (DashboardID)
+      REFERENCES Dashboard (DashboardID)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+GO
+/*---------------------------------23	FK_DashboardGivenColumn_DashboardTable	-------------------------------------*/
+Alter TABLE DashboardGivenColumn
+ADD CONSTRAINT FK_DashboardGivenColumn_DashboardTable FOREIGN KEY (DashboardTableId)
+      REFERENCES DashboardTable (DashboardTableId)
+      ON DELETE CASCADE
+      ON UPDATE CASCADE
+GO
+/*---------------------------------24	FK_DashboardColumn_DashboardGivenColumn	-------------------------------------*/
+Alter TABLE DashboardColumn
+ADD CONSTRAINT FK_DashboardColumn_DashboardGivenColumn FOREIGN KEY (DashboardGivenColumnId)
+      REFERENCES DashboardGivenColumn (DashboardGivenColumnId)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+GO

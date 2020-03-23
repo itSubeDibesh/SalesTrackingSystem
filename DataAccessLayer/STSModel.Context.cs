@@ -26,6 +26,11 @@ namespace DataAccessLayer
         }
     
         public virtual DbSet<Batch> Batches { get; set; }
+        public virtual DbSet<Dashboard> Dashboards { get; set; }
+        public virtual DbSet<DashboardColumn> DashboardColumns { get; set; }
+        public virtual DbSet<DashboardGivenColumn> DashboardGivenColumns { get; set; }
+        public virtual DbSet<DashboardTable> DashboardTables { get; set; }
+        public virtual DbSet<DashboardType> DashboardTypes { get; set; }
         public virtual DbSet<DistributonArea> DistributonAreas { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<Module> Modules { get; set; }

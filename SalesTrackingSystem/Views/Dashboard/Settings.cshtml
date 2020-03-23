@@ -1,0 +1,458 @@
+﻿@model Models.Users_Model
+@using Models
+@using Services.Interface
+@using Services.Service
+@{
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+    DashboardTable_Interface dashboardTable = new DashboardTable_Service();
+    DashboardType_Interface dashboardType = new DashboardType_Service();
+    DashboardGivenColumn_Interface dashboardGivenColumn = new DashboardGivenColumn_Service();
+}
+@{
+    ViewBag.Title = "Dashboard Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.AppName = "Tinjure tea factory";
+    ViewBag.Page = "Settings";
+    int SearialNumberTable = 1;
+    int SearialNumberType = 1;
+    int SearialNumberColumn = 1;
+    ViewBag.ActionTable = "Add";
+    ViewBag.ActionColumn = "Add";
+    ViewBag.ActionType = "Add";
+}
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
+<div class="row">
+    <div class="col-12">
+        <div class="overview-wrap">
+            <div class="title-1">
+                <h4><a href="">@ViewBag.AppName</a> > Dashboard > @ViewBag.Page</h4>
+            </div>
+        </div>
+        <br /><br />
+    </div>
+</div>
+@if (ViewBag.TypeAddError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TypeAdd').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.EditTypeDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TypeUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateTypeError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TypeUpdate').slideDown();
+        }
+    </script>
+}
+
+
+@if (ViewBag.TableAddError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TableAdd').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.EditTableDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TableUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateTableError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TableUpdate').slideDown();
+        }
+    </script>
+}
+
+
+@if (ViewBag.ColumnAddError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ColumnAdd').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.EditColumnDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ColumnUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateColumnError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#ColumnUpdate').slideDown();
+        }
+    </script>
+}
+
+
+<div class="row">
+    @if (ViewBag.ActionType == "Add")
+    {
+        @Html.Partial("TypeAdd")
+    }
+    @if (Request.Params.Get("action") == "TypeUpdate")
+    {
+        if (dashboardType.DashboardType_Exists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("TypeEdit", dashboardType.DashboardTypeByID(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " Type couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.UpdateTypeData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateTypeData);
+        if (dashboardType.DashboardType_Exists(uaid))
+        {
+            @Html.Partial("TypeEdit", dashboardType.DashboardTypeByID(uaid));
+        }
+        else
+        {
+            Session["Error"] = " Type couldn't be found please retry!!";
+        }
+    }
+
+
+    @if (ViewBag.ActionTable == "Add")
+    {
+        @Html.Partial("TableAdd")
+    }
+    @if (Request.Params.Get("action") == "TableUpdate")
+    {
+        if (dashboardTable.DashboardTable_Exists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("TableEdit", dashboardTable.DashboardTableByID(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " Table couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.UpdateTableData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateTableData);
+        if (dashboardTable.DashboardTable_Exists(uaid))
+        {
+            @Html.Partial("TableEdit", dashboardTable.DashboardTableByID(uaid));
+        }
+        else
+        {
+            Session["Error"] = " Table couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.ActionColumn == "Add")
+    {
+        @Html.Partial("ColumnAdd")
+    }
+    @if (Request.Params.Get("action") == "ColumnUpdate")
+    {
+        if (dashboardGivenColumn.DashboardGivenColumn_Exists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("ColumnEdit", dashboardGivenColumn.DashboardGivenColumnByID(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " Column couldn't be found please retry!!";
+        }
+    }
+
+    @if (ViewBag.UpdateColumnData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateColumnData);
+        if (dashboardGivenColumn.DashboardGivenColumn_Exists(uaid))
+        {
+            @Html.Partial("ColumnEdit", dashboardGivenColumn.DashboardGivenColumnByID(uaid));
+        }
+        else
+        {
+            Session["Error"] = " Column couldn't be found please retry!!";
+        }
+    }
+
+
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-header">
+                <strong> Type List</strong>
+                <button class="btn btn-primary " style="float: right;" onclick="javascript: $('#TypeAdd').slideDown()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-scroable-table-module table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Type Name</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (SessionVariable.ProfileName == "Developer")
+                        {
+                            foreach (var type in dashboardType.DisplayTable())
+                            {
+                                if (type != null)
+                                {
+                                    <tr>
+                                        <td style="text-align: center;">@(SearialNumberType++)</td>
+                                        <td style="text-align: center;">@type.TypeName </td>
+                                        <td style="padding-left:10%;">
+                                            <a href="~/Dashboard/TypeEdit?action=TypeUpdate&uaid=@type.DashboardTypeID"> <i class="fas fa-edit" style="color:green;"></i></a> |
+                                            <a href="#" onclick="DeleteAndNotifyType(@type.DashboardTypeID,'@type.TypeName')"><i class="fas fa-trash" style="color:red;"></i></a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-header">
+                <strong> Table List</strong>
+                <button class="btn btn-primary " style="float: right;" onclick="javascript: $('#TableAdd').slideDown()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-scroable-table-module table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Table Name</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (SessionVariable.ProfileName == "Developer")
+                        {
+                            foreach (var table in dashboardTable.DisplayTable())
+                            {
+                                if (table != null)
+                                {
+                                    <tr>
+                                        <td style="text-align: center;">@(SearialNumberTable++)</td>
+                                        <td style="text-align: center;">@table.TableName</td>
+                                        <td style="padding-left:10%;">
+                                            <a href="~/Dashboard/TableEdit?action=TableUpdate&uaid=@table.DashboardTableId"> <i class="fas fa-edit" style="color:green;"></i></a> |
+                                            <a href="#" onclick="DeleteAndNotifyTable(@table.DashboardTableId,'@table.TableName')"><i class="fas fa-trash" style="color:red;"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                <strong> Allowed Column List</strong>
+                <button class="btn btn-primary " style="float: right;" onclick="javascript: $('#ColumnAdd').slideDown()">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+            <div class="card-body card-block">
+                <table class="dynamic-table-action table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="text-align: center;">SN</th>
+                            <th style="text-align: center;">Table Name</th>
+                            <th style="text-align: center;">Column Name</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (SessionVariable.ProfileName == "Developer")
+                        {
+                            foreach (var colunm in dashboardGivenColumn.DisplayTable())
+                            {
+                                if (colunm != null)
+                                {
+                                    <tr>
+                                        <td style="text-align: center;">@(SearialNumberColumn++)</td>
+                                        <td style="text-align: center;">@colunm.TableName</td>
+                                        <td style="text-align: center;">@colunm.ColumnName</td>
+                                        <td style="padding-left:8%;">
+                                            <a href="~/Dashboard/ColumnEdit?action=ColumnUpdate&uaid=@colunm.DashboardGivenColumnId"> <i class="fas fa-edit" style="color:green;"></i></a> |
+                                            <a href="#" onclick="DeleteAndNotifyColumn(@colunm.DashboardGivenColumnId,'@colunm.ColumnName')"><i class="fas fa-trash" style="color:red;"></i></a>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $('.dynamic-scroable-table-module').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                paging: !1,
+                "searching": false,
+                "bPaginate": false,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": false,
+                "bAutoWidth": false
+            });
+        });
+        $(function () {
+            $('.dynamic-table-action').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ]
+            });
+        });
+        function DeleteAndNotifyType(id, value) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " Type, all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.DashboardTypeID = id;
+                        data.TypeName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/Dashboard/TypeDelete",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/Dashboard/Settings"
+                                });
+                            }
+                        });
+                    }
+                });
+        }
+        function DeleteAndNotifyTable(id, value) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " Table, all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.DashboardTableId = id;
+                        data.TableName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/Dashboard/TableDelete",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/Dashboard/Settings"
+                                });
+                            }
+                        });
+                    }
+                });
+        }
+        function DeleteAndNotifyColumn(id, value) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to delete " + value + " Table, all the related data will be deleted!",
+                icon: "warning",
+                closeOnEsc: false,
+                closeOnClickOutside: false,
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        var data = {};
+                        data.DashboardGivenColumnId = id;
+                        data.ColumnName = value;
+                        $.ajax({
+                            type: "POST",
+                            url: "/Dashboard/ColumnDelete",
+                            dataType: "json",
+                            data: JSON.stringify(data),
+                            contentType: "application/json; charset=utf-8",
+                            success: function (response) {
+                                swal("Poof all gone! " + response, {
+                                    icon: "success",
+                                }).then(function () {
+                                    window.location.href = "/Dashboard/Settings"
+                                });
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
+}
