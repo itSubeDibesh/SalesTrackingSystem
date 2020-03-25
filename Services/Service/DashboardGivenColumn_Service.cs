@@ -98,7 +98,7 @@ namespace Services.Service
                                     ColumnName=givenColumn.ColumnName,
                                     DateCreated=givenColumn.DateCreated,
                                     DateUpdated=givenColumn.DateUpdated
-                                }).ToList();
+                                }).ToList().OrderBy(givenColumn=> givenColumn.ColumnName).ToList();
                     return data;
                 }
                 catch (Exception)

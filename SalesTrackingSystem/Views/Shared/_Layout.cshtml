@@ -349,7 +349,7 @@
 @Scripts.Render("~/bundles/js")
 @RenderSection("scripts", required: false)
 </html>
-<script>
+@*<script>
     document.addEventListener('contextmenu', event => event.preventDefault());
     document.onkeypress = function (event) {
         event = (event || window.event);
@@ -397,7 +397,7 @@
         }
     }, 1000)
 
-    @*var timeoutID;
+    var timeoutID;
 
 function setup() {
     this.addEventListener("mousemove", resetTimer, false);
@@ -412,8 +412,7 @@ function setup() {
 }
 setup();
 
-function startTimer() {
-    // wait 2 seconds before calling goInactive
+function startTimer() {    
     timeoutID = window.setTimeout(goInactive, 300000);
 }
 
@@ -429,5 +428,5 @@ function goInactive() {
 
 function goActive() {
     startTimer();
-}*@
-</script>
+}
+</script>*@

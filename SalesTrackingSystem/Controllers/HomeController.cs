@@ -23,7 +23,12 @@ namespace SalesTrackingSystem.Controllers
         {
             return View("Index");
         }
-      
+        [HttpPost]
+        public ActionResult Index(List<DashboardColumn_Model> dashboards)
+        {
+            return View("Index");
+        }
+
         public ActionResult Setting()
         {
             return View("Setting");

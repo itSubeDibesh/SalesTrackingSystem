@@ -92,7 +92,7 @@ namespace Services.Service
                                     TableName = table.TableName,
                                     DateCreated = table.DateCreated,
                                     DateUpdated = table.DateUpdated
-                                }).ToList();
+                                }).ToList().OrderBy(table=> table.TableName).ToList();
                     return data;
                 }
                 catch (Exception)

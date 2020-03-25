@@ -544,6 +544,7 @@
     <Content Include="Views\Dashboard\TableEdit.cshtml" />
     <Content Include="Views\Dashboard\ColumnAdd.cshtml" />
     <Content Include="Views\Dashboard\ColumnEdit.cshtml" />
+    <Content Include="Views\Home\DashboardAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

@@ -1,0 +1,106 @@
+﻿@model DashboardColumn_Model
+@using Services.Interface
+@using Services.Service
+@using Models
+@{
+    DashboardGivenColumn_Interface column = new DashboardGivenColumn_Service();
+    DashboardTable_Interface table = new DashboardTable_Service();
+    DashboardType_Interface type = new DashboardType_Service();
+    List<DashboardColumn_Model> column_Models = new List<DashboardColumn_Model>();
+}
+<form method="get" action="~/Home/Index">
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-md-2 col-sm-6">
+                <label for="" class="form-control-label">Plugin for (Category)</label>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <select name="DashboardTableId" id="DashboardTableId" class="form-control">
+                    <option selected disabled>Select Category</option>
+                    @foreach (var Table in table.DisplayTable())
+                    {
+                        if (Table != null)
+                        {
+                            <option value="@Table.DashboardTableId">@Table.TableName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-2 col-sm-6">
+                <label for="" class="form-control-label">Plugin Type</label>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <select name="DashboardTypeID" id="DashboardTypeID" class="form-control">
+                    <option selected disabled>Select Type</option>
+                    @foreach (var Type in type.DisplayTable())
+                    {
+                        if (Type != null)
+                        {
+                            <option value="@Type.DashboardTypeID">@Type.TypeName</option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-2 col-sm-6">
+                <label for="" class="form-control-label">Display in Hompage</label>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <select name="ShowInHome" id="ShowInHome" class="form-control">
+                    <option selected disabled>Please select</option>
+                    <option value="1">Yes</option>
+                    <option value="0">NO</option>
+                </select>
+            </div>
+        </div>
+        <div class="row form-group" id="ColumnSelect">
+            <hr />
+            <div class="col-sm-8 container-fluid m-l-500">
+                <table id="tableColumns" class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width:150px">Column</th>
+                            <th style="width:150px">Color</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var Column in column_Models)
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><input type="button" value="Remove" onclick="Remove(this)" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td  class="form-control">
+                                <select name="DashboardGivenColumnId" id="DashboardGivenColumnId">
+                                    <option selected disabled>Select Type</option>
+                                    @foreach (var Column in column.DisplayTable())
+                                    {
+                                        if (Column != null)
+                                        {
+                                            <option value="@Column.DashboardGivenColumnId">@Column.ColumnName</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <input type="color" name="color" id="color" class="au-input au-input--full">
+                            </td>
+                            <td><input type="button" id="btnAdd" value="Add" /></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+       <input type="submit" class="btn btn-success btn-sm" id="AddDashboard" value="Add">
+    </div>
+</form>

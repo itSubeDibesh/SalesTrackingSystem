@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DashboardColumn_Model.cs" />
     <Compile Include="DashboardGivenColumn_Model.cs" />
     <Compile Include="DashboardTable_Model.cs" />
     <Compile Include="DashboardType_Model.cs" />
