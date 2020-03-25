@@ -537,13 +537,13 @@
     <Content Include="Views\User\Users_Update.cshtml" />
     <Content Include="Views\Home\Setting.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
-    <Content Include="Views\Dashboard\Settings.cshtml" />
-    <Content Include="Views\Dashboard\TypeAdd.cshtml" />
-    <Content Include="Views\Dashboard\TypeEdit.cshtml" />
-    <Content Include="Views\Dashboard\TableAdd.cshtml" />
-    <Content Include="Views\Dashboard\TableEdit.cshtml" />
     <Content Include="Views\Dashboard\ColumnAdd.cshtml" />
     <Content Include="Views\Dashboard\ColumnEdit.cshtml" />
+    <Content Include="Views\Dashboard\Settings.cshtml" />
+    <Content Include="Views\Dashboard\TableAdd.cshtml" />
+    <Content Include="Views\Dashboard\TableEdit.cshtml" />
+    <Content Include="Views\Dashboard\TypeAdd.cshtml" />
+    <Content Include="Views\Dashboard\TypeEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj">

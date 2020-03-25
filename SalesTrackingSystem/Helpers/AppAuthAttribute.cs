@@ -43,8 +43,12 @@ namespace SalesTrackingSystem.Helpers
                         {
                             filterContext.Result = new RedirectResult("~/Error/E401");
                         }
-                    }                   
+                    }
 
+                    if (HttpContext.Current.Request.Url.AbsolutePath.StartsWith("/Dashboard/"))
+                    {
+                        filterContext.Result = new RedirectResult("~/Error/E401");
+                    }
                 }
 
                 if (HttpContext.Current.Response.StatusCode==404)

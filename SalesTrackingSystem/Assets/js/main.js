@@ -246,7 +246,7 @@
           }
         }
       });
-    }
+      }
 
     // Recent Report
     const brandProduct = 'rgba(0,181,233,0.8)'
