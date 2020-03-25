@@ -17,7 +17,6 @@ namespace DataAccessLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ModuleAction()
         {
-            this.ExceptionUserProfiles = new HashSet<ExceptionUserProfile>();
             this.UserProfileDetails = new HashSet<UserProfileDetail>();
         }
     
@@ -26,11 +25,9 @@ namespace DataAccessLayer
         public string ActionName { get; set; }
         public Nullable<bool> ActionStatus { get; set; }
         public string Description { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExceptionUserProfile> ExceptionUserProfiles { get; set; }
         public virtual Module Module { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProfileDetail> UserProfileDetails { get; set; }

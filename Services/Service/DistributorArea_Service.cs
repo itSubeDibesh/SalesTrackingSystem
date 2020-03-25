@@ -17,7 +17,7 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = _context.DistributorAreas.Where(distArea => distArea.DistributonAreaID == DistributorAreaId).FirstOrDefault();
+                    var data = _context.DistributorAreas.Where(distArea => distArea.DistributorAreaID == DistributorAreaId).FirstOrDefault();
                     _context.DistributorAreas.Remove(data);
                     _context.SaveChanges();
                     return true;
@@ -35,12 +35,12 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = (from DistributorArea in _dbContext.DistributorAreas.Where(distArea => distArea.DistributonAreaID == id)
+                    var data = (from DistributorArea in _dbContext.DistributorAreas.Where(distArea => distArea.DistributorAreaID == id)
                                 select new DistributorArea_Model()
                                 {
-                                    DistributonAreaID = DistributorArea.DistributonAreaID
+                                    DistributorAreaID = DistributorArea.DistributorAreaID
                                 }).FirstOrDefault();
-                    if (id != data.DistributonAreaID)
+                    if (id != data.DistributorAreaID)
                     {
                         return false;
                     }
@@ -62,17 +62,16 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = _context.DistributorAreas.Where(distArea => distArea.DistributonAreaID== id).Select(distArea => new DistributorArea_Model()
+                    var data = _context.DistributorAreas.Where(distArea => distArea.DistributorAreaID== id).Select(distArea => new DistributorArea_Model()
                     {
-                        DistributonAreaID = distArea.DistributonAreaID,
+                        DistributorAreaID = distArea.DistributorAreaID,
                         DistrubitorID = distArea.DistrubitorID,
                         City = distArea.City,
                         State = distArea.State,
                         District = distArea.District,
                         Address = distArea.Address,
                         Latitude = distArea.Latitude,
-                        Longitude = distArea.Longitude,
-                        IsDeleted = distArea.IsDeleted
+                        Longitude = distArea.Longitude
                     }).FirstOrDefault();
                     return data;
                 }
@@ -89,7 +88,7 @@ namespace Services.Service
             {
                 using (var _context = new SalesTrackingSystemEntities())
                 {
-                    var data = _context.DistributorAreas.Max(distArea => distArea.DistributonAreaID);
+                    var data = _context.DistributorAreas.Max(distArea => distArea.DistributorAreaID);
                     int id = Convert.ToInt32(data) + 1;
                     return id;
                 }
@@ -110,7 +109,7 @@ namespace Services.Service
                                 join dist in _context.Distributors on DistributorArea.DistrubitorID equals dist.DistrubitorID
                                 select new DistributorArea_Model()
                                 {
-                                    DistributonAreaID = DistributorArea.DistributonAreaID,
+                                    DistributorAreaID = DistributorArea.DistributorAreaID,
                                     DistrubitorID = DistributorArea.DistrubitorID,
                                     DistributorName = dist.DistrubitorName,
                                     State = DistributorArea.State,
@@ -118,8 +117,7 @@ namespace Services.Service
                                     City = DistributorArea.City,
                                     Address = DistributorArea.Address,
                                     Latitude = DistributorArea.Latitude,
-                                    Longitude = DistributorArea.Longitude,
-                                    IsDeleted = DistributorArea.IsDeleted,
+                                    Longitude = DistributorArea.Longitude
                                 }
                                 ).ToList().OrderBy(DistributorArea => DistributorArea.State).ToList();
                     return data;
@@ -140,7 +138,7 @@ namespace Services.Service
                 {
                     var data = new DistributorArea()
                     {
-                        DistributonAreaID = GetNewDistributorAreaID(),
+                        DistributorAreaID = GetNewDistributorAreaID(),
                         DistrubitorID = distArea.DistrubitorID,
                         City = distArea.City,
                         State = distArea.State,
@@ -166,8 +164,8 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = _context.DistributorAreas.Where(distArea => distArea.DistributonAreaID == model.DistributonAreaID).FirstOrDefault();
-                    data.DistributonAreaID = model.DistributonAreaID;
+                    var data = _context.DistributorAreas.Where(distArea => distArea.DistributorAreaID == model.DistributorAreaID).FirstOrDefault();
+                    data.DistributorAreaID = model.DistributorAreaID;
                     data.DistrubitorID = model.DistrubitorID;
                     data.State = model.State;
                     data.District = model.District;

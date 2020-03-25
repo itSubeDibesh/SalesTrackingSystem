@@ -76,7 +76,7 @@ namespace SalesTrackingSystem.Controllers
             if (model.DistrubitorID <= 0)
             {
                 ViewBag.DistributorUpdateAreaError = "Error";
-                ViewBag.UpdateDistributorAreaData = model.DistributonAreaID;
+                ViewBag.UpdateDistributorAreaData = model.DistributorAreaID;
                 return View("DistributorArea");
             }
             else
@@ -99,7 +99,7 @@ namespace SalesTrackingSystem.Controllers
         {
             try
             {
-                if (distAreaService.Delete(model.DistributonAreaID))
+                if (distAreaService.Delete(model.DistributorAreaID))
                 {
                     return Json("Deleted successfully");
                 }

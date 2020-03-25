@@ -28,10 +28,10 @@ namespace Models
         public Nullable<long> StockLeft { get; set; }
         [Required(ErrorMessage = "Enter date produced")]
         [Display(Name = "Date Produced")]
-        public System.DateTime DateProduced { get; set; }
+        public string DateProduced { get; set; }
         [Required(ErrorMessage = "Enter expiry date")]
-        [Display(Name = "Expiry Date")]
-        public System.DateTime ExpiryDate { get; set; }
+        [Display(Name = "Expiry Date")]        
+        public string ExpiryDate { get; set; }
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
         public Nullable<long> ProductID { get; set; }

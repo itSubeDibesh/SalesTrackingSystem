@@ -133,7 +133,8 @@ namespace Services.Service
                         ProductCategoryName = model.ProductCategoryName,
                         IsSubCategory = model.IsSubCategory,
                         SubCategoryOf = model.SubCategoryOf,
-                        CategoryStatus = model.CategoryStatus
+                        CategoryStatus = model.CategoryStatus,
+                        DateCreated = DateTime.Now
                     };
                     _context.ProductCategories.Add(data);
                     _context.SaveChanges();

@@ -14,7 +14,7 @@ namespace DataAccessLayer
     
     public partial class DistributorArea
     {
-        public long DistributonAreaID { get; set; }
+        public long DistributorAreaID { get; set; }
         public Nullable<long> DistrubitorID { get; set; }
         public string State { get; set; }
         public string District { get; set; }
@@ -22,8 +22,7 @@ namespace DataAccessLayer
         public string Address { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
     
         public virtual Distributor Distributor { get; set; }

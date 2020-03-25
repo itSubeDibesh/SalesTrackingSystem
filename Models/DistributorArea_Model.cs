@@ -8,7 +8,7 @@ namespace Models
 {
     public class DistributorArea_Model
     {
-        public long DistributonAreaID { get; set; }
+        public long DistributorAreaID { get; set; }
         public Nullable<long> DistrubitorID { get; set; }
         public string State { get; set; }
         public string District { get; set; }

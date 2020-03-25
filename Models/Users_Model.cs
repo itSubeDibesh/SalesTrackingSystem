@@ -37,8 +37,9 @@ namespace Models
 
         public string Token { get; set; }
         public long MobileNo { get; set; }
-        public string ImageString { get; set; }
-        public Nullable<byte> UsersStatus { get; set; }
+        public string ImageString { get; set; }        
+        public Nullable<int> UsersStatus { get; set; }
+        
         public Nullable<System.DateTime> DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
 

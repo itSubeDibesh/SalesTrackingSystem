@@ -15,17 +15,18 @@
           <Property Name="QunatityProduced" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="StockLeft" Type="bigint" />
-          <Property Name="DateProduced" Type="datetime" Nullable="false" />
-          <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateProduced" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ExpiryDate" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="ProductID" Type="bigint" />
+          <Property Name="UnitID" Type="bigint" />
         </EntityType>
         <EntityType Name="DistributorArea">
           <Key>
-            <PropertyRef Name="DistributonAreaID" />
+            <PropertyRef Name="DistributorAreaID" />
           </Key>
-          <Property Name="DistributonAreaID" Type="bigint" Nullable="false" />
+          <Property Name="DistributorAreaID" Type="bigint" Nullable="false" />
           <Property Name="DistrubitorID" Type="bigint" />
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="District" Type="varchar" MaxLength="50" />
@@ -33,8 +34,7 @@
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Distributors">
@@ -54,22 +54,7 @@
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="DateCreated" Type="datetime" />
-          <Property Name="DateUpdated" Type="datetime" />
-        </EntityType>
-        <EntityType Name="ExceptionUserProfile">
-          <Key>
-            <PropertyRef Name="ExceptionProfileID" />
-          </Key>
-          <Property Name="ExceptionProfileID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserID" Type="bigint" />
-          <Property Name="ModuleID" Type="bigint" />
-          <Property Name="ModuleActionID" Type="bigint" />
-          <Property Name="ExceptionProfileStatus" Type="bit" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="CreatedBy" Type="bigint" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Module">
@@ -81,7 +66,7 @@
           <Property Name="ControllerName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ModuleStatus" Type="bit" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="ModuleAction">
@@ -93,7 +78,7 @@
           <Property Name="ActionName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ActionStatus" Type="bit" />
           <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="ProductCategory">
@@ -105,7 +90,7 @@
           <Property Name="IsSubCategory" Type="bit" />
           <Property Name="SubCategoryOf" Type="bigint" />
           <Property Name="CategoryStatus" Type="bit" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Products">
@@ -118,9 +103,9 @@
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="PackRate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="PackSize" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UnitID" Type="bigint" />
         </EntityType>
         <EntityType Name="Resellers">
           <Key>
@@ -139,8 +124,7 @@
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="TransactionDetails">
@@ -152,7 +136,7 @@
           <Property Name="ProductID" Type="bigint" />
           <Property Name="Quantity" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Units" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Transactions">
@@ -166,7 +150,7 @@
           <Property Name="InvoiceNo" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="InvoiceDate" Type="date" Nullable="false" />
           <Property Name="InvoiceEntryDate" Type="datetime" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Unit">
@@ -175,6 +159,8 @@
           </Key>
           <Property Name="UnitId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UnitName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -185,7 +171,7 @@
           <Property Name="UserProfileStatus" Type="bit" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="CreatedBy" Type="bigint" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="UserProfileDetails">
@@ -199,7 +185,7 @@
           <Property Name="ProfileDetailStatus" Type="bit" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="CreatedBy" Type="bigint" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Users">
@@ -209,15 +195,14 @@
           <Property Name="UserID" Type="bigint" Nullable="false" />
           <Property Name="UserProfileID" Type="bigint" />
           <Property Name="DistrubitorID" Type="bigint" />
-          <Property Name="ExeceptionProfile" Type="bit" />
           <Property Name="FullName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="PasswordHash" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Token" Type="varchar" MaxLength="250" />
           <Property Name="MobileNo" Type="bigint" Nullable="false" />
           <Property Name="ImageString" Type="varchar" MaxLength="200" />
-          <Property Name="UsersStatus" Type="tinyint" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="UsersStatus" Type="int" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <EntityType Name="Verification">
@@ -231,7 +216,7 @@
           <Property Name="VerifiedToken" Type="varchar" MaxLength="200" />
           <Property Name="ResetToken" Type="varchar" MaxLength="200" />
           <Property Name="ResetTriggered" Type="datetime" />
-          <Property Name="DateCreated" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
         <Association Name="FK_Batch_ProductCategory">
@@ -260,7 +245,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DistributonArea_Distributors">
+        <Association Name="FK_Batch_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="UnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributorArea_Distributors">
           <End Role="Distributors" Type="Self.Distributors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -271,58 +268,6 @@
             </Principal>
             <Dependent Role="DistributorArea">
               <PropertyRef Name="DistrubitorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Module">
-          <End Role="Module" Type="Self.Module" Multiplicity="0..1" />
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Module">
-              <PropertyRef Name="ModuleID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_ModuleAction">
-          <End Role="ModuleAction" Type="Self.ModuleAction" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModuleAction">
-              <PropertyRef Name="ModuleActionID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleActionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_SelectedUser">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-          <End Role="ExceptionUserProfile" Type="Self.ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -361,6 +306,18 @@
             </Principal>
             <Dependent Role="Products">
               <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="UnitID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,7 +471,6 @@
           <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributorArea" EntityType="Self.DistributorArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ExceptionUserProfile" EntityType="Self.ExceptionUserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModuleAction" EntityType="Self.ModuleAction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
@@ -535,25 +491,13 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Batch" EntitySet="Batch" />
           </AssociationSet>
-          <AssociationSet Name="FK_DistributonArea_Distributors" Association="Self.FK_DistributonArea_Distributors">
+          <AssociationSet Name="FK_Batch_Unit" Association="Self.FK_Batch_Unit">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="Batch" EntitySet="Batch" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributorArea_Distributors" Association="Self.FK_DistributorArea_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
             <End Role="DistributorArea" EntitySet="DistributorArea" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Module" Association="Self.FK_ExceptionUserProfile_Module">
-            <End Role="Module" EntitySet="Module" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_ModuleAction" Association="Self.FK_ExceptionUserProfile_ModuleAction">
-            <End Role="ModuleAction" EntitySet="ModuleAction" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_SelectedUser" Association="Self.FK_ExceptionUserProfile_SelectedUser">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Users" Association="Self.FK_ExceptionUserProfile_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfile" />
           </AssociationSet>
           <AssociationSet Name="FK_ModuleAction_Module" Association="Self.FK_ModuleAction_Module">
             <End Role="Module" EntitySet="Module" />
@@ -565,6 +509,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Unit" Association="Self.FK_Products_Unit">
+            <End Role="Unit" EntitySet="Unit" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Resellers_Distributors" Association="Self.FK_Resellers_Distributors">
@@ -620,7 +568,6 @@
           <EntitySet Name="Batches" EntityType="SalesTrackingSystemModel.Batch" />
           <EntitySet Name="DistributorAreas" EntityType="SalesTrackingSystemModel.DistributorArea" />
           <EntitySet Name="Distributors" EntityType="SalesTrackingSystemModel.Distributor" />
-          <EntitySet Name="ExceptionUserProfiles" EntityType="SalesTrackingSystemModel.ExceptionUserProfile" />
           <EntitySet Name="Modules" EntityType="SalesTrackingSystemModel.Module" />
           <EntitySet Name="ModuleActions" EntityType="SalesTrackingSystemModel.ModuleAction" />
           <EntitySet Name="ProductCategories" EntityType="SalesTrackingSystemModel.ProductCategory" />
@@ -641,7 +588,11 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Batch" EntitySet="Batches" />
           </AssociationSet>
-          <AssociationSet Name="FK_DistributonArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors">
+          <AssociationSet Name="FK_Batch_Unit" Association="SalesTrackingSystemModel.FK_Batch_Unit">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Batch" EntitySet="Batches" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributorArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributorArea_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
             <End Role="DistributorArea" EntitySet="DistributorAreas" />
           </AssociationSet>
@@ -652,22 +603,6 @@
           <AssociationSet Name="FK_Users_Distributors" Association="SalesTrackingSystemModel.FK_Users_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
             <End Role="User" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Module" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module">
-            <End Role="Module" EntitySet="Modules" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_ModuleAction" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction">
-            <End Role="ModuleAction" EntitySet="ModuleActions" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_SelectedUser" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ExceptionUserProfile_Users" Association="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ExceptionUserProfile" EntitySet="ExceptionUserProfiles" />
           </AssociationSet>
           <AssociationSet Name="FK_ModuleAction_Module" Association="SalesTrackingSystemModel.FK_ModuleAction_Module">
             <End Role="Module" EntitySet="Modules" />
@@ -687,6 +622,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Products_ProductCategory" Association="SalesTrackingSystemModel.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Unit" Association="SalesTrackingSystemModel.FK_Products_Unit">
+            <End Role="Unit" EntitySet="Units" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_TransactionDetails_Products" Association="SalesTrackingSystemModel.FK_TransactionDetails_Products">
@@ -728,19 +667,21 @@
           <Property Name="QunatityProduced" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="StockLeft" Type="Int64" />
-          <Property Name="DateProduced" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateProduced" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ExpiryDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="ProductID" Type="Int64" />
+          <Property Name="UnitID" Type="Int64" />
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="Batch" ToRole="ProductCategory" />
           <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Batch" ToRole="Product" />
+          <NavigationProperty Name="Unit" Relationship="SalesTrackingSystemModel.FK_Batch_Unit" FromRole="Batch" ToRole="Unit" />
         </EntityType>
         <EntityType Name="DistributorArea">
           <Key>
-            <PropertyRef Name="DistributonAreaID" />
+            <PropertyRef Name="DistributorAreaID" />
           </Key>
-          <Property Name="DistributonAreaID" Type="Int64" Nullable="false" />
+          <Property Name="DistributorAreaID" Type="Int64" Nullable="false" />
           <Property Name="DistrubitorID" Type="Int64" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -748,10 +689,9 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="DistributorArea" ToRole="Distributor" />
+          <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_DistributorArea_Distributors" FromRole="DistributorArea" ToRole="Distributor" />
         </EntityType>
         <EntityType Name="Distributor">
           <Key>
@@ -770,30 +710,11 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DistributorAreas" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="Distributor" ToRole="DistributorArea" />
+          <NavigationProperty Name="DistributorAreas" Relationship="SalesTrackingSystemModel.FK_DistributorArea_Distributors" FromRole="Distributor" ToRole="DistributorArea" />
           <NavigationProperty Name="Resellers" Relationship="SalesTrackingSystemModel.FK_Resellers_Distributors" FromRole="Distributor" ToRole="Reseller" />
           <NavigationProperty Name="Users" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="Distributor" ToRole="User" />
-        </EntityType>
-        <EntityType Name="ExceptionUserProfile">
-          <Key>
-            <PropertyRef Name="ExceptionProfileID" />
-          </Key>
-          <Property Name="ExceptionProfileID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserID" Type="Int64" />
-          <Property Name="ModuleID" Type="Int64" />
-          <Property Name="ModuleActionID" Type="Int64" />
-          <Property Name="ExceptionProfileStatus" Type="Boolean" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int64" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
-          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Module" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module" FromRole="ExceptionUserProfile" ToRole="Module" />
-          <NavigationProperty Name="ModuleAction" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction" FromRole="ExceptionUserProfile" ToRole="ModuleAction" />
-          <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser" FromRole="ExceptionUserProfile" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users" FromRole="ExceptionUserProfile" ToRole="User" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -804,9 +725,8 @@
           <Property Name="ControllerName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ModuleStatus" Type="Boolean" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ExceptionUserProfiles" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Module" FromRole="Module" ToRole="ExceptionUserProfile" />
           <NavigationProperty Name="ModuleActions" Relationship="SalesTrackingSystemModel.FK_ModuleAction_Module" FromRole="Module" ToRole="ModuleAction" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Module" FromRole="Module" ToRole="UserProfileDetail" />
         </EntityType>
@@ -819,9 +739,8 @@
           <Property Name="ActionName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="ActionStatus" Type="Boolean" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ExceptionUserProfiles" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_ModuleAction" FromRole="ModuleAction" ToRole="ExceptionUserProfile" />
           <NavigationProperty Name="Module" Relationship="SalesTrackingSystemModel.FK_ModuleAction_Module" FromRole="ModuleAction" ToRole="Module" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_ModuleAction" FromRole="ModuleAction" ToRole="UserProfileDetail" />
         </EntityType>
@@ -834,7 +753,7 @@
           <Property Name="IsSubCategory" Type="Boolean" />
           <Property Name="SubCategoryOf" Type="Int64" />
           <Property Name="CategoryStatus" Type="Boolean" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_ProductCategory" FromRole="ProductCategory" ToRole="Batch" />
           <NavigationProperty Name="ProductCategory1" Relationship="SalesTrackingSystemModel.FK_ProductCategory_ProductCategory" FromRole="ProductCategory" ToRole="ProductCategory1" />
@@ -851,11 +770,12 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PackRate" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="PackSize" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UnitID" Type="Int64" />
           <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Product" ToRole="Batch" />
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="Unit" Relationship="SalesTrackingSystemModel.FK_Products_Unit" FromRole="Product" ToRole="Unit" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Products" FromRole="Product" ToRole="TransactionDetail" />
         </EntityType>
         <EntityType Name="Reseller">
@@ -875,8 +795,7 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_Resellers_Distributors" FromRole="Reseller" ToRole="Distributor" />
         </EntityType>
@@ -889,7 +808,7 @@
           <Property Name="ProductID" Type="Int64" />
           <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="Units" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Products" FromRole="TransactionDetail" ToRole="Product" />
           <NavigationProperty Name="Transaction" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Transactions" FromRole="TransactionDetail" ToRole="Transaction" />
@@ -905,7 +824,7 @@
           <Property Name="InvoiceNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="InvoiceEntryDate" Type="DateTime" Precision="3" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Transactions" FromRole="Transaction" ToRole="TransactionDetail" />
         </EntityType>
@@ -915,6 +834,10 @@
           </Key>
           <Property Name="UnitId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UnitName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_Unit" FromRole="Unit" ToRole="Batch" />
+          <NavigationProperty Name="Products" Relationship="SalesTrackingSystemModel.FK_Products_Unit" FromRole="Unit" ToRole="Product" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -925,7 +848,7 @@
           <Property Name="UserProfileStatus" Type="Boolean" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int64" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_UserProfile_Users" FromRole="UserProfile" ToRole="User" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_UserProfile" FromRole="UserProfile" ToRole="UserProfileDetail" />
@@ -942,7 +865,7 @@
           <Property Name="ProfileDetailStatus" Type="Boolean" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int64" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Module" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Module" FromRole="UserProfileDetail" ToRole="Module" />
           <NavigationProperty Name="ModuleAction" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_ModuleAction" FromRole="UserProfileDetail" ToRole="ModuleAction" />
@@ -956,19 +879,16 @@
           <Property Name="UserID" Type="Int64" Nullable="false" />
           <Property Name="UserProfileID" Type="Int64" />
           <Property Name="DistrubitorID" Type="Int64" />
-          <Property Name="ExeceptionProfile" Type="Boolean" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="PasswordHash" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Token" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="MobileNo" Type="Int64" Nullable="false" />
           <Property Name="ImageString" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="UsersStatus" Type="Byte" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="UsersStatus" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="User" ToRole="Distributor" />
-          <NavigationProperty Name="ExceptionUserProfiles" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_SelectedUser" FromRole="User" ToRole="ExceptionUserProfile" />
-          <NavigationProperty Name="ExceptionUserProfiles1" Relationship="SalesTrackingSystemModel.FK_ExceptionUserProfile_Users" FromRole="User" ToRole="ExceptionUserProfile" />
           <NavigationProperty Name="UserProfiles" Relationship="SalesTrackingSystemModel.FK_UserProfile_Users" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfile" Relationship="SalesTrackingSystemModel.FK_Users_UserProfile" FromRole="User" ToRole="UserProfile" />
           <NavigationProperty Name="UserProfileDetails" Relationship="SalesTrackingSystemModel.FK_UserProfileDetails_Users" FromRole="User" ToRole="UserProfileDetail" />
@@ -985,7 +905,7 @@
           <Property Name="VerifiedToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ResetToken" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="ResetTriggered" Type="DateTime" Precision="3" />
-          <Property Name="DateCreated" Type="DateTime" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_Verification_Users" FromRole="Verification" ToRole="User" />
         </EntityType>
@@ -1015,7 +935,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DistributonArea_Distributors">
+        <Association Name="FK_Batch_Unit">
+          <End Type="SalesTrackingSystemModel.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Batch" Role="Batch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Batch">
+              <PropertyRef Name="UnitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributorArea_Distributors">
           <End Type="SalesTrackingSystemModel.Distributor" Role="Distributor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -1054,58 +986,6 @@
             </Principal>
             <Dependent Role="User">
               <PropertyRef Name="DistrubitorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Module">
-          <End Type="SalesTrackingSystemModel.Module" Role="Module" Multiplicity="0..1" />
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Module">
-              <PropertyRef Name="ModuleID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_ModuleAction">
-          <End Type="SalesTrackingSystemModel.ModuleAction" Role="ModuleAction" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ModuleAction">
-              <PropertyRef Name="ModuleActionID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="ModuleActionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_SelectedUser">
-          <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ExceptionUserProfile_Users">
-          <End Type="SalesTrackingSystemModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="SalesTrackingSystemModel.ExceptionUserProfile" Role="ExceptionUserProfile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="ExceptionUserProfile">
-              <PropertyRef Name="CreatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1170,6 +1050,18 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Unit">
+          <End Type="SalesTrackingSystemModel.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="UnitID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1274,6 +1166,7 @@
           <EntitySetMapping Name="Batches">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Batch">
               <MappingFragment StoreEntitySet="Batch">
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -1293,7 +1186,6 @@
               <MappingFragment StoreEntitySet="DistributorArea">
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1301,7 +1193,7 @@
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
-                <ScalarProperty Name="DistributonAreaID" ColumnName="DistributonAreaID" />
+                <ScalarProperty Name="DistributorAreaID" ColumnName="DistributorAreaID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1310,7 +1202,6 @@
               <MappingFragment StoreEntitySet="Distributors">
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1324,21 +1215,6 @@
                 <ScalarProperty Name="OwnerName" ColumnName="OwnerName" />
                 <ScalarProperty Name="DistrubitorName" ColumnName="DistrubitorName" />
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ExceptionUserProfiles">
-            <EntityTypeMapping TypeName="SalesTrackingSystemModel.ExceptionUserProfile">
-              <MappingFragment StoreEntitySet="ExceptionUserProfile">
-                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ExceptionProfileStatus" ColumnName="ExceptionProfileStatus" />
-                <ScalarProperty Name="ModuleActionID" ColumnName="ModuleActionID" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ExceptionProfileID" ColumnName="ExceptionProfileID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1384,9 +1260,9 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="PackSize" ColumnName="PackSize" />
                 <ScalarProperty Name="PackRate" ColumnName="PackRate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1401,7 +1277,6 @@
               <MappingFragment StoreEntitySet="Resellers">
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -1449,6 +1324,8 @@
           <EntitySetMapping Name="Units">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Unit">
               <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="UnitName" ColumnName="UnitName" />
                 <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
@@ -1494,7 +1371,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
                 <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="ExeceptionProfile" ColumnName="ExeceptionProfile" />
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
                 <ScalarProperty Name="UserProfileID" ColumnName="UserProfileID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />

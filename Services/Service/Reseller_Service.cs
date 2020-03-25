@@ -66,8 +66,7 @@ namespace Services.Service
                         District = res.District,
                         Address = res.Address,
                         Latitude = res.Latitude,
-                        Longitude = res.Longitude,
-                        IsDeleted = res.IsDeleted
+                        Longitude = res.Longitude
                     }).FirstOrDefault();
                     return data;
                 }
@@ -101,8 +100,7 @@ namespace Services.Service
                                     District = res.District,
                                     Address = res.Address,
                                     Latitude = res.Latitude,
-                                    Longitude = res.Longitude,
-                                    IsDeleted = res.IsDeleted
+                                    Longitude = res.Longitude
                                 }).ToList();
                     return data;
                 }
@@ -163,8 +161,7 @@ namespace Services.Service
                         District = res.District,
                         Address = res.Address,
                         Latitude = res.Latitude,
-                        Longitude = res.Longitude,
-                        IsDeleted = res.IsDeleted
+                        Longitude = res.Longitude
                     };
                     _context.Resellers.Add(data);
                     _context.SaveChanges();
@@ -197,7 +194,7 @@ namespace Services.Service
                     data.Address = res.Address;
                     data.Latitude = res.Latitude;
                     data.Longitude = res.Longitude;
-                    data.IsDeleted = res.IsDeleted;
+                    
                     _context.SaveChanges();
                     return true;
                 }

@@ -78,8 +78,7 @@ namespace Services.Service
                         District = dist.District,
                         Address = dist.Address,
                         Latitude = dist.Latitude,
-                        Longitude = dist.Longitude,
-                        IsDeleted = dist.IsDeleted
+                        Longitude = dist.Longitude
                     }).FirstOrDefault();
                     return data;
                 }
@@ -127,8 +126,7 @@ namespace Services.Service
                         District = Distributor.District,                        
                         Address = Distributor.Address,                        
                         Latitude = Distributor.Latitude,                        
-                        Longitude = Distributor.Longitude,
-                        IsDeleted = Distributor.IsDeleted
+                        Longitude = Distributor.Longitude
                     }).ToList().OrderBy(Dist => Dist.DistrubitorName).ToList();
                     return data;
                 }
