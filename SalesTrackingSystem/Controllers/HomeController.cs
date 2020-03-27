@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DataAccessLayer;
+using Models;
 using Services.Interface;
 using Services.Service;
 using System;
@@ -145,6 +146,104 @@ namespace SalesTrackingSystem.Controllers
         public ActionResult Dashboard()
         {
             return View("Dashboard");
+        }
+
+        public JsonResult GetDashboardOverviews()
+        {
+            string Categories,QuantitySold,Distributors,StockLeft,ActiveUsers,Resellers,Products,SubCategories;
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                /* Categories */
+                try
+                {
+                     Categories = (_dbContext.ProductCategories.Count(cats=>cats.ProductCategoryID!=0)).ToString();                  
+                }
+                catch (Exception)
+                {
+                    Categories = 0.ToString();
+                }
+                /* QuantitySold */
+                try
+                {
+                    QuantitySold = ((_dbContext.Batches.Sum(bat => bat.QunatityProduced))-(_dbContext.Batches.Sum(bata=> bata.StockLeft))).ToString();
+                }
+                catch (Exception)
+                {
+                    QuantitySold = 0.ToString();
+                }
+                /* Distributors */
+                try
+                {
+                    Distributors = (_dbContext.Distributors.Count(dist => dist.DistrubitorID != 0)).ToString();
+                }
+                catch (Exception)
+                {
+                    Distributors = 0.ToString();
+                }
+                /* StockLeft */
+                try
+                {
+                    StockLeft = (_dbContext.Batches.Sum(bat => bat.StockLeft)).ToString();
+                    if (StockLeft=="")
+                    {
+                        StockLeft = "0";
+                    }
+                }
+                catch (Exception)
+                {
+                    StockLeft = "0";
+                }
+                /* ActiveUsers */
+                try
+                {
+                    ActiveUsers = (_dbContext.Users.Count(usr => usr.UsersStatus == 1)).ToString();
+                }
+                catch (Exception)
+                {
+                    ActiveUsers = 0.ToString();
+                }
+                /* Resellers */
+                try
+                {
+                    Resellers = (_dbContext.Resellers.Count(res => res.ResellerID != 0)).ToString();
+                }
+                catch (Exception)
+                {
+                    Resellers = 0.ToString();
+                }
+                /* Products */
+                try
+                {
+                    Products = (_dbContext.Products.Count(pro => pro.ProductID != 0)).ToString();
+                }
+                catch (Exception)
+                {
+                    Products = 0.ToString();
+                }
+                /* SubCategories */
+                try
+                {
+                    SubCategories = (_dbContext.ProductCategories.Count(pro => pro.IsSubCategory != null && pro.IsSubCategory==true)).ToString();
+                }
+                catch (Exception)
+                {
+                    SubCategories = 0.ToString();
+                }
+            }
+            List<DashbaordPreview_Model> overviewData = new List<DashbaordPreview_Model>()
+            {
+              new DashbaordPreview_Model{
+                    Categories=Categories,
+                    QuantitySold=QuantitySold,
+                    Distributors=Distributors,
+                    StockLeft=StockLeft,
+                    ActiveUsers=ActiveUsers,
+                    Resellers=Resellers,
+                    Products=Products,
+                    SubCategories=SubCategories
+              }
+            };
+            return Json(overviewData, JsonRequestBehavior.AllowGet);
         }
     }
 }

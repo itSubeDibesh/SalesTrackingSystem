@@ -546,6 +546,10 @@
     <Content Include="Views\Dashboard\TypeEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
+      <Project>{4E0B8CF7-6372-40D2-9183-AC8141A3B54F}</Project>
+      <Name>DataAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{49c1fce6-d60a-4eb1-8a34-9dac15db68b3}</Project>
       <Name>Models</Name>
