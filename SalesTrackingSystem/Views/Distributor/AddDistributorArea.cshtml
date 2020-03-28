@@ -1,0 +1,80 @@
+﻿@model Models.DistributorArea_Model
+@using Services.Interface;
+@using Services.Service;
+@{
+    Distributor_Interface distributor_ = new Distributor_Service();
+}
+
+<div class="col-sm-12 " id="AddDistributorArea" style="display:none">
+    <div class="card">
+        <div class="card-header">
+            <strong>Add</strong> @ViewBag.Page
+            <a href="~/Distributor/DistributorArea" class="btn btn-danger " style="float: right;color:white;" data-toggle="tooltip" data-placement="right" title="Close Edit Product Update"><i class="fas fa-close"></i></a>
+        </div>
+        <div class="card-body card-block">
+            @using (Html.BeginForm("AddDistributorArea", "Distributor", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            @Html.LabelFor(model => model.DistrubitorName, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <select name="DistrubitorID" id="DistrubitorID" class="form-control">
+                                <option selected disabled>Please select</option>
+                                @foreach (var item in distributor_.DisplayTable())
+                                {
+                                    <option value="@item.DistrubitorID">@item.DistrubitorName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            @Html.LabelFor(model => model.District, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            @Html.EditorFor(model => model.District, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.District, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-6">
+                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label " })
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa fa-paper-plane"></i> Submit
+                        </button>
+                        <a href="~/Distributor/DistributorArea" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i> Reset
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>    

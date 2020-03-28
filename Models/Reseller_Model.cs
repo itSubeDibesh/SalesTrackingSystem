@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Distributor_Model
+    public class Reseller_Model
     {
-        public long DistrubitorID { get; set; }
+        public long ResellerID { get; set; }
 
-        [Required(ErrorMessage = "Distrubitor Name required")]
-        [Display(Name = "Distrubitor Name")]
-        public string DistrubitorName { get; set; }
+        [Required(ErrorMessage = "Reseller Name required")]
+        [Display(Name = "Reseller Name")]
+        public string ResellerName { get; set; }
 
         [Required(ErrorMessage = "Owner Name required")]
         [Display(Name = "Owner Name")]
@@ -23,13 +23,15 @@ namespace Models
         [Display(Name = "Regestration No")]
         public string RegestrationID { get; set; }
 
+        [Required(ErrorMessage = "Distrubitor Name required")]
+        [Display(Name = "Distrubitor Name")]
+        public Nullable<long> DistrubitorID { get; set; }
+
         [Required(ErrorMessage = "Mobile No required")]
         [Display(Name = "Mobile No")]
-        public long MobileNo { get; set; }
+        public Nullable<long> Mobile { get; set; }
         public long Phone { get; set; }
-        public string Fax { get; set; }
 
-        [Required(ErrorMessage = "Email required")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -45,5 +47,6 @@ namespace Models
         public string Longitude { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
+        public string DistrubitorName { get; set; }
     }
 }

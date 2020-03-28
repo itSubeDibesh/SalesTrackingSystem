@@ -54,9 +54,11 @@
     <Compile Include="Interface\DashboardGivenColumn_Interface.cs" />
     <Compile Include="Interface\DashboardTable_Interface.cs" />
     <Compile Include="Interface\DashboardType_Interface.cs" />
+    <Compile Include="Interface\DistributorArea_Interface.cs" />
     <Compile Include="Interface\Distributor_Interface.cs" />
     <Compile Include="Interface\ModuleAction_Interface.cs" />
     <Compile Include="Interface\Module_Interface.cs" />
+    <Compile Include="Interface\Reseller_Interface.cs" />
     <Compile Include="Interface\UserProfileDetails_Interface.cs" />
     <Compile Include="Interface\UserProfile_Interface.cs" />
     <Compile Include="Interface\Users_Interface.cs" />
@@ -65,9 +67,11 @@
     <Compile Include="Service\DashboardGivenColumn_Service.cs" />
     <Compile Include="Service\DashboardTable_Service.cs" />
     <Compile Include="Service\DashboardType_Service.cs" />
+    <Compile Include="Service\DistributorArea_Service.cs" />
     <Compile Include="Service\Distributor_Service.cs" />
     <Compile Include="Service\ModuleAction_Service.cs" />
     <Compile Include="Service\Module_Service.cs" />
+    <Compile Include="Service\Reseller_Service.cs" />
     <Compile Include="Service\UserProfileDetails_Service.cs" />
     <Compile Include="Service\UserProfile_Service.cs" />
     <Compile Include="Service\Users_Service.cs" />

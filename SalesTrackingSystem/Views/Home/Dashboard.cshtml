@@ -25,7 +25,7 @@
         <div class="au-card m-b-30">
             <div class="au-card-inner">
                 <h3 class="title-2 m-b-40">
-                    Transaction chart
+                    Transaction chart @DateTime.Now.Year
                 </h3>
                 <canvas id="Transaction"></canvas>
             </div>
@@ -255,8 +255,8 @@
                             labels: ["January", "February", "March", "April", "May", "June", "July","August", "September", "October", "November", "December"],
                             datasets: [
                                 {
-                                    label: "My First dataset",
-                                    data: [90,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56, 55, 40],
+                                    label: "Quantity sold",
+                                    data: [90,65, 59, 80, 81, 56, 55, 40,65, 59, 80, 81, 56],
                                     borderColor: "rgba(0, 123, 255, 0.9)",
                                     borderWidth: "0",
                                     backgroundColor: "rgba(0, 133, 155, 0.5)",
@@ -264,10 +264,10 @@
                                 },
                                 {
                                     label: "My Second dataset",
-                                    data: [28, 48, 40, 19, 86, 27, 90,28, 48, 40, 19, 86, 27, 190],
+                                    data: [28, 48, 40, 19, 86, 27, 90,28, 48, 40, 19, 190],
                                     borderColor: "rgba(0,0,0,0.09)",
                                     borderWidth: "0",
-                                    backgroundColor: "rgba(0,0,0,0.07)",
+                                    backgroundColor: "rgba(0,123,155,1)",
                                     fontFamily: "Poppins"
                                 }
                             ]

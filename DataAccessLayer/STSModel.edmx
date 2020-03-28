@@ -15,8 +15,8 @@
           <Property Name="QunatityProduced" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="StockLeft" Type="bigint" />
-          <Property Name="DateProduced" Type="datetime" Nullable="false" />
-          <Property Name="ExpiryDate" Type="datetime" Nullable="false" />
+          <Property Name="DateProduced" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ExpiryDate" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
           <Property Name="ProductID" Type="bigint" />
@@ -29,9 +29,9 @@
           <Property Name="UserID" Type="bigint" />
           <Property Name="DashboardTableId" Type="bigint" />
           <Property Name="DashboardTypeId" Type="bigint" />
+          <Property Name="ShowInHome" Type="bit" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
-          <Property Name="ShowInHome" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DashboardColumn">
           <Key>
@@ -39,11 +39,11 @@
           </Key>
           <Property Name="DashboardColumnId" Type="bigint" Nullable="false" />
           <Property Name="DashboardTableId" Type="bigint" />
+          <Property Name="DashboardID" Type="bigint" />
+          <Property Name="DashboardGivenColumnId" Type="bigint" />
           <Property Name="Color" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
-          <Property Name="DashboardID" Type="bigint" />
-          <Property Name="DashboardGivenColumnId" Type="bigint" />
         </EntityType>
         <EntityType Name="DashboardGivenColumn">
           <Key>
@@ -73,15 +73,15 @@
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
-        <EntityType Name="DistributonArea">
+        <EntityType Name="DistributorArea">
           <Key>
-            <PropertyRef Name="DistributonAreaID" />
+            <PropertyRef Name="DistributorAreaID" />
           </Key>
-          <Property Name="DistributonAreaID" Type="bigint" Nullable="false" />
+          <Property Name="DistributorAreaID" Type="bigint" Nullable="false" />
           <Property Name="DistrubitorID" Type="bigint" />
           <Property Name="State" Type="varchar" MaxLength="50" />
           <Property Name="District" Type="varchar" MaxLength="50" />
-          <Property Name="Ciry" Type="varchar" MaxLength="50" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Latitude" Type="varchar" MaxLength="50" />
           <Property Name="Longitude" Type="varchar" MaxLength="50" />
@@ -380,16 +380,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DistributonArea_Distributors">
+        <Association Name="FK_DistributorArea_Distributors">
           <End Role="Distributors" Type="Self.Distributors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="DistributonArea" Type="Self.DistributonArea" Multiplicity="*" />
+          <End Role="DistributorArea" Type="Self.DistributorArea" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Distributors">
               <PropertyRef Name="DistrubitorID" />
             </Principal>
-            <Dependent Role="DistributonArea">
+            <Dependent Role="DistributorArea">
               <PropertyRef Name="DistrubitorID" />
             </Dependent>
           </ReferentialConstraint>
@@ -585,7 +585,7 @@
           <EntitySet Name="DashboardGivenColumn" EntityType="Self.DashboardGivenColumn" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashboardTable" EntityType="Self.DashboardTable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DashboardType" EntityType="Self.DashboardType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="DistributonArea" EntityType="Self.DistributonArea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistributorArea" EntityType="Self.DistributorArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distributors" EntityType="Self.Distributors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModuleAction" EntityType="Self.ModuleAction" Schema="dbo" store:Type="Tables" />
@@ -634,9 +634,9 @@
             <End Role="DashboardTable" EntitySet="DashboardTable" />
             <End Role="DashboardGivenColumn" EntitySet="DashboardGivenColumn" />
           </AssociationSet>
-          <AssociationSet Name="FK_DistributonArea_Distributors" Association="Self.FK_DistributonArea_Distributors">
+          <AssociationSet Name="FK_DistributorArea_Distributors" Association="Self.FK_DistributorArea_Distributors">
             <End Role="Distributors" EntitySet="Distributors" />
-            <End Role="DistributonArea" EntitySet="DistributonArea" />
+            <End Role="DistributorArea" EntitySet="DistributorArea" />
           </AssociationSet>
           <AssociationSet Name="FK_ModuleAction_Module" Association="Self.FK_ModuleAction_Module">
             <End Role="Module" EntitySet="Module" />
@@ -706,7 +706,7 @@
           <EntitySet Name="DashboardGivenColumns" EntityType="SalesTrackingSystemModel.DashboardGivenColumn" />
           <EntitySet Name="DashboardTables" EntityType="SalesTrackingSystemModel.DashboardTable" />
           <EntitySet Name="DashboardTypes" EntityType="SalesTrackingSystemModel.DashboardType" />
-          <EntitySet Name="DistributonAreas" EntityType="SalesTrackingSystemModel.DistributonArea" />
+          <EntitySet Name="DistributorAreas" EntityType="SalesTrackingSystemModel.DistributorArea" />
           <EntitySet Name="Distributors" EntityType="SalesTrackingSystemModel.Distributor" />
           <EntitySet Name="Modules" EntityType="SalesTrackingSystemModel.Module" />
           <EntitySet Name="ModuleActions" EntityType="SalesTrackingSystemModel.ModuleAction" />
@@ -755,9 +755,9 @@
             <End Role="DashboardTable" EntitySet="DashboardTables" />
             <End Role="DashboardGivenColumn" EntitySet="DashboardGivenColumns" />
           </AssociationSet>
-          <AssociationSet Name="FK_DistributonArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributonArea_Distributors">
+          <AssociationSet Name="FK_DistributorArea_Distributors" Association="SalesTrackingSystemModel.FK_DistributorArea_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
-            <End Role="DistributonArea" EntitySet="DistributonAreas" />
+            <End Role="DistributorArea" EntitySet="DistributorAreas" />
           </AssociationSet>
           <AssociationSet Name="FK_Resellers_Distributors" Association="SalesTrackingSystemModel.FK_Resellers_Distributors">
             <End Role="Distributor" EntitySet="Distributors" />
@@ -826,8 +826,8 @@
           <Property Name="QunatityProduced" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="StockLeft" Type="Int64" />
-          <Property Name="DateProduced" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateProduced" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ExpiryDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="ProductID" Type="Int64" />
@@ -842,9 +842,9 @@
           <Property Name="UserID" Type="Int64" />
           <Property Name="DashboardTableId" Type="Int64" />
           <Property Name="DashboardTypeId" Type="Int64" />
+          <Property Name="ShowInHome" Type="Boolean" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="ShowInHome" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="DashboardTable" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardTable" FromRole="Dashboard" ToRole="DashboardTable" />
           <NavigationProperty Name="DashboardType" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardType" FromRole="Dashboard" ToRole="DashboardType" />
           <NavigationProperty Name="User" Relationship="SalesTrackingSystemModel.FK_Dashboard_Users" FromRole="Dashboard" ToRole="User" />
@@ -856,11 +856,11 @@
           </Key>
           <Property Name="DashboardColumnId" Type="Int64" Nullable="false" />
           <Property Name="DashboardTableId" Type="Int64" />
+          <Property Name="DashboardID" Type="Int64" />
+          <Property Name="DashboardGivenColumnId" Type="Int64" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <Property Name="DashboardID" Type="Int64" />
-          <Property Name="DashboardGivenColumnId" Type="Int64" />
           <NavigationProperty Name="Dashboard" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_Dashboard" FromRole="DashboardColumn" ToRole="Dashboard" />
           <NavigationProperty Name="DashboardGivenColumn" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_DashboardGivenColumn" FromRole="DashboardColumn" ToRole="DashboardGivenColumn" />
           <NavigationProperty Name="DashboardTable" Relationship="SalesTrackingSystemModel.FK_DashboardColumn_DashboardTable" FromRole="DashboardColumn" ToRole="DashboardTable" />
@@ -899,21 +899,21 @@
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Dashboards" Relationship="SalesTrackingSystemModel.FK_Dashboard_DashboardType" FromRole="DashboardType" ToRole="Dashboard" />
         </EntityType>
-        <EntityType Name="DistributonArea">
+        <EntityType Name="DistributorArea">
           <Key>
-            <PropertyRef Name="DistributonAreaID" />
+            <PropertyRef Name="DistributorAreaID" />
           </Key>
-          <Property Name="DistributonAreaID" Type="Int64" Nullable="false" />
+          <Property Name="DistributorAreaID" Type="Int64" Nullable="false" />
           <Property Name="DistrubitorID" Type="Int64" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Ciry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="DistributonArea" ToRole="Distributor" />
+          <NavigationProperty Name="Distributor" Relationship="SalesTrackingSystemModel.FK_DistributorArea_Distributors" FromRole="DistributorArea" ToRole="Distributor" />
         </EntityType>
         <EntityType Name="Distributor">
           <Key>
@@ -934,7 +934,7 @@
           <Property Name="Longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DistributonAreas" Relationship="SalesTrackingSystemModel.FK_DistributonArea_Distributors" FromRole="Distributor" ToRole="DistributonArea" />
+          <NavigationProperty Name="DistributorAreas" Relationship="SalesTrackingSystemModel.FK_DistributorArea_Distributors" FromRole="Distributor" ToRole="DistributorArea" />
           <NavigationProperty Name="Resellers" Relationship="SalesTrackingSystemModel.FK_Resellers_Distributors" FromRole="Distributor" ToRole="Reseller" />
           <NavigationProperty Name="Users" Relationship="SalesTrackingSystemModel.FK_Users_Distributors" FromRole="Distributor" ToRole="User" />
         </EntityType>
@@ -1239,16 +1239,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DistributonArea_Distributors">
+        <Association Name="FK_DistributorArea_Distributors">
           <End Type="SalesTrackingSystemModel.Distributor" Role="Distributor" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="SalesTrackingSystemModel.DistributonArea" Role="DistributonArea" Multiplicity="*" />
+          <End Type="SalesTrackingSystemModel.DistributorArea" Role="DistributorArea" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Distributor">
               <PropertyRef Name="DistrubitorID" />
             </Principal>
-            <Dependent Role="DistributonArea">
+            <Dependent Role="DistributorArea">
               <PropertyRef Name="DistrubitorID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1463,9 +1463,9 @@
           <EntitySetMapping Name="Dashboards">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Dashboard">
               <MappingFragment StoreEntitySet="Dashboard">
-                <ScalarProperty Name="ShowInHome" ColumnName="ShowInHome" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="ShowInHome" ColumnName="ShowInHome" />
                 <ScalarProperty Name="DashboardTypeId" ColumnName="DashboardTypeId" />
                 <ScalarProperty Name="DashboardTableId" ColumnName="DashboardTableId" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
@@ -1476,11 +1476,11 @@
           <EntitySetMapping Name="DashboardColumns">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.DashboardColumn">
               <MappingFragment StoreEntitySet="DashboardColumn">
-                <ScalarProperty Name="DashboardGivenColumnId" ColumnName="DashboardGivenColumnId" />
-                <ScalarProperty Name="DashboardID" ColumnName="DashboardID" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="DashboardGivenColumnId" ColumnName="DashboardGivenColumnId" />
+                <ScalarProperty Name="DashboardID" ColumnName="DashboardID" />
                 <ScalarProperty Name="DashboardTableId" ColumnName="DashboardTableId" />
                 <ScalarProperty Name="DashboardColumnId" ColumnName="DashboardColumnId" />
               </MappingFragment>
@@ -1517,19 +1517,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DistributonAreas">
-            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DistributonArea">
-              <MappingFragment StoreEntitySet="DistributonArea">
+          <EntitySetMapping Name="DistributorAreas">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.DistributorArea">
+              <MappingFragment StoreEntitySet="DistributorArea">
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Ciry" ColumnName="Ciry" />
+                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="DistrubitorID" ColumnName="DistrubitorID" />
-                <ScalarProperty Name="DistributonAreaID" ColumnName="DistributonAreaID" />
+                <ScalarProperty Name="DistributorAreaID" ColumnName="DistributorAreaID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

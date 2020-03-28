@@ -245,5 +245,41 @@ namespace SalesTrackingSystem.Controllers
             };
             return Json(overviewData, JsonRequestBehavior.AllowGet);
         }
+
+        //public JsonResult GetDashboardTransaction()
+        //{
+        //    using (var _dbContext = new SalesTrackingSystemEntities())
+        //    {
+        //        try
+        //        {
+        //            var data = (from Users in _dbContext.Users
+        //                        join actionUserProfile in _dbContext.UserProfiles on Users.UserProfileID equals actionUserProfile.UserProfileID
+        //                        select new Users_Model()
+        //                        {
+        //                            UserID = Users.UserID,
+        //                            UserProfileID = Users.UserProfileID,
+        //                            DistrubitorID = Users.DistrubitorID,
+        //                            FullName = Users.FullName,
+        //                            PasswordHash = Users.PasswordHash,
+        //                            Email = Users.Email,
+        //                            Token = Users.Token,
+        //                            MobileNo = Users.MobileNo,
+        //                            ImageString = Users.ImageString,
+        //                            UsersStatus = Users.UsersStatus,
+        //                            DateCreated = Users.DateCreated,
+        //                            DateUpdated = Users.DateUpdated,
+        //                            ProfileName = actionUserProfile.ProfileName,
+        //                            Description = actionUserProfile.Description,
+        //                            CreatedBy = actionUserProfile.CreatedBy,
+        //                            UserProfileStatus = actionUserProfile.UserProfileStatus
+        //                        }).ToList().OrderBy(Users => Users.FullName).ToList();
+        //            return data;
+        //        }
+        //        catch (Exception)
+        //        {
+                   
+        //        }
+        //    }
+        //}
     }
 }

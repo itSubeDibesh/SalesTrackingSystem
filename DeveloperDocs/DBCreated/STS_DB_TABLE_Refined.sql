@@ -562,3 +562,42 @@ ADD CONSTRAINT FK_DashboardColumn_DashboardGivenColumn FOREIGN KEY (DashboardGiv
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 GO
+
+/*------------------------------------ Inserting Datas ------------------------------------------------------------*/
+GO
+
+/*------------------------------------- DashboardType-------------------------------------------------------------*/
+INSERT INTO DashboardType (DashboardTypeID,TypeName) VALUES(1,'Overview'),(2,'Recent report'),
+(3,'Percent chart'),(4,'Bar chart'),(5,'Doughut chart'),(6,'Line chart'),(7,'Pie chart'),
+(8,'Polar chart'),(9,'Single bar chart'),(10,'Radar chart'),(11,'Single line graph'),(12,'Multi line graph');
+GO
+
+/*------------------------------------- DashboardTable-------------------------------------------------------------*/
+INSERT INTO DashboardTable (DashboardTableId,TableName) VALUES(1,'Distributors'),(2,'Products'),
+(3,'Product Categories'),(4,'Batch'),(5,'Distribution area'),(6,'Resellers'),(7,'Transactions'),
+(8,'Users'),(9,'User profile');
+GO
+
+/*------------------------------------- DashboardGivenColumn-------------------------------------------------------*/
+INSERT INTO DashboardGivenColumn (DashboardGivenColumnId,DashboardTableId,ColumnName) values (1,4,'BatchName'),
+(2,4,'UnitPrice'),(3,4,'DateProduced'),(4,4,'StockLeft'),(5,4,'QunatityProduced'),(6,8,'UsersStatus'),
+(7,8,'UserProfile'),(8,9,'ProfileName');
+GO
+
+/*------------------------------------- UserProfile-------------------------------------------------------*/
+INSERT INTO UserProfile (ProfileName,UserProfileStatus,Description,CreatedBy) 
+VALUES('Developer',1,'This profile is made for developers to create and modify access.',1),
+('Company',1,'This profile is made for company and can access everything except developers contents.',1),
+('Distributor',1,'This profile allows distributor access and with limited control.',1);
+GO
+
+/*------------------------------------- Users-------------------------------------------------------------*/
+INSERT INTO Users(UserID,UserProfileID,FullName,PasswordHash,Email,MobileNo,ImageString,UsersStatus) 
+VALUES(1,NULL,'Dibesh Raj Subedi','2B84F11E7DE7DA72572486C6289A041E1E1E7292','kingraj530@gmail.com',9861315234,'/UserInformation/kingraj530@gmail.com/Images/22.jpg',1),
+(2,NULL,'Dibesh Subedi','9048C6011D4BEFD8222807FD74CF861DC3BD71DD','dsubedi@ismt.edu.np',98613152340,'/UserInformation/dsubedi@ismt.edu.np/Images/77127096.jpg',2);
+
+GO
+/*------------------------------------- Verification-------------------------------------------------------------*/
+INSERT INTO Verification (VerificationID,UserID,IsVerified,DateVerified,VerifiedToken,ResetToken,ResetTriggered)
+VALUES(1,1,1,2020-03-14,'lq8xNiLPdrIDsiBeEKPFgHTA','DqiHGqRta_4kC_V@6123JmGcRyhXEXCvsB_cs7g3lAJOpXZv_',2020-03-14),
+(2,2,1,2020-03-14,'SD$cn4K3t9slpi17$x6EHXUCC2ShekjLBdEzPd7Mmfr_ENIk','n7nPatFp$CIcMJADf$bHTz4wdVubazbW_OxZemXDD65BZu3t79jh7XiZd1Lp9DpAAWm7nLz2@6123JmGcRyhXEXCvsB_cs7g3lAJOpXZv_',2020-03-14);

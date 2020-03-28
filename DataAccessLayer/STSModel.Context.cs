@@ -31,7 +31,7 @@ namespace DataAccessLayer
         public virtual DbSet<DashboardGivenColumn> DashboardGivenColumns { get; set; }
         public virtual DbSet<DashboardTable> DashboardTables { get; set; }
         public virtual DbSet<DashboardType> DashboardTypes { get; set; }
-        public virtual DbSet<DistributonArea> DistributonAreas { get; set; }
+        public virtual DbSet<DistributorArea> DistributorAreas { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
         public virtual DbSet<ModuleAction> ModuleActions { get; set; }

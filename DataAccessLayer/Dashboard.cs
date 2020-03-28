@@ -24,9 +24,9 @@ namespace DataAccessLayer
         public Nullable<long> UserID { get; set; }
         public Nullable<long> DashboardTableId { get; set; }
         public Nullable<long> DashboardTypeId { get; set; }
+        public bool ShowInHome { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-        public bool ShowInHome { get; set; }
     
         public virtual DashboardTable DashboardTable { get; set; }
         public virtual DashboardType DashboardType { get; set; }

@@ -7,31 +7,13 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Distributor_Model
+    public class DistributorArea_Model
     {
-        public long DistrubitorID { get; set; }
+        public long DistributorAreaID { get; set; }
 
         [Required(ErrorMessage = "Distrubitor Name required")]
         [Display(Name = "Distrubitor Name")]
-        public string DistrubitorName { get; set; }
-
-        [Required(ErrorMessage = "Owner Name required")]
-        [Display(Name = "Owner Name")]
-        public string OwnerName { get; set; }
-
-        [Required(ErrorMessage = "Regestration No required")]
-        [Display(Name = "Regestration No")]
-        public string RegestrationID { get; set; }
-
-        [Required(ErrorMessage = "Mobile No required")]
-        [Display(Name = "Mobile No")]
-        public long MobileNo { get; set; }
-        public long Phone { get; set; }
-        public string Fax { get; set; }
-
-        [Required(ErrorMessage = "Email required")]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        public Nullable<long> DistrubitorID { get; set; }
 
         [Required(ErrorMessage = "State required")]
         [Display(Name = "State")]
@@ -40,10 +22,15 @@ namespace Models
         [Required(ErrorMessage = "District required")]
         [Display(Name = "District")]
         public string District { get; set; }
+
+        [Required(ErrorMessage = "City required")]
+        [Display(Name = "City")]
+        public string City { get; set; }
         public string Address { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
+        public string DistrubitorName { get; set; }
     }
 }

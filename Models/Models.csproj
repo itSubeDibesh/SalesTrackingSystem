@@ -42,14 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Batch_Model.cs" />
     <Compile Include="DashbaordPreview_Model.cs" />
     <Compile Include="DashboardGivenColumn_Model.cs" />
     <Compile Include="DashboardTable_Model.cs" />
     <Compile Include="DashboardType_Model.cs" />
+    <Compile Include="DistributorArea_Model.cs" />
     <Compile Include="Distributor_Model.cs" />
     <Compile Include="Module_Model.cs" />
     <Compile Include="ModuleAction_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reseller_Model.cs" />
     <Compile Include="UserProfile_Model.cs" />
     <Compile Include="UserProfileDetails_Model.cs" />
     <Compile Include="Users_Model.cs" />

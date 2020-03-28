@@ -12,13 +12,13 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class DistributonArea
+    public partial class DistributorArea
     {
-        public long DistributonAreaID { get; set; }
+        public long DistributorAreaID { get; set; }
         public Nullable<long> DistrubitorID { get; set; }
         public string State { get; set; }
         public string District { get; set; }
-        public string Ciry { get; set; }
+        public string City { get; set; }
         public string Address { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }

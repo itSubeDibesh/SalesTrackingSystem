@@ -16,11 +16,11 @@ namespace DataAccessLayer
     {
         public long DashboardColumnId { get; set; }
         public Nullable<long> DashboardTableId { get; set; }
+        public Nullable<long> DashboardID { get; set; }
+        public Nullable<long> DashboardGivenColumnId { get; set; }
         public string Color { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-        public Nullable<long> DashboardID { get; set; }
-        public Nullable<long> DashboardGivenColumnId { get; set; }
     
         public virtual Dashboard Dashboard { get; set; }
         public virtual DashboardGivenColumn DashboardGivenColumn { get; set; }
