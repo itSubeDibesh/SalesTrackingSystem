@@ -1,0 +1,138 @@
+﻿@model Models.Transaction_Model
+@using Models
+@using Services.Interface
+@using Services.Service
+@{
+    var SessionVariable = new Users_Model();  
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);       
+    } 
+    long supplierID = SessionVariable.UserID;
+    long transactionLevel = 1; /*Distributor to Reseller*/
+    if (SessionVariable.DistrubitorID == null)
+    {
+        transactionLevel = 2;/*Company to Distributor*/
+    }
+    Users_Interface users_Interface = new Users_Service();
+    List<TransactionDetail_Model> transactionDetail_Models = new List<TransactionDetail_Model>();
+    Product_Interface product_ = new Product_Service();
+
+}
+<div class="col-sm-12" id="AddTransaction" style="display:none;">
+    <div class="card">
+        <div class="card-header">
+            <strong>Add</strong> Transaction
+            <a href="~/Transaction/Transaction" class="btn btn-danger " style="float: right;color:white;"><i class="fas fa-close"></i></a>
+        </div>
+        <div class="card-body card-block"> 
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <input type="hidden" name="TransactionLevel" id="TransactionLevel" value="@transactionLevel" />
+                <input type="hidden" name="SupplierID" id="SupplierID" value="@supplierID" />
+                <div class="row form-group">
+                    <div class="col-md-3 col-sm-6">
+                        @Html.LabelFor(model => model.ReceiverID, htmlAttributes: new { @class = "form-control-label" })
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <select name="ReceiverID" id="ReceiverID" class="form-control">
+                            <option selected disabled>Select receiver</option>
+                            @foreach (var user in users_Interface.DisplayTable())
+                            {
+                                if (users_Interface.DisplayTable() != null)
+                                {
+                                    <option value="@user.UserID">@user.FullName (@user.Email)</option>
+                                }
+                            }
+                        </select>
+                        @Html.ValidationMessageFor(model => model.ReceiverID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-2 col-sm-6">
+                        @Html.LabelFor(model => model.InvoiceNo, htmlAttributes: new { @class = "form-control-label" })
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        @Html.EditorFor(model => model.InvoiceNo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.InvoiceNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-3 col-sm-6">
+                        @Html.LabelFor(model => model.InvoiceDate, htmlAttributes: new { @class = "form-control-label" })
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                        @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row form-group" id="transactionDetalis">
+                    <hr />
+                    <div class="col-sm-6 container-fluid m-l-500">
+                        <table id="tableTransactionDetails" class="table">
+                            <thead class="thead-dark" style="text-align:center;">
+                                <tr>
+                                    <th >Product</th>
+                                    <th >Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transDet in transactionDetail_Models)
+                                {
+                                    <tr>
+                                        <td>@transDet.ProductName</td>
+                                        <td></td>
+                                        <td style="text-align:center;"><button type="button"  onclick="Remove(this)" class="btn btn-danger btn-sm"> <i class="fas fa-minus"></i>Remove</button></td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <select name="ProductID" id="ProductID" class="form-control">
+                                            <option selected disabled>Select Product</option>
+                                            @foreach (var transDet in product_.ListAllData())
+                                            {
+                                                if (transDet != null)
+                                                {
+                                                    <option value="@transDet.ProductID">@transDet.ProductName</option>
+                                                }
+                                            }
+                                        </select> 
+                                    </td>
+                                    <td>
+                                        <input type="number" name="Quantity" id="Quantity" class="form-control">
+                                    </td>
+                                    <td style="text-align:center;"><button type="button" id="btnAdd" class='btn btn-success btn-sm'> <i class="fas fa-plus"></i> Add</button></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-3 col-sm-6">
+                        @Html.LabelFor(model => model.DiscountPercent, htmlAttributes: new { @class = "form-control-label" })
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        @Html.EditorFor(model => model.DiscountPercent, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.DiscountPercent, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        @Html.LabelFor(model => model.TaxPercent, htmlAttributes: new { @class = "form-control-label" })
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        @Html.EditorFor(model => model.TaxPercent, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.TaxPercent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success btn-sm" id="AddTransactionAjax">
+                        <i class="fa fa-paper-plane"></i> Submit
+                    </button>
+                    <a href="~/Transaction/Transaction" class="btn btn-danger btn-sm" style="color:white;"><i class="fa fa-trash"></i> Reset</a>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>

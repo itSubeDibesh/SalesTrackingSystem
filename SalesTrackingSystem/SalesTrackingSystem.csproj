@@ -561,6 +561,8 @@
     <Content Include="Views\Products\AddProductCategory.cshtml" />
     <Content Include="Views\Products\EditProduct.cshtml" />
     <Content Include="Views\Products\EditProductCategory.cshtml" />
+    <Content Include="Views\Transaction\AddTransaction.cshtml" />
+    <Content Include="Views\Transaction\EditTransaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">

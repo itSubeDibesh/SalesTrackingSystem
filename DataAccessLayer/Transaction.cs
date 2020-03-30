@@ -29,6 +29,9 @@ namespace DataAccessLayer
         public Nullable<System.DateTime> InvoiceEntryDate { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
+        public Nullable<decimal> DiscountPercent { get; set; }
+        public Nullable<decimal> TaxPercent { get; set; }
+        public Nullable<decimal> Balance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransactionDetail> TransactionDetails { get; set; }

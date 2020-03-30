@@ -62,6 +62,7 @@
     <Compile Include="Interface\ProductCategory_Interface.cs" />
     <Compile Include="Interface\Product_Interface.cs" />
     <Compile Include="Interface\Reseller_Interface.cs" />
+    <Compile Include="Interface\Transaction_Interface.cs" />
     <Compile Include="Interface\Unit_Interface.cs" />
     <Compile Include="Interface\UserProfileDetails_Interface.cs" />
     <Compile Include="Interface\UserProfile_Interface.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Service\ProductCategory_Service.cs" />
     <Compile Include="Service\Product_Service.cs" />
     <Compile Include="Service\Reseller_Service.cs" />
+    <Compile Include="Service\Transaction_Service.cs" />
     <Compile Include="Service\Unit_Service.cs" />
     <Compile Include="Service\UserProfileDetails_Service.cs" />
     <Compile Include="Service\UserProfile_Service.cs" />

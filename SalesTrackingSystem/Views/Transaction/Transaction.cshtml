@@ -1,10 +1,19 @@
-﻿@{
+﻿@using Services.Interface
+@using Services.Service
+@using Models;
+@{
+    Transaction_Interface transaction = new Transaction_Service();
+}
+
+@{
     ViewBag.Title = "Transaction";
     ViewBag.Page = "Transaction";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.AppName = "Tinjure tea factory";
+    int SearialNumber = 1;
+    ViewBag.Action = "Add";
 }
-
+@Html.Partial("~/Views/Shared/_Alert.cshtml")
 <div class="row">
     <div class="col-12">
         <div class="overview-wrap">
@@ -16,345 +25,67 @@
     </div>
 </div>
 <!--#region Forms-->
+@if (ViewBag.AddError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#AddTransaction').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.EditDropDown != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TransactionUpdate').slideDown();
+        }
+    </script>
+}
+@if (ViewBag.UpdateError != null)
+{
+    <script>
+        window.onload = function () {
+            $('#TransactionUpdate').slideDown();
+        }
+    </script>
+}
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <strong>Add</strong> Transaction
-                <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Module Action">
-                    <i class="fas fa-close"></i>
-                </button>
-            </div>
-            <div class="card-body card-block">
-                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Transaction Level</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">Supplier To customer</option>
-                                <option value="2">Costumer to son</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="text-input" class=" form-control-label">Supplier Name</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">Rohan</option>
-                                <option value="2">Dibesh</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Receiver Name</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">Rohan</option>
-                                <option value="2">Dibesh</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Invoice No</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="number" name="invoice" id="text-input" placeholder="Text" class="form-control" />
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Invoice Entry date</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="datetime" name="invoice" id="text-input" placeholder="Text" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Product Name</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <select name="select" id="select" class="form-control">
-                                <option selected disabled>Please select</option>
-                                <option value="1">MAc</option>
-                                <option value="2">IPhone</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Quantity</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="number" name="invoice" id="text-input" placeholder="qty" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="select" class=" form-control-label">Units</label>
-                        </div>
-                        <div class="col-md-3 col-sm-6">
-                            <input type="number" name="invoice" id="text-input" placeholder="qty" class="form-control" />
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <i class="fa fa-paper-plane"></i> Submit
-                        </button>
-                        <button type="reset" class="btn btn-primary btn-sm">
-                            <i class="fa fa-trash"></i> Reset
-                        </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-close"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header" cz-shortcut-listen="true">
-                <strong>Tranaction</strong> Invoice
-                <button class="btn btn-danger " style="float: right;" data-toggle="tooltip" data-placement="right" title="Close Invoice">
-                    <i class="fas fa-close"></i>
-                </button>
-            </div>
-            @* Printing Bill *@
-            <div class="container d-none" id="invoice">
-                <div class="card-body card-block">                    
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <p>
-                                <Strong>Invoice No: </Strong> 98614516
-                            </p>
-                            <p>
-                                <Strong>Date Issued: </Strong> 09/08/2020
-                            </p>
-                            <p>
-                                <Strong>Due Date: </Strong> 09/08/2020
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <span>
-                                <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
-                            </span>
-                        </div>
+    @if (ViewBag.Action == "Add")
+    {
+        @Html.Partial("AddTransaction")
+    }
 
-                        <div class="col-sm-12">
-                            <br />
-                            <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
-                        </div>
+    @if (Request.Params.Get("action") == "Update")
+    {
+        if (transaction.TransactionExists(Convert.ToInt64(Request.Params.Get("uaid"))))
+        {
+            @Html.Partial("EditTransaction", transaction.TransactionByID(Convert.ToInt64(Request.Params.Get("uaid"))));
+        }
+        else
+        {
+            Session["Error"] = " Transaction couldn't be found please retry!!";
+        }
+    }
 
-                    </div>
-                    <hr />
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
-                            <hr />
-                        </div>
-                        <div class="col-sm-6">
-                            <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
-                            <hr />
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <table class="table table-bordered table-hover">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th style="text-align: center;">SN</th>
-                                        <th style="text-align: center;">Product Name</th>
-                                        <th style="text-align: center;">Cost (NRS)</th>
-                                        <th style="text-align: center;">Units</th>
-                                        <th style="text-align: center;">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: center;">1</td>
-                                        <td style="text-align: center;">Mac Book Pro</td>
-                                        <td style="text-align: center;">50000</td>
-                                        <td style="text-align: center;">500</td>
-                                        <td style="text-align: center;">5000000</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">2</td>
-                                        <td style="text-align: center;">Mac Book Pro</td>
-                                        <td style="text-align: center;">50000</td>
-                                        <td style="text-align: center;">500</td>
-                                        <td style="text-align: center;">5000000</td>
-                                    </tr>                                               
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr />
-                        <br />
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <br />
-                            <p>Thanks for your business.</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <br />
-                                <br />
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Subtotal</p></div>
-                                <div class="col-6"><p>NRS 10000000</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Discount</p></div>
-                                <div class="col-6"><p>-NRS 50</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Tax</p></div>
-                                <div class="col-6"><p>13%</p></div>
-                            </div>
-                            <hr style="width:90%;" />
-                            <div class="row">
-                                <div class="col-6"><p>Invoice Total</p></div>
-                                <div class="col-6"><p> NRS 100000000</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Discount</p></div>
-                                <div class="col-6"><p> NRS 0</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Balance(NRS)</p></div>
-                                <div class="col-6"><p>NRS 100000000</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @* Displaying Bill *@
-            <div class="container">
-                <div class="card-body card-block">
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <p>
-                                <Strong>Invoice No: </Strong> 98614516
-                            </p>
-                            <p>
-                                <Strong>Date Issued: </Strong> 09/08/2020
-                            </p>
-                            <p>
-                                <Strong>Due Date: </Strong> 09/08/2020
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <span>
-                                <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
-                            </span>
-                        </div>
+    @if (ViewBag.UpdateData != null)
+    {
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateData);
+        if (transaction.TransactionExists(uaid))
+        {
+            @Html.Partial("EditTransaction", transaction.TransactionByID(uaid));
+        }
+        else
+        {
+            Session["Error"] = " Transaction couldn't be found please retry!!";
+        }
+    }
 
-                        <div class="col-sm-12">
-                            <br />
-                            <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
-                        </div>
-
-                    </div>
-                    <hr />
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
-                            <hr />
-                        </div>
-                        <div class="col-sm-6">
-                            <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
-                            <hr />
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-12">
-                            <table class="table dynamic-scroable-table-module table-bordered table-hover">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th style="text-align: center;">SN</th>
-                                        <th style="text-align: center;">Product Name</th>
-                                        <th style="text-align: center;">Cost (NRS)</th>
-                                        <th style="text-align: center;">Units</th>
-                                        <th style="text-align: center;">Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: center;">1</td>
-                                        <td style="text-align: center;">Mac Book Pro</td>
-                                        <td style="text-align: center;">50000</td>
-                                        <td style="text-align: center;">500</td>
-                                        <td style="text-align: center;">5000000</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">2</td>
-                                        <td style="text-align: center;">Mac Book Pro</td>
-                                        <td style="text-align: center;">50000</td>
-                                        <td style="text-align: center;">500</td>
-                                        <td style="text-align: center;">5000000</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr />
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-sm-6">
-                            <p>Thanks for your business.</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-6"><p>Subtotal</p></div>
-                                <div class="col-6"><p>NRS 10000000</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Discount</p></div>
-                                <div class="col-6"><p>-NRS 50</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Tax</p></div>
-                                <div class="col-6"><p>13%</p></div>
-                            </div>
-                            <hr style="width:90%;" />
-                            <div class="row">
-                                <div class="col-6"><p>Invoice Total</p></div>
-                                <div class="col-6"><p> NRS 100000000</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Discount</p></div>
-                                <div class="col-6"><p> NRS 0</p></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6"><p>Balance(NRS)</p></div>
-                                <div class="col-6"><p>NRS 100000000</p></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer text-white">
-                <a onclick="printDiv('invoice')" class="btn btn-success btn-sm">
-                    <i class="fa fa-file-pdf bg-danger"></i> Save / <i class="fa fa-print"></i> Print
-                </a>
-            </div>
-        </div>
-    </div>
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <strong>  Transaction List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add transaction">
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add transaction"  onclick="javascript: $('#AddTransaction').slideDown()">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
@@ -382,7 +113,7 @@
                             <td style="text-align: center;">987654</td>
                             <td style="text-align: center;">2020/18/19</td>
                             <td style="padding-left:3.5%;">
-                                <a href="#"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
+                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
                                 <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
                             </td>
                         </tr>
@@ -395,7 +126,7 @@
                             <td style="text-align: center;">987654</td>
                             <td style="text-align: center;">2020/18/19</td>
                             <td style="padding-left:3.5%;">
-                                <a href="#"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
+                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
                                 <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
                             </td>
                         </tr>
@@ -408,7 +139,7 @@
                             <td style="text-align: center;">987654</td>
                             <td style="text-align: center;">2020/18/19</td>
                             <td style="padding-left:3.5%;">
-                                <a href="#"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
+                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
                                 <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
                             </td>
                         </tr>
@@ -421,7 +152,7 @@
                             <td style="text-align: center;">987654</td>
                             <td style="text-align: center;">2020/18/19</td>
                             <td style="padding-left:3.5%;">
-                                <a href="#"><i class="fas fa-eye" style="color: skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
+                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color: skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
                                 <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
                             </td>
                         </tr>
@@ -434,7 +165,7 @@
                             <td style="text-align: center;">987654</td>
                             <td style="text-align: center;">2020/18/19</td>
                             <td style="padding-left:3.5%;">
-                                <a href="#"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
+                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
                                 <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
                             </td>
                         </tr>
@@ -444,12 +175,251 @@
         </div>
     </div>
 </div>
+@section aboveMain{
+    <div class="modal fade" id="InvoicePopup" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" cz-shortcut-listen="true">
+                    <strong>Tranaction</strong>&nbsp;Invoice
+                    <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
+                        <i class="fas fa-close" style="color:white;"></i>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    @* Printing Bill *@
+                    <div class="container d-none" id="invoice">
+                        <div class="card-body card-block">
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <p>
+                                        <Strong>Invoice No: </Strong> 98614516
+                                    </p>
+                                    <p>
+                                        <Strong>Date Issued: </Strong> 09/08/2020
+                                    </p>
+                                    <p>
+                                        <Strong>Due Date: </Strong> 09/08/2020
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <span>
+                                        <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                                    </span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <br />
+                                    <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
+                                </div>
+
+                            </div>
+                            <hr />
+                            <div class="row form-group">
+                                <div class="col-sm-6">
+                                    <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
+                                    <hr />
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th style="text-align: center;">SN</th>
+                                                <th style="text-align: center;">Product Name</th>
+                                                <th style="text-align: center;">Cost (NRS)</th>
+                                                <th style="text-align: center;">Units</th>
+                                                <th style="text-align: center;">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align: center;">1</td>
+                                                <td style="text-align: center;">Mac Book Pro</td>
+                                                <td style="text-align: center;">50000</td>
+                                                <td style="text-align: center;">500</td>
+                                                <td style="text-align: center;">5000000</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: center;">2</td>
+                                                <td style="text-align: center;">Mac Book Pro</td>
+                                                <td style="text-align: center;">50000</td>
+                                                <td style="text-align: center;">500</td>
+                                                <td style="text-align: center;">5000000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr />
+                                <br />
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-6">
+                                    <br />
+                                    <p>Thanks for your business.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <br />
+                                        <br />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Subtotal</p></div>
+                                        <div class="col-6"><p>NRS 10000000</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Discount</p></div>
+                                        <div class="col-6"><p>-NRS 50</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Tax</p></div>
+                                        <div class="col-6"><p>13%</p></div>
+                                    </div>
+                                    <hr style="width:90%;" />
+                                    <div class="row">
+                                        <div class="col-6"><p>Invoice Total</p></div>
+                                        <div class="col-6"><p> NRS 100000000</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Discount</p></div>
+                                        <div class="col-6"><p> NRS 0</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Balance(NRS)</p></div>
+                                        <div class="col-6"><p>NRS 100000000</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* Displaying Bill *@
+                    <div class="container">
+                        <div class="card-body card-block">
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <p>
+                                        <Strong>Invoice No: </Strong> 98614516
+                                    </p>
+                                    <p>
+                                        <Strong>Date Issued: </Strong> 09/08/2020
+                                    </p>
+                                    <p>
+                                        <Strong>Due Date: </Strong> 09/08/2020
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <span>
+                                        <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                                    </span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <br />
+                                    <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
+                                </div>
+
+                            </div>
+                            <hr />
+                            <div class="row form-group">
+                                <div class="col-sm-6">
+                                    <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
+                                    <hr />
+                                </div>
+                                <div class="col-sm-6">
+                                    <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-12">
+                                    <table class="table dynamic-scroable-table-module table-bordered table-hover">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th style="text-align: center;">SN</th>
+                                                <th style="text-align: center;">Product Name</th>
+                                                <th style="text-align: center;">Cost (NRS)</th>
+                                                <th style="text-align: center;">Units</th>
+                                                <th style="text-align: center;">Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align: center;">1</td>
+                                                <td style="text-align: center;">Mac Book Pro</td>
+                                                <td style="text-align: center;">50000</td>
+                                                <td style="text-align: center;">500</td>
+                                                <td style="text-align: center;">5000000</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align: center;">2</td>
+                                                <td style="text-align: center;">Mac Book Pro</td>
+                                                <td style="text-align: center;">50000</td>
+                                                <td style="text-align: center;">500</td>
+                                                <td style="text-align: center;">5000000</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-6">
+                                    <p>Thanks for your business.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row">
+                                        <div class="col-6"><p>Subtotal</p></div>
+                                        <div class="col-6"><p>NRS 10000000</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Discount</p></div>
+                                        <div class="col-6"><p>-NRS 50</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Tax</p></div>
+                                        <div class="col-6"><p>13%</p></div>
+                                    </div>
+                                    <hr style="width:90%;" />
+                                    <div class="row">
+                                        <div class="col-6"><p>Invoice Total</p></div>
+                                        <div class="col-6"><p> NRS 100000000</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Discount</p></div>
+                                        <div class="col-6"><p> NRS 0</p></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6"><p>Balance(NRS)</p></div>
+                                        <div class="col-6"><p>NRS 100000000</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="modal-footer text-white">
+                    <a onclick="printDiv('invoice')" class="btn btn-success btn-sm">
+                        <i class="fa fa-file-pdf bg-danger"></i> Save / <i class="fa fa-print"></i> Print
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>   
+}
 <!--#endregion Forms ends-->
 @section scripts{
     <script>
         $(function () {
             $('.dynamic-scroable-table-module').DataTable({
-                 responsive: !0,
+                responsive: !0,
                 scrollY: "65vh",
                 scrollCollapse: !0,
                 paging: false,
@@ -485,17 +455,99 @@
             });
         });
 
-        function printDiv(divName){
-			var printContents = document.getElementById(divName).innerHTML;
-			var originalContents = document.body.innerHTML;
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
 
-			document.body.innerHTML = printContents;
+         $("body").on("click", "#btnAdd", function () {
+            //Reference the Name and Country TextBoxes.
+            var ProductID = $("#ProductID");
+            var Quantity = $("#Quantity");
 
-			window.print();
+            //Get the reference of the Table's TBODY element.
+            var tBody = $("#tableTransactionDetails > TBODY")[0];
 
-			document.body.innerHTML = originalContents;
+            //Add Row.
+            var row = tBody.insertRow(-1);
 
-        } 
+            //Add ProductID cell.
+            var cell = $(row.insertCell(-1));
+            cell.html(ProductID.val());
+
+            //Add Quantity cell.
+            cell = $(row.insertCell(-1));
+            cell.html(Quantity.val());
+
+            //Add Button cell.
+            cell = $(row.insertCell(-1));
+            var btnRemove = $("<button class='btn btn-danger btn-sm'> <i class='fas fa-minus'> Remove</button>");
+            btnRemove.attr("type", "button");
+            btnRemove.attr("onclick", "Remove(this);");     
+            cell.append(btnRemove);
+
+            //Clear the TextBoxes.
+            ProductID.val("");
+            Quantity.val("");
+        });
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            //Get the reference of the Table.
+            var table = $("#tableTransactionDetails")[0];
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        };
+
+        $("body").on("click", "#AddTransactionAjax", function () {
+            //Loop through the Table rows and build a JSON array.          
+            var transaction = {};
+            transaction.TransactionLevel = $("#TransactionLevel").val();
+            transaction.SupplierID = $("#SupplierID").val();
+            transaction.ReceiverID = $("#ReceiverID").val();
+            transaction.InvoiceNo = $("#InvoiceNo").val();
+            transaction.InvoiceDate = $("#InvoiceDate").val();
+            transaction.DiscountPercent = $("#DiscountPercent").val();
+            transaction.TaxPercent = $("#TaxPercent").val();
+
+            console.log(transaction);
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "/Transaction/TransactionAdd",
+                data: JSON.stringify(transaction),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                        var transactionDetail = new Array();                       
+                        $("#tableTransactionDetails TBODY TR").each(function () {
+                            var row = $(this);
+                            var AddTransDetail = {};
+                            AddTransDetail.TransactionID = response;
+                            AddTransDetail.ProductID = row.find("TD").eq(0).html();
+                            AddTransDetail.Quantity = row.find("TD").eq(1).html();
+                            AddTransDetail.DateCreated = "@(DateTime.Now)";
+                            transactionDetail.push(AddTransDetail);                           
+                        });
+                      console.log(transactionDetail);
+                        $.ajax({
+                        type: "POST",
+                        url: "/Transaction/TransactionDetailsAdd",
+                        data: JSON.stringify(transactionDetail),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                            success: function () {
+                                location.reload();
+                            }
+                    });
+                }
+            });
+        });
 
     </script>
 }

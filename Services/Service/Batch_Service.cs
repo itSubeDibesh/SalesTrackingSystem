@@ -63,8 +63,8 @@ namespace Services.Service
             using (var _context = new SalesTrackingSystemEntities())
             {
                 try
-                {                                       
-                    var data = (from batch in _context.Batches.Where(batch=>batch.BatchID== batchID)
+                {
+                    var data = (from batch in _context.Batches.Where(batch => batch.BatchID == batchID)
                                 join product in _context.Products on batch.ProductID equals product.ProductID
                                 join productCategory in _context.ProductCategories on batch.ProductCategoryId equals productCategory.ProductCategoryID
                                 select new Batch_Model()
@@ -120,20 +120,20 @@ namespace Services.Service
                                 join productCategory in _dbContext.ProductCategories on batch.ProductCategoryId equals productCategory.ProductCategoryID
                                 select new Batch_Model()
                                 {
-                                    BatchID=batch.BatchID,
-                                    BatchName=batch.BatchName,
-                                    ProductCategoryId=batch.ProductCategoryId,
-                                    QunatityProduced=batch.QunatityProduced,
-                                    UnitPrice=batch.UnitPrice,
-                                    StockLeft=batch.StockLeft,
-                                    ExpiryDate=batch.ExpiryDate,
-                                    ProductName=product.ProductName,
-                                    ProductID=batch.ProductID,
-                                    ProductCategoryName=productCategory.ProductCategoryName,
-                                    DateProduced=batch.DateProduced,
+                                    BatchID = batch.BatchID,
+                                    BatchName = batch.BatchName,
+                                    ProductCategoryId = batch.ProductCategoryId,
+                                    QunatityProduced = batch.QunatityProduced,
+                                    UnitPrice = batch.UnitPrice,
+                                    StockLeft = batch.StockLeft,
+                                    ExpiryDate = batch.ExpiryDate,
+                                    ProductName = product.ProductName,
+                                    ProductID = batch.ProductID,
+                                    ProductCategoryName = productCategory.ProductCategoryName,
+                                    DateProduced = batch.DateProduced,
                                     DateCreated = batch.DateCreated,
                                     DateUpdated = batch.DateUpdated
-                                }).ToList().OrderBy(batch=>batch.BatchName).ToList(); 
+                                }).ToList().OrderBy(batch => batch.BatchName).ToList();
                     return data;
                 }
                 catch (Exception)
@@ -160,7 +160,7 @@ namespace Services.Service
                         StockLeft = Convert.ToInt64(model.QunatityProduced),
                         DateProduced = model.DateProduced,
                         ExpiryDate = model.ExpiryDate,
-                        DateCreated=DateTime.Now
+                        DateCreated = DateTime.Now
                     };
                     _context.Batches.Add(data);
                     _context.SaveChanges();
@@ -175,12 +175,12 @@ namespace Services.Service
 
         public string StockLeftByProduct(long productID)
         {
-            string  StockLeft;
+            string StockLeft;
             using (var _dbContext = new SalesTrackingSystemEntities())
             {
                 try
                 {
-                    StockLeft = (_dbContext.Batches.Where(bate=>bate.ProductID==productID).Sum(bat => bat.StockLeft)).ToString();
+                    StockLeft = (_dbContext.Batches.Where(bate => bate.ProductID == productID).Sum(bat => bat.StockLeft)).ToString();
                     if (StockLeft == "")
                     {
                         StockLeft = "0";
@@ -193,6 +193,58 @@ namespace Services.Service
                     return StockLeft;
                 }
             }
+        }
+
+        public bool SubtractStockLeft(decimal stockAmount, long productID)
+        {         
+            decimal stockLeft = Convert.ToDecimal(StockLeftByProduct(productID));
+            if (stockLeft >= stockAmount)
+            {
+                using (var _context = new SalesTrackingSystemEntities())
+                {
+                    decimal newFistbatchStockLeft;
+                    var FirstBatchdata = (from batch in _context.Batches.Where(batch => batch.ProductID == productID && batch.StockLeft != 0)
+                                            select new Batch_Model()
+                                            {
+                                                BatchID = batch.BatchID,
+                                                StockLeft = batch.StockLeft,
+                                            }).FirstOrDefault();
+                    if (FirstBatchdata.StockLeft >= stockAmount)
+                    {
+                        newFistbatchStockLeft = Convert.ToDecimal(FirstBatchdata.StockLeft) - stockAmount;
+                        var data = _context.Batches.Where(batch => batch.BatchID == FirstBatchdata.BatchID).FirstOrDefault();
+                        data.StockLeft = newFistbatchStockLeft;
+                        data.DateUpdated = DateTime.Now;
+                        _context.SaveChanges();
+                    }
+                    else
+                    {
+                        newFistbatchStockLeft = Convert.ToDecimal(FirstBatchdata.StockLeft) - stockAmount;
+                        var data = _context.Batches.Where(batch => batch.BatchID == FirstBatchdata.BatchID).FirstOrDefault();
+                        data.StockLeft = newFistbatchStockLeft;
+                        data.DateUpdated = DateTime.Now;
+                        _context.SaveChanges();
+
+                        var SecondtBatchdata = (from batch in _context.Batches.Where(batch => batch.ProductID == productID && batch.StockLeft != 0)
+                                                select new Batch_Model()
+                                                {
+                                                    BatchID = batch.BatchID,
+                                                    StockLeft = batch.StockLeft,
+                                                }).FirstOrDefault();
+                        var newSecondbatchStockLeft = Convert.ToDecimal(FirstBatchdata.StockLeft) - newFistbatchStockLeft;
+                        var SecondData = _context.Batches.Where(batch => batch.BatchID == SecondtBatchdata.BatchID).FirstOrDefault();
+                        data.StockLeft = newSecondbatchStockLeft;
+                        data.DateUpdated = DateTime.Now;
+                        _context.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public bool Update(Batch_Model model)
@@ -222,3 +274,4 @@ namespace Services.Service
         }
     }
 }
+          

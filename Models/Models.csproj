@@ -55,6 +55,8 @@
     <Compile Include="Products_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reseller_Model.cs" />
+    <Compile Include="TransactionDetail_Model.cs" />
+    <Compile Include="Transaction_Model.cs" />
     <Compile Include="Unit_Model.cs" />
     <Compile Include="UserProfile_Model.cs" />
     <Compile Include="UserProfileDetails_Model.cs" />

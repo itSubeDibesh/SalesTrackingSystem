@@ -185,7 +185,6 @@
           <Property Name="TransactionID" Type="bigint" />
           <Property Name="ProductID" Type="bigint" />
           <Property Name="Quantity" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="Units" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
@@ -202,6 +201,9 @@
           <Property Name="InvoiceEntryDate" Type="datetime" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="DiscountPercent" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TaxPercent" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Balance" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="Unit">
           <Key>
@@ -1061,7 +1063,6 @@
           <Property Name="TransactionID" Type="Int64" />
           <Property Name="ProductID" Type="Int64" />
           <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="Units" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Product" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Products" FromRole="TransactionDetail" ToRole="Product" />
@@ -1080,6 +1081,9 @@
           <Property Name="InvoiceEntryDate" Type="DateTime" Precision="3" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="DiscountPercent" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TaxPercent" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Balance" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Transactions" FromRole="Transaction" ToRole="TransactionDetail" />
         </EntityType>
         <EntityType Name="Unit">
@@ -1691,7 +1695,6 @@
               <MappingFragment StoreEntitySet="TransactionDetails">
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="Units" ColumnName="Units" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
@@ -1702,6 +1705,9 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Transaction">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="TaxPercent" ColumnName="TaxPercent" />
+                <ScalarProperty Name="DiscountPercent" ColumnName="DiscountPercent" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="InvoiceEntryDate" ColumnName="InvoiceEntryDate" />

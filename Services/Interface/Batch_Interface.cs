@@ -17,5 +17,6 @@ namespace Services.Interface
         Batch_Model GetBatchById(long batchID);
         bool BatchExist(long batchID);
         string StockLeftByProduct(long productID);
+        bool SubtractStockLeft(decimal stockAmount, long productID);
     }
 }

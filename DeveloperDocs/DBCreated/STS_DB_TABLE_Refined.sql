@@ -645,3 +645,19 @@ ADD CONSTRAINT FK_Products_Unit FOREIGN KEY (UnitId)
       ON DELETE NO ACTION
       ON UPDATE NO ACTION
 GO
+
+/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------(March 30 2020) Transaction column added ----------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+Alter TABLE Transactions
+ADD		DiscountPercent		DECIMAL(10,2)	NULL
+GO
+Alter TABLE Transactions
+ADD		TaxPercent			DECIMAL(10,2)	NULL
+GO
+Alter TABLE Transactions
+ADD		Balance				DECIMAL(10,2)	NULL
+GO
+Alter TABLE TransactionDetails
+Drop	Column	Units
+GO
