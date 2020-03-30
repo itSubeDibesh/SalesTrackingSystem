@@ -12,29 +12,22 @@ namespace DataAccessLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Unit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Unit()
         {
-            this.Batches = new HashSet<Batch>();
-            this.TransactionDetails = new HashSet<TransactionDetail>();
+            this.Products = new HashSet<Product>();
         }
     
-        public long ProductID { get; set; }
-        public Nullable<long> ProductCategoryID { get; set; }
-        public string ProductName { get; set; }
+        public long UnitId { get; set; }
+        public string UnitName { get; set; }
+        public string UnitAbb { get; set; }
         public string Description { get; set; }
-        public decimal PackRate { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
-        public Nullable<long> UnitId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Batch> Batches { get; set; }
-        public virtual ProductCategory ProductCategory { get; set; }
-        public virtual Unit Unit { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TransactionDetail> TransactionDetails { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

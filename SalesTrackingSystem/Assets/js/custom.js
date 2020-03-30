@@ -13,6 +13,18 @@
     }
 });
 
+$(".bod-picker").nepaliDatePicker({
+    dateFormat: "%y-%m-%d",
+    closeOnDateSelect: true
+});
+
+$("#clear-DateProduce").on("click", function (event) {
+    $("#DateProduced").val('');
+});
+$("#clear-ExpiryDate").on("click", function (event) {
+    $("#ExpiryDate").val('');
+});
+
 $('.dropify').dropify({
     messages: {
         'default': 'Drag and drop a file here or click',

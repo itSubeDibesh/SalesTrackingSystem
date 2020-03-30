@@ -29,7 +29,7 @@ namespace Models
 
         [Required(ErrorMessage = "Enter stock")]
         [Display(Name = "Stock")]
-        public Nullable<long> StockLeft { get; set; }
+        public Nullable<decimal> StockLeft { get; set; }
 
         [Required(ErrorMessage = "Enter date produced")]
         [Display(Name = "Date Produced")]
@@ -40,8 +40,13 @@ namespace Models
         public string ExpiryDate { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
+
+        [Required(ErrorMessage = "Choose Product Name")]
+        [Display(Name = "Product  Name")]
         public Nullable<long> ProductID { get; set; }
+
         public string ProductCategoryName { get; set; }
+        public string ProductName { get; set; }
 
     }
 }

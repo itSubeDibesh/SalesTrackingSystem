@@ -40,6 +40,7 @@ namespace DataAccessLayer
         public virtual DbSet<Reseller> Resellers { get; set; }
         public virtual DbSet<TransactionDetail> TransactionDetails { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<UserProfileDetail> UserProfileDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }

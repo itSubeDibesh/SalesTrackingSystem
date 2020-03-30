@@ -19,7 +19,7 @@ namespace DataAccessLayer
         public Nullable<long> ProductCategoryId { get; set; }
         public decimal QunatityProduced { get; set; }
         public decimal UnitPrice { get; set; }
-        public Nullable<long> StockLeft { get; set; }
+        public Nullable<decimal> StockLeft { get; set; }
         public string DateProduced { get; set; }
         public string ExpiryDate { get; set; }
         public System.DateTime DateCreated { get; set; }

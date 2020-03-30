@@ -131,7 +131,7 @@
                             </a>
                         </li>
                         <li class="has-sub">
-                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ? "royalblue" : "")">
+                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ||ViewBag.Page == "Unit"? "royalblue" : "")">
                                 <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
@@ -241,7 +241,7 @@
                                 <i class="zmdi zmdi-file-text zmdi-hc-lg"></i>Transaction
                             </a>
                         </li>
-                        <li class="has-sub  @(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ? "active" : " ")">
+                        <li class="has-sub  @(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ||ViewBag.Page == "Unit"? "active" : " ")">
                             <a class="js-arrow" href="#">
                                 <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
                                 <span class="arrow">

@@ -6,7 +6,7 @@ CREATE TABLE Batch(
 	ProductCategoryId	BIGINT			NULL,			/*FK*/
 	QunatityProduced	DECIMAL(10,2)	NOT NULL,
 	UnitPrice			DECIMAL(10,2)	NOT NULL,
-	StockLeft			BIGINT			NULL,
+	StockLeft			DECIMAL(10,2)	NULL,
 	DateProduced		NVARCHAR(10)	NOT NULL,
 	ExpiryDate			NVARCHAR(10)	NOT NULL,
 	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
@@ -563,6 +563,10 @@ ADD CONSTRAINT FK_DashboardColumn_DashboardGivenColumn FOREIGN KEY (DashboardGiv
       ON UPDATE NO ACTION
 GO
 
+/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------(March 28 2020) Insert Datas Added ----------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+
 /*------------------------------------ Inserting Datas ------------------------------------------------------------*/
 GO
 
@@ -601,3 +605,43 @@ GO
 INSERT INTO Verification (VerificationID,UserID,IsVerified,DateVerified,VerifiedToken,ResetToken,ResetTriggered)
 VALUES(1,1,1,2020-03-14,'lq8xNiLPdrIDsiBeEKPFgHTA','DqiHGqRta_4kC_V@6123JmGcRyhXEXCvsB_cs7g3lAJOpXZv_',2020-03-14),
 (2,2,1,2020-03-14,'SD$cn4K3t9slpi17$x6EHXUCC2ShekjLBdEzPd7Mmfr_ENIk','n7nPatFp$CIcMJADf$bHTz4wdVubazbW_OxZemXDD65BZu3t79jh7XiZd1Lp9DpAAWm7nLz2@6123JmGcRyhXEXCvsB_cs7g3lAJOpXZv_',2020-03-14);
+
+
+/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------(March 29 2020) Unit table Added -----------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+
+CREATE TABLE Unit(
+	UnitId				BIGINT			PRIMARY KEY,	
+	UnitName			VARCHAR(100)	NOT NULL,
+	UnitAbb				VARCHAR(100)	NOT NULL,
+	Description			NVARCHAR(MAX)	NULL,
+	DateCreated			DATETIME		NOT NULL		DEFAULT			GETDATE(),
+	DateUpdated			DATETIME		NULL
+);
+GO
+CREATE TRIGGER Trigger_UPDATE_Unit on Unit FOR UPDATE AS            
+BEGIN
+    UPDATE Unit
+    SET DateUpdated=getdate()
+    FROM Unit INNER JOIN deleted d
+    ON Unit.UnitId = d.UnitId
+END
+GO
+----------------------------------------------------------------------------------------------------
+GO
+ALTER TABLE Products
+DROP COLUMN PackSize
+----------------------------------------------------------------------------------------------------
+GO
+ALTER TABLE Products
+ADD		UnitId		BIGINT	NULL
+----------------------------------------------------------------------------------------------------
+GO
+/*---------------------------------25	FK_Products_Unit	-------------------------------------*/
+Alter TABLE Products
+ADD CONSTRAINT FK_Products_Unit FOREIGN KEY (UnitId)
+      REFERENCES Unit (UnitId)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION
+GO

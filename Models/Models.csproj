@@ -51,8 +51,11 @@
     <Compile Include="Distributor_Model.cs" />
     <Compile Include="Module_Model.cs" />
     <Compile Include="ModuleAction_Model.cs" />
+    <Compile Include="ProductCategory_Model.cs" />
+    <Compile Include="Products_Model.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reseller_Model.cs" />
+    <Compile Include="Unit_Model.cs" />
     <Compile Include="UserProfile_Model.cs" />
     <Compile Include="UserProfileDetails_Model.cs" />
     <Compile Include="Users_Model.cs" />

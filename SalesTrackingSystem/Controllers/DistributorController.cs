@@ -95,6 +95,31 @@ namespace SalesTrackingSystem.Controllers
                 }
             }
         }
+
+        [HttpPost]
+        public ActionResult UpdateDistributorSettings(Distributor_Model distributor)
+        {
+            if (string.IsNullOrWhiteSpace(distributor.DistrubitorName) || distributor.OwnerName == null || distributor.District == null || distributor.State == null || distributor.Email == null)
+            {
+                ViewBag.DistributorUpdateError = "Error";
+                ViewBag.UpdateDistributorData = distributor.DistrubitorID;
+                return RedirectToAction("Setting", "Home");
+            }
+            else
+            {
+                if (distributor_Interface.Update(distributor))
+                {
+                    Session["Success"] = distributor.DistrubitorName + " updated successfully!!";
+                    return RedirectToAction("Setting", "Home");
+                }
+                else
+                {
+                    Session["Error"] = distributor.DistrubitorName + " couldn't be updated please retry!!";
+                    return RedirectToAction("Setting", "Home");   
+                }
+            }
+        }
+
         [HttpPost]
         public ActionResult DeleteDistributor(Distributor_Model distributor)
         {

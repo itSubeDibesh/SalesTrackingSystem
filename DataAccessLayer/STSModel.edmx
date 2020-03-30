@@ -14,7 +14,7 @@
           <Property Name="ProductCategoryId" Type="bigint" />
           <Property Name="QunatityProduced" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="StockLeft" Type="bigint" />
+          <Property Name="StockLeft" Type="decimal" Precision="10" Scale="2" />
           <Property Name="DateProduced" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="ExpiryDate" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
@@ -153,9 +153,9 @@
           <Property Name="ProductName" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="PackRate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="PackSize" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
+          <Property Name="UnitId" Type="bigint" />
         </EntityType>
         <EntityType Name="Resellers">
           <Key>
@@ -200,6 +200,17 @@
           <Property Name="InvoiceNo" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="InvoiceDate" Type="date" Nullable="false" />
           <Property Name="InvoiceEntryDate" Type="datetime" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="bigint" Nullable="false" />
+          <Property Name="UnitName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="UnitAbb" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateUpdated" Type="datetime" />
         </EntityType>
@@ -432,6 +443,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Products_Unit">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Resellers_Distributors">
           <End Role="Distributors" Type="Self.Distributors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -594,6 +617,7 @@
           <EntitySet Name="Resellers" EntityType="Self.Resellers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransactionDetails" EntityType="Self.TransactionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transactions" EntityType="Self.Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfile" EntityType="Self.UserProfile" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfileDetails" EntityType="Self.UserProfileDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -648,6 +672,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Unit" Association="Self.FK_Products_Unit">
+            <End Role="Unit" EntitySet="Unit" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_Resellers_Distributors" Association="Self.FK_Resellers_Distributors">
@@ -715,6 +743,7 @@
           <EntitySet Name="Resellers" EntityType="SalesTrackingSystemModel.Reseller" />
           <EntitySet Name="TransactionDetails" EntityType="SalesTrackingSystemModel.TransactionDetail" />
           <EntitySet Name="Transactions" EntityType="SalesTrackingSystemModel.Transaction" />
+          <EntitySet Name="Units" EntityType="SalesTrackingSystemModel.Unit" />
           <EntitySet Name="UserProfiles" EntityType="SalesTrackingSystemModel.UserProfile" />
           <EntitySet Name="UserProfileDetails" EntityType="SalesTrackingSystemModel.UserProfileDetail" />
           <EntitySet Name="Users" EntityType="SalesTrackingSystemModel.User" />
@@ -787,6 +816,10 @@
             <End Role="ProductCategory" EntitySet="ProductCategories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_Products_Unit" Association="SalesTrackingSystemModel.FK_Products_Unit">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
           <AssociationSet Name="FK_TransactionDetails_Products" Association="SalesTrackingSystemModel.FK_TransactionDetails_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="TransactionDetail" EntitySet="TransactionDetails" />
@@ -825,7 +858,7 @@
           <Property Name="ProductCategoryId" Type="Int64" />
           <Property Name="QunatityProduced" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="StockLeft" Type="Int64" />
+          <Property Name="StockLeft" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="DateProduced" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ExpiryDate" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
@@ -991,11 +1024,12 @@
           <Property Name="ProductName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PackRate" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
-          <Property Name="PackSize" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UnitId" Type="Int64" />
           <NavigationProperty Name="Batches" Relationship="SalesTrackingSystemModel.FK_Batch_Products" FromRole="Product" ToRole="Batch" />
           <NavigationProperty Name="ProductCategory" Relationship="SalesTrackingSystemModel.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="Unit" Relationship="SalesTrackingSystemModel.FK_Products_Unit" FromRole="Product" ToRole="Unit" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Products" FromRole="Product" ToRole="TransactionDetail" />
         </EntityType>
         <EntityType Name="Reseller">
@@ -1047,6 +1081,18 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <NavigationProperty Name="TransactionDetails" Relationship="SalesTrackingSystemModel.FK_TransactionDetails_Transactions" FromRole="Transaction" ToRole="TransactionDetail" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="Int64" Nullable="false" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UnitAbb" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="SalesTrackingSystemModel.FK_Products_Unit" FromRole="Unit" ToRole="Product" />
         </EntityType>
         <EntityType Name="UserProfile">
           <Key>
@@ -1345,6 +1391,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Products_Unit">
+          <End Type="SalesTrackingSystemModel.Unit" Role="Unit" Multiplicity="0..1" />
+          <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="UnitId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TransactionDetails_Products">
           <End Type="SalesTrackingSystemModel.Product" Role="Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1596,9 +1654,9 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
                 <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="PackSize" ColumnName="PackSize" />
                 <ScalarProperty Name="PackRate" ColumnName="PackRate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
@@ -1653,6 +1711,18 @@
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="TransactionLevel" ColumnName="TransactionLevel" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="SalesTrackingSystemModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="DateUpdated" ColumnName="DateUpdated" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UnitAbb" ColumnName="UnitAbb" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

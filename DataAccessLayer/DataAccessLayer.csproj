@@ -114,6 +114,9 @@
     <Compile Include="TransactionDetail.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Unit.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>

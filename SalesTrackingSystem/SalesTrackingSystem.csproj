@@ -552,6 +552,15 @@
     <Content Include="Views\Distributor\EditDistributorArea.cshtml" />
     <Content Include="Views\Reseller\AddReseller.cshtml" />
     <Content Include="Views\Reseller\EditReseller.cshtml" />
+    <Content Include="Views\Products\Unit.cshtml" />
+    <Content Include="Views\Products\Unit_Add.cshtml" />
+    <Content Include="Views\Products\Unit_Update.cshtml" />
+    <Content Include="Views\Products\Batch_Add.cshtml" />
+    <Content Include="Views\Products\Batch_Update.cshtml" />
+    <Content Include="Views\Products\AddProduct.cshtml" />
+    <Content Include="Views\Products\AddProductCategory.cshtml" />
+    <Content Include="Views\Products\EditProduct.cshtml" />
+    <Content Include="Views\Products\EditProductCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">

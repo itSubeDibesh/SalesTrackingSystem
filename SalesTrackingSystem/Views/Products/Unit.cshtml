@@ -1,15 +1,15 @@
 ﻿@using Services.Interface
 @using Services.Service
 @using Models;
-@model Batch_Model
+@model Unit_Model
 @{
-    ViewBag.Title = "Batch";
+    ViewBag.Title = "Unit";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Page = "Batch";
+    ViewBag.Page = "Unit";
     ViewBag.AppName = "Tinjure tea factory";
     int SearialNumber = 1;
     ViewBag.Action = "Add";
-    Batch_Interface batch_ = new Batch_Service();
+    Unit_Interface unit_ = new Unit_Service();
 }
 
 @Html.Partial("~/Views/Shared/_Alert.cshtml")
@@ -27,66 +27,66 @@
 </div>
 <!--#region Forms-->
 
-@if (ViewBag.AddBatchError != null)
+@if (ViewBag.AddUnitError != null)
 {
     <script>
         window.onload = function () {
-            $('#BatchAdd').slideDown();
+            $('#UnitAdd').slideDown();
         }
     </script>
 }
-@if (ViewBag.EditBatchDropDown != null)
+@if (ViewBag.EditUnitDropDown != null)
 {
     <script>
         window.onload = function () {
-            $('#BatchUpdate').slideDown();
+            $('#UnitUpdate').slideDown();
         }
     </script>
 }
-@if (ViewBag.UpdateBatchError != null)
+@if (ViewBag.UpdateUnitError != null)
 {
     <script>
         window.onload = function () {
-            $('#BatchUpdate').slideDown();
+            $('#UnitUpdate').slideDown();
         }
     </script>
 }
 <div class="row">
     @if (ViewBag.Action == "Add")
     {
-        @Html.Partial("Batch_Add")
+        @Html.Partial("Unit_Add")
     }
 
-    @if (Request.Params.Get("action") == "BatchUpdate")
+    @if (Request.Params.Get("action") == "UnitUpdate")
     {
-        if (batch_.BatchExist(Convert.ToInt64(Request.Params.Get("uaid"))))
+        if (unit_.UnitExist(Convert.ToInt64(Request.Params.Get("uaid"))))
         {
-            @Html.Partial("Batch_Update", batch_.GetBatchById(Convert.ToInt64(Request.Params.Get("uaid"))));
+            @Html.Partial("Unit_Update", unit_.GetUnitById(Convert.ToInt64(Request.Params.Get("uaid"))));
         }
         else
         {
-            Session["Error"] = " Batch couldn't be found please retry!!";
+            Session["Error"] = " Unit couldn't be found please retry!!";
         }
     }
 
-    @if (ViewBag.UpdateBatchData != null)
+    @if (ViewBag.UpdateUnitData != null)
     {
-        Int64 uaid = Convert.ToInt64(ViewBag.UpdateBatchData);
-        if (batch_.BatchExist(uaid))
+        Int64 uaid = Convert.ToInt64(ViewBag.UpdateUnitData);
+        if (unit_.UnitExist(uaid))
         {
-            @Html.Partial("Batch_Update", batch_.GetBatchById(uaid));
+            @Html.Partial("Unit_Update", unit_.GetUnitById(uaid));
         }
         else
         {
-            Session["Error"] = " Batch couldn't be found please retry!!";
+            Session["Error"] = " Unit couldn't be found please retry!!";
         }
     }
 
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-                <strong> Batch List</strong>
-                <button class="btn btn-primary " style="float: right;" onclick="$('#BatchAdd').slideDown();">
+                <strong> Unit List</strong>
+                <button class="btn btn-primary " style="float: right;" onclick="$('#UnitAdd').slideDown();">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
@@ -95,29 +95,25 @@
                     <thead class="thead-dark">
                         <tr>
                             <th style="text-align: center;">SN</th>
-                            <th style="text-align: center;">Batch Name</th>
-                            <th style="text-align: center;">Product Name</th>
-                            <th style="text-align: center;">Category Name</th>
-                            <th style="text-align: center;">Stock Left</th>
-                            <th style="text-align: center;">Action</th>                          
+                            <th style="text-align: center;">Unit Name</th>          
+                            <th style="text-align: center;">Unit</th>
+                            <th style="text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in batch_.ListAllData())
+                        @foreach (var item in unit_.DisplayTable())
                         {
                             if (item != null)
                             {
-                        <tr>
-                            <td style="text-align: center;">@(SearialNumber++)</td>
-                            <td style="text-align: center;">@item.BatchName</td>
-                            <td style="text-align: center;">@item.ProductName</td>
-                            <td style="text-align: center;">@item.ProductCategoryName</td>
-                            <td style="text-align: center;">@item.StockLeft</td>
-                            <td style="padding-left:5%;">
-                                <a href="~/Products/BatchEdit?action=BatchUpdate&uaid=@item.BatchID"> <i class="fas fa-edit" style="color:green;"></i></a> |
-                                <a href="#" onclick="DeleteAndNotify(@item.BatchID,'@item.BatchName')"><i class="fas fa-trash" style="color:red;"></i></a>
-                            </td>
-                        </tr>
+                                <tr>
+                                    <td style="text-align: center;">@(SearialNumber++)</td>
+                                    <td style="text-align: center;">@item.UnitName</td>
+                                    <td style="text-align: center;">@item.UnitAbb</td>                                    
+                                    <td style="padding-left:12%;">
+                                        <a href="~/Products/UnitEdit?action=UnitUpdate&uaid=@item.UnitId"> <i class="fas fa-edit" style="color:green;"></i></a> |
+                                        <a href="#" onclick="DeleteAndNotify(@item.UnitId,'@item.UnitName')"><i class="fas fa-trash" style="color:red;"></i></a>
+                                    </td>
+                                </tr>
                             }
                         }
                     </tbody>
@@ -140,7 +136,7 @@
             });
         });
 
-        function DeleteAndNotify(id, value) {
+         function DeleteAndNotify(id, value) {
             swal({
                 title: "Are you sure?",
                 text: "You want to delete " + value + " , all the related data will be deleted!",
@@ -153,11 +149,11 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         var data = {};
-                        data.BatchID = id;
-                        data.BatchName = value;
+                        data.UnitId = id;
+                        data.UnitName = value;
                         $.ajax({
                             type: "POST",
-                            url: "/Products/BatchDelete",
+                            url: "/Products/UnitDelete",
                             dataType: "json",
                             data: JSON.stringify(data),
                             contentType: "application/json; charset=utf-8",
@@ -165,7 +161,7 @@
                                 swal("Poof all gone! " + response, {
                                     icon: "success",
                                 }).then(function () {
-                                    window.location.href = "/Products/Batch"
+                                    window.location.href = "/Products/Unit"
                                 });
                             },
                             failure: function (response) {
@@ -177,7 +173,7 @@
                         });
                     }
                 });
-        }       
+        }
     </script>
 }
 

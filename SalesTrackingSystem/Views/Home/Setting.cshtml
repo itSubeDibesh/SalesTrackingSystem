@@ -1,10 +1,18 @@
 ﻿@model Models.Users_Model
 @using Models
+@using Services.Interface
+@using Services.Service
 @{
     var SessionVariable = new Users_Model();
     if (Session["auth"] != null)
     {
         SessionVariable = (Session["auth"] as Users_Model);
+    }
+    Distributor_Interface distributor_ = new Distributor_Service();
+    var DistributorVariable = new Distributor_Model();
+    if (SessionVariable.DistrubitorID != null)
+    {
+        DistributorVariable = distributor_.GetDistributorById(Convert.ToInt64(SessionVariable.DistrubitorID));
     }
 }
 @{
@@ -13,9 +21,9 @@
 }
 @Html.Partial("~/Views/Shared/_Alert.cshtml")
 @{
-//ViewBag.UserInfo = true;
-//ViewBag.ServerInfo = true;
-//ViewBag.ServerDebug = true;
+    //ViewBag.UserInfo = true;
+    //ViewBag.ServerInfo = true;
+    //ViewBag.ServerDebug = true;
 }
 @Html.Partial("~/Views/Shared/_Debug.cshtml")
 <div class="row">
@@ -29,7 +37,7 @@
             </div>
             <div class="card-body row">
                 <div class="mx-auto d-block">
-                    <img class="rounded-circle mx-auto d-block" src="@(SessionVariable.ImageString == null ? "Https://" + Request.ServerVariables["HTTP_HOST"] + "/images/icon/user.png" : "Https://" + Request.ServerVariables["HTTP_HOST"] + SessionVariable.ImageString+"")" alt="Https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:250px; width:auto;"/>
+                    <img class="rounded-circle mx-auto d-block" src="@(SessionVariable.ImageString == null ? "Https://" + Request.ServerVariables["HTTP_HOST"] + "/images/icon/user.png" : "Https://" + Request.ServerVariables["HTTP_HOST"] + SessionVariable.ImageString+"")" alt="Https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:250px; width:auto;" />
                     <div class="row" style="text-align:center;">
                         <div class="col-sm-12">
                             <h5>@SessionVariable.FullName </h5>
@@ -62,100 +70,104 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-6">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title mb-3">Distrubitor Details</strong>
-                <a class="btn btn-primary btn-md text-white" style="float: right;" href="#" data-toggle="modal" data-target="#DistributorDetails">
-                    <i class="fas fa-edit"></i> Edit
-                </a>
-            </div>
-            <div class="card-body row">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Distrubitor name:</b></div>
-                        <div class="col-sm-6">
-                            <p>Rolay Distributors</p>
+    @if (SessionVariable.DistrubitorID != null)
+    {
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title mb-3">Distrubitor Details</strong>
+                    <a class="btn btn-primary btn-md text-white" style="float: right;" href="#" data-toggle="modal" data-target="#DistributorDetails">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                </div>
+                <div class="card-body row">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Distrubitor name:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.DistrubitorName</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Owner Name:</b></div>
-                        <div class="col-sm-6">
-                            <p>Rajan Kumar Latea</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Owner Name:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.OwnerName</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Regestration No:</b></div>
-                        <div class="col-sm-6">
-                            <p>9878667129800812</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Regestration No:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.RegestrationID</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Mobile No:</b></div>
-                        <div class="col-sm-6">
-                            <p>9816125433</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Mobile No:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.MobileNo</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Phone no:</b></div>
-                        <div class="col-sm-6">
-                            <p>981716154</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Phone no:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.Phone</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Email:</b></div>
-                        <div class="col-sm-6">
-                            <p>Lala@lal.lal</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Email:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.Email</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>State:</b></div>
-                        <div class="col-sm-6">
-                            <p>Bagmati</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>State:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.State</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>District:</b></div>
-                        <div class="col-sm-6">
-                            <p>Bagmati</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>District:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.District</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-6"><b>Address:</b></div>
-                        <div class="col-sm-6">
-                            <p>Gaushala, Pinglasthan</p>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-6"><b>Address:</b></div>
+                            <div class="col-sm-6">
+                                <p>@DistributorVariable.Address</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+
 </div>
 
 @section aboveMain{
-    <div style="margin-top:10%;" class="modal fade" id="ResetPassword"  data-backdrop="static">
+    <div style="margin-top:10%;" class="modal fade" id="ResetPassword" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Reset Password</h4>
                     <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
-                        <i class="fas fa-close" style="color:white;background-color:red;"></i>
+                        <i class="fas fa-close" style="color:white;"></i>
                     </a>
                 </div>
                 <div class="modal-body" style="text-align:center;">
@@ -164,7 +176,7 @@
                         <code class="text-danger">
                             &nbsp;You will get logged out once you reset your password!!
                         </code>
-                    </span>                   
+                    </span>
                 </div>
                 <form action="~/Home/Reset" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -173,7 +185,7 @@
                                 <div class="row">
                                     <div class="col-sm-4 control-label"><b>Old Password:</b></div>
                                     <div class="col-sm-8 input-group">
-                                        <input type="password"  name="OldPassword" id="OldPasssword" class="au-input au-input--full"  minlength="8">
+                                        <input type="password" name="OldPassword" id="OldPasssword" class="au-input au-input--full" minlength="8">
                                     </div>
                                 </div>
                                 <br>
@@ -183,7 +195,7 @@
                                 <div class="row">
                                     <div class="col-sm-4 control-label"><b>New Password:</b></div>
                                     <div class="col-sm-8 input-group">
-                                        <input type="password" name="NewPassword" id="password" class="au-input au-input--full"  minlength="8">
+                                        <input type="password" name="NewPassword" id="password" class="au-input au-input--full" minlength="8">
                                     </div>
                                 </div>
                                 <br>
@@ -193,7 +205,7 @@
                                 <div class="row">
                                     <div class="col-sm-4 control-label"><b>Retype Password:</b></div>
                                     <div class="col-sm-8 input-group">
-                                        <input type="password" id="confirm_password" class="au-input au-input--full"  minlength="8">
+                                        <input type="password" id="confirm_password" class="au-input au-input--full" minlength="8">
                                     </div>
                                 </div>
                             </div>
@@ -208,13 +220,13 @@
             </div>
         </div>
     </div>
-    <div style="margin-top:10%;" class="modal fade" id="ProfileDetails"  data-backdrop="static">
+    <div style="margin-top:10%;" class="modal fade" id="ProfileDetails" data-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Profile Details</h4>
                     <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
-                        <i class="fas fa-close" style="color:white;background-color:red;"></i>
+                        <i class="fas fa-close" style="color:white;"></i>
                     </a>
                 </div>
                 <form action="~/Home/UpdateProfile" method="post" enctype="multipart/form-data">
@@ -227,7 +239,7 @@
                                         @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "form-control-label" })
                                     </div>
                                     <div class="col-md-9 col-sm-6">
-                                        <input type="text" class="form-control" name="FullName" value="@SessionVariable.FullName">                                       
+                                        <input type="text" class="form-control" name="FullName" value="@SessionVariable.FullName">
                                     </div>
                                 </div>
                                 <br>
@@ -238,7 +250,7 @@
                                     <div class="col-md-3 col-sm-6">
                                         @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "form-control-label" })
                                     </div>
-                                    <div class="col-md-9 col-sm-6">                  
+                                    <div class="col-md-9 col-sm-6">
                                         <input type="number" class="form-control" name="MobileNo" value="@SessionVariable.MobileNo">
                                     </div>
                                 </div>
@@ -274,69 +286,158 @@
             </div>
         </div>
     </div>
-    <div style="margin-top:10%;" class="modal fade" id="DistributorDetails"  data-backdrop="static">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Distributors Details</h4>
-                    <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
-                        <i class="fas fa-close" style="color:white;background-color:red;"></i>
-                    </a>
-                </div>
-                <form action="lol.ppp" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-4 control-label"><b>Distributor Name:</b></div>
-                                    <div class="col-sm-8 input-group">
-                                        <input type="text" class="form-control" name="FullName" value="Dibesh Raj Subedi">
+    @if (SessionVariable.DistrubitorID != null)
+    {
+        <div  class="modal fade" id="DistributorDetails" data-backdrop="static">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Distributors Details</h4>
+                        <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
+                            <i class="fas fa-close" style="color:white;"></i>
+                        </a>
+                    </div>
+                    <form action="~/Distributor/UpdateDistributorSettings" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <input type="hidden" name="DistrubitorID" value="@DistributorVariable.DistrubitorID" />               
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Distributor Name:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="text" class="form-control" name="DistrubitorName" value="@DistributorVariable.DistrubitorName">
+                                        </div>
                                     </div>
+                                    <br>
                                 </div>
-                                <br>
-                            </div>
 
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-4 control-label"><b>Phone Number:</b></div>
-                                    <div class="col-sm-8 input-group">
-                                        <input type="number" class="form-control" name="Phone No">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>OwnerName:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="text" class="form-control" name="OwnerName" value="@DistributorVariable.OwnerName">
+                                        </div>
                                     </div>
+                                    <br>
                                 </div>
-                                <br>
-                            </div>
 
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-4 control-label"><b>Image:</b></div>
-                                    <div class="col-sm-4 input-group">
-                                        <input type="password" class="form-control" name="RetypePassword">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Regestration No:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="number" class="form-control" name="RegestrationID" value="@DistributorVariable.RegestrationID">
+                                        </div>
                                     </div>
+                                    <br>
                                 </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Mobile No:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="number" class="form-control" name="MobileNo" value="@DistributorVariable.MobileNo">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Phone:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="number" class="form-control" name="Phone" value="@DistributorVariable.Phone">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Fax:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="text" class="form-control" name="Fax" value="@DistributorVariable.Fax">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Email:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="email" class="form-control" name="Email" value="@DistributorVariable.Email">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>State:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="text" class="form-control" name="State" value="@DistributorVariable.State">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>District:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="text" class="form-control" name="District" value="@DistributorVariable.District">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Regestration No:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="number" class="form-control" name="RegestrationID" value="@DistributorVariable.RegestrationID">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
+
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-4 control-label"><b>Address:</b></div>
+                                        <div class="col-sm-8 input-group">
+                                            <input type="text" class="form-control" name="Address" value="@DistributorVariable.Address">
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success btn-sm">
-                            <i class="fa fa-paper-plane"></i> Confirm
-                        </button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fa fa-paper-plane"></i> Confirm
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+    }
 }
 <script>
-var password=document.getElementById("password"),confirm_password=document.getElementById("confirm_password");
-function validatePassword(){
-  if(password.value != confirm_password.value) {
-    confirm_password.setCustomValidity("Passwords Don't Match");
-  } else {
-    confirm_password.setCustomValidity('');
-  }
-}
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
+    var password = document.getElementById("password"), confirm_password = document.getElementById("confirm_password");
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
 </script>
 <script>
     function resetPasswordFiled() {
