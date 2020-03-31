@@ -77,6 +77,26 @@ namespace Services.Service
             }
         }
 
+        public string GetProductNameById(long id)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from product in _dbContext.Products.Where(prod => prod.ProductID == id)                               
+                                select new Products_Model()
+                                {                                                               
+                                    ProductName = product.ProductName,                                   
+                                }).FirstOrDefault();
+                    return data.ProductName;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
         public List<Products_Model> ListAllData()
         {
             using (var _dbContext = new SalesTrackingSystemEntities())

@@ -450,6 +450,26 @@ namespace Services.Service
             }
         }
 
+        public string GetUseNameByID(long userID)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from actionUser in _dbContext.Users.Where(actionUser => actionUser.UserID == userID)
+                                select new Users_Model()
+                                {
+                                    FullName = actionUser.FullName
+                                }).FirstOrDefault();
+                    return data.FullName;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
         public bool MakeDistrubitorNull(long userId)
         {
             using (var _dbContext = new SalesTrackingSystemEntities())

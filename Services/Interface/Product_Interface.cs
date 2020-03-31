@@ -15,6 +15,7 @@ namespace Services.Interface
         int GetNewProductID();
         bool Delete(long ProductId);
         Products_Model GetProductById(long id);
+        string GetProductNameById(long id);
         bool ProductExist(long id);
     }
 }

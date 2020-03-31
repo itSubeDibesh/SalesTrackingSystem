@@ -22,7 +22,7 @@ namespace SalesTrackingSystem.Controllers
             transaction_Interface = new Transaction_Service();
         }
         public ActionResult Transaction()
-        {
+        {         
             return View("Transaction");
         }
 
@@ -69,5 +69,17 @@ namespace SalesTrackingSystem.Controllers
                 return Json("Transaction done successfully");
             }
         }
+
+
+        [HttpPost]
+        public ActionResult TransactionView(long TID)
+        {          
+            if (TID != 0)
+            {
+                Session["Transaction"] = transaction_Interface.TransactionByID(TID);                
+            }
+            return Json("Transaction done successfully");
+        }
+
     }
 }

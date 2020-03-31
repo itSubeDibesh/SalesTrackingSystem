@@ -14,10 +14,11 @@ namespace Services.Interface
         Int64 SaveTransaction(Transaction_Model transaction);
         bool SaveTransactionDetails(List<TransactionDetail> transactionDetail);
         bool TransactionExists(Int64 TransactionID);
-        Transaction_Model TransactionByID(Int64 TransactionID);
-        bool UpdateTransaction(Transaction_Model transaction);
+        Transaction_Model TransactionByID(Int64 TransactionID);     
         bool DeleteTransaction(Int64 TransactionID);
         Int64 GetNewTransactionID();
+        bool UpateBalance(decimal balance,long transactionID);
+        List<TransactionDetail_Model> TransactionDetailsByID(Int64 TransactionID);
         //Int64 GetNewTransactionDetailsID();
     }
 }

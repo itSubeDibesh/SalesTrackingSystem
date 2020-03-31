@@ -13,7 +13,8 @@ namespace Services.Service
 {
     public class Transaction_Service : Transaction_Interface
     {
-        long TransactionId;
+        long TransactionId, productId;
+        decimal QuantitySum;
         public bool DeleteTransaction(long TransactionID)
         {
             using (var _context = new SalesTrackingSystemEntities())
@@ -34,7 +35,32 @@ namespace Services.Service
 
         public List<Transaction_Model> DisplayTable()
         {
-            throw new NotImplementedException();
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from trans in _dbContext.Transactions
+                                select new Transaction_Model()
+                                {
+                                    TransactionID = trans.TransactionID,
+                                    SupplierID = trans.SupplierID,
+                                    ReceiverID = trans.ReceiverID,
+                                    InvoiceEntryDate = trans.InvoiceEntryDate,
+                                    InvoiceNo = trans.InvoiceNo,
+                                    Balance = trans.Balance,
+                                    DateCreated = trans.DateCreated,
+                                    DateUpdated = trans.DateUpdated,
+                                    DiscountPercent = trans.DiscountPercent,
+                                    TaxPercent = trans.TaxPercent,
+                                    TransactionLevel = trans.TransactionLevel
+                                }).ToList().OrderByDescending(trans => trans.InvoiceEntryDate).ToList();
+                    return data;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         //public long GetNewTransactionDetailsID()
@@ -103,7 +129,8 @@ namespace Services.Service
         }
 
         public bool SaveTransactionDetails(List<TransactionDetail> transactionDetail)
-        {          
+        {
+           
             using (SalesTrackingSystemEntities db_Context = new SalesTrackingSystemEntities())
             {
                 using (DbContextTransaction db = db_Context.Database.BeginTransaction())
@@ -121,11 +148,13 @@ namespace Services.Service
                         foreach (TransactionDetail item in transactionDetail)
                         {
                             TransactionId = Convert.ToInt64(item.TransactionID);
+                            QuantitySum += item.Quantity;
+                            productId = Convert.ToInt64(item.ProductID);
                             batch_.SubtractStockLeft(item.Quantity, Convert.ToInt64(item.ProductID));                           
-                        } 
-                        
-                        //sum quantity and find price from batch and multiply and store in balance
-
+                        }
+                        decimal MamPrice = batch_.MaxPriceByProductID(productId);
+                        decimal balance = QuantitySum * MamPrice;
+                        UpateBalance(balance, TransactionId);
                         db.Commit();
                         return true;
                     }
@@ -141,17 +170,105 @@ namespace Services.Service
 
         public Transaction_Model TransactionByID(long TransactionID)
         {
-            throw new NotImplementedException();
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from trans in _dbContext.Transactions.Where(trans => trans.TransactionID == TransactionID)
+                                select new Transaction_Model()
+                                {
+                                    TransactionID = trans.TransactionID,
+                                    SupplierID = trans.SupplierID,
+                                    ReceiverID = trans.ReceiverID,
+                                    InvoiceEntryDate = trans.InvoiceEntryDate,
+                                    InvoiceNo = trans.InvoiceNo,
+                                    Balance = trans.Balance,
+                                    DateCreated = trans.DateCreated,
+                                    DateUpdated = trans.DateUpdated,
+                                    DiscountPercent = trans.DiscountPercent,
+                                    TaxPercent = trans.TaxPercent,
+                                    TransactionLevel = trans.TransactionLevel
+                                }).FirstOrDefault();
+                    return data;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public List<TransactionDetail_Model> TransactionDetailsByID(long TransactionID)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from trans in _dbContext.TransactionDetails.Where(trans => trans.TransactionID == TransactionID)
+                                select new TransactionDetail_Model()
+                                {
+                                    TransactionDetailsID=trans.TransactionDetailsID,
+                                    TransactionID = trans.TransactionID,
+                                    ProductID = trans.ProductID,
+                                    Quantity=trans.Quantity,
+                                    DateCreated = trans.DateCreated,
+                                    DateUpdated = trans.DateUpdated
+                                }).ToList();
+                    return data;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         public bool TransactionExists(long TransactionID)
         {
-            throw new NotImplementedException();
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = (from trans in _dbContext.Transactions.Where(trans => trans.TransactionID == TransactionID)
+                                select new Transaction_Model()
+                                {
+                                    TransactionID = trans.TransactionID,
+
+                                }).FirstOrDefault();
+                    if (TransactionID != data.TransactionID)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
         }
 
-        public bool UpdateTransaction(Transaction_Model transaction)
+        public bool UpateBalance(decimal balance, long transactionID)
         {
-            throw new NotImplementedException();
+            using (var _context = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _context.Transactions.Where(trans => trans.TransactionID == transactionID).FirstOrDefault();
+                    data.Balance = balance;
+                    data.DateUpdated = DateTime.Now;
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
         }
+      
     }
 }

@@ -143,6 +143,22 @@ namespace Services.Service
             }
         }
 
+        public decimal MaxPriceByProductID(long ProductID)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    decimal MaxPrice = _dbContext.Batches.Where(bate => bate.ProductID == ProductID).Max(bat => bat.UnitPrice);
+                    return MaxPrice;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
         public bool Save(Batch_Model model)
         {
             using (var _context = new SalesTrackingSystemEntities())

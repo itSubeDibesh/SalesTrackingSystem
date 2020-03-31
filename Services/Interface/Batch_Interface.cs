@@ -18,5 +18,6 @@ namespace Services.Interface
         bool BatchExist(long batchID);
         string StockLeftByProduct(long productID);
         bool SubtractStockLeft(decimal stockAmount, long productID);
+        decimal MaxPriceByProductID(long ProductID);
     }
 }

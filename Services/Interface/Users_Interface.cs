@@ -32,6 +32,7 @@ namespace Services.Interface
         Users_Model GetModelOnlyById(Int64 userID);
         bool CheckNewAccount(string email, string password);
         bool CheckReset(string email, string password);
+        string GetUseNameByID(long userID);
 
     }
 }

@@ -17,7 +17,7 @@
     Users_Interface users_Interface = new Users_Service();
     List<TransactionDetail_Model> transactionDetail_Models = new List<TransactionDetail_Model>();
     Product_Interface product_ = new Product_Service();
-
+    Reseller_Interface reseller = new Reseller_Service();
 }
 <div class="col-sm-12" id="AddTransaction" style="display:none;">
     <div class="card">
@@ -37,11 +37,24 @@
                     <div class="col-md-4 col-sm-6">
                         <select name="ReceiverID" id="ReceiverID" class="form-control">
                             <option selected disabled>Select receiver</option>
-                            @foreach (var user in users_Interface.DisplayTable())
+                            @if (transactionLevel == 2)
                             {
-                                if (users_Interface.DisplayTable() != null)
+                                foreach (var user in users_Interface.DisplayTable())
                                 {
-                                    <option value="@user.UserID">@user.FullName (@user.Email)</option>
+                                    if (users_Interface.DisplayTable() != null)
+                                    {
+                                        <option value="@user.UserID">@user.FullName (@user.Email)</option>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var resel in reseller.ListAllData())
+                                {
+                                    if (reseller.ListAllData() != null)
+                                    {
+                                        <option value="@resel.ResellerID">@resel.ResellerName (@resel.Email)</option>
+                                    }
                                 }
                             }
                         </select>

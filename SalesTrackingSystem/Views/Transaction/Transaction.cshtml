@@ -3,6 +3,17 @@
 @using Models;
 @{
     Transaction_Interface transaction = new Transaction_Service();
+    Users_Interface user = new Users_Service();
+    Distributor_Interface distributor_ = new Distributor_Service();
+    Reseller_Interface reseller = new Reseller_Service();
+    Product_Interface product = new Product_Service();
+    Batch_Interface batch = new Batch_Service();
+
+    var TransacctionVariable = new Transaction_Model();
+    if (Session["Transaction"] != null)
+    {
+        TransacctionVariable = (Session["Transaction"] as Transaction_Model);
+    }
 }
 
 @{
@@ -11,6 +22,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.AppName = "Tinjure tea factory";
     int SearialNumber = 1;
+    int SearialNumberInvoice = 1;
+    int SearialNumberInvoicePrint = 1;
     ViewBag.Action = "Add";
 }
 @Html.Partial("~/Views/Shared/_Alert.cshtml")
@@ -33,22 +46,7 @@
         }
     </script>
 }
-@if (ViewBag.EditDropDown != null)
-{
-    <script>
-        window.onload = function () {
-            $('#TransactionUpdate').slideDown();
-        }
-    </script>
-}
-@if (ViewBag.UpdateError != null)
-{
-    <script>
-        window.onload = function () {
-            $('#TransactionUpdate').slideDown();
-        }
-    </script>
-}
+
 <div class="row">
 
     @if (ViewBag.Action == "Add")
@@ -56,36 +54,11 @@
         @Html.Partial("AddTransaction")
     }
 
-    @if (Request.Params.Get("action") == "Update")
-    {
-        if (transaction.TransactionExists(Convert.ToInt64(Request.Params.Get("uaid"))))
-        {
-            @Html.Partial("EditTransaction", transaction.TransactionByID(Convert.ToInt64(Request.Params.Get("uaid"))));
-        }
-        else
-        {
-            Session["Error"] = " Transaction couldn't be found please retry!!";
-        }
-    }
-
-    @if (ViewBag.UpdateData != null)
-    {
-        Int64 uaid = Convert.ToInt64(ViewBag.UpdateData);
-        if (transaction.TransactionExists(uaid))
-        {
-            @Html.Partial("EditTransaction", transaction.TransactionByID(uaid));
-        }
-        else
-        {
-            Session["Error"] = " Transaction couldn't be found please retry!!";
-        }
-    }
-
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
                 <strong>  Transaction List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add transaction"  onclick="javascript: $('#AddTransaction').slideDown()">
+                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="right" title="Add transaction" onclick="javascript: $('#AddTransaction').slideDown()">
                     <i class="fas fa-plus"></i> Add
                 </button>
             </div>
@@ -94,81 +67,64 @@
                     <thead class="thead-dark">
                         <tr>
                             <th style="text-align: center;">SN</th>
-                            <th style="text-align: center;">Transaction Level</th>
                             <th style="text-align: center;">Supplier Name</th>
                             <th style="text-align: center;">Receiver Name</th>
-                            <th style="text-align: center;">Product Name</th>
                             <th style="text-align: center;">Invoice No</th>
                             <th style="text-align: center;">Entry Date</th>
                             <th style="text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Distributor To Reseller</td>
-                            <td style="text-align: center;">Rohan</td>
-                            <td style="text-align: center;">Dibesh</td>
-                            <td style="text-align: center;">Finasol</td>
-                            <td style="text-align: center;">987654</td>
-                            <td style="text-align: center;">2020/18/19</td>
-                            <td style="padding-left:3.5%;">
-                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
-                                <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Distributor To Reseller</td>
-                            <td style="text-align: center;">Rohan</td>
-                            <td style="text-align: center;">Dibesh</td>
-                            <td style="text-align: center;">Finasol</td>
-                            <td style="text-align: center;">987654</td>
-                            <td style="text-align: center;">2020/18/19</td>
-                            <td style="padding-left:3.5%;">
-                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
-                                <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Distributor To Reseller</td>
-                            <td style="text-align: center;">Rohan</td>
-                            <td style="text-align: center;">Dibesh</td>
-                            <td style="text-align: center;">Finasol</td>
-                            <td style="text-align: center;">987654</td>
-                            <td style="text-align: center;">2020/18/19</td>
-                            <td style="padding-left:3.5%;">
-                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
-                                <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Distributor To Reseller</td>
-                            <td style="text-align: center;">Rohan</td>
-                            <td style="text-align: center;">Dibesh</td>
-                            <td style="text-align: center;">Finasol</td>
-                            <td style="text-align: center;">987654</td>
-                            <td style="text-align: center;">2020/18/19</td>
-                            <td style="padding-left:3.5%;">
-                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color: skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
-                                <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: center;">1</td>
-                            <td style="text-align: center;">Distributor To Reseller</td>
-                            <td style="text-align: center;">Rohan</td>
-                            <td style="text-align: center;">Dibesh</td>
-                            <td style="text-align: center;">Finasol</td>
-                            <td style="text-align: center;">987654</td>
-                            <td style="text-align: center;">2020/18/19</td>
-                            <td style="padding-left:3.5%;">
-                                <a href="#"  data-toggle="modal" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:skyblue;" data-toggle="tooltip" data-placement="right" title="View"></i></a> |
-                                <a href="#"><i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a>
-                            </td>
-                        </tr>
+                        @foreach (var item in transaction.DisplayTable())
+                        {
+                            if (item != null)
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SearialNumber++)</td>
+                                    <td style="text-align: center;">
+                                        @if (item.TransactionLevel == 1)/*Distributor to Reseller*/
+                                        {
+                                            var SupplierPrimaryInfo = user.GetModelById(item.SupplierID);
+                                            var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
+                                            if (SupplierDetails != null)
+                                            {
+                                                <span>@SupplierDetails.DistrubitorName</span>
+                                            }
+                                        }
+                                        else/*Company to Distributor*/
+                                        {
+                                            <span> Tinjure Organic Tea</span>
+                                        }
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @if (item.TransactionLevel == 1)/*Distributor to Reseller*/
+                                        {
+                                            var resellerInfo = reseller.GetResellerById(item.ReceiverID);
+                                            <span>@resellerInfo.ResellerName</span>
+                                        }
+                                        else/*Company to Distributor*/
+                                        {
+                                            var ReceiverPrimaryInfo = user.GetModelById(item.ReceiverID);
+                                            var ReceiverDetails = new Distributor_Model();
+                                            if (ReceiverPrimaryInfo != null)
+                                            {
+                                                ReceiverDetails = distributor_.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                            }
+
+                                            if (ReceiverDetails != null)
+                                            {
+                                                <span>@ReceiverDetails.DistrubitorName</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td style="text-align: center;">@item.InvoiceNo</td>
+                                    <td style="text-align: center;">@(string.Format("{0:dd/MM/yyyy}", item.InvoiceEntryDate))</td>
+                                    <td style="padding-left:3.5%;">
+                                        <button class="btn btn-success" onclick="setTransaction(@item.TransactionID)" data-toggle="modal" id="InvoiceTargete" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:white;"></i> View</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
@@ -180,231 +136,331 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header" cz-shortcut-listen="true">
-                    <strong>Tranaction</strong>&nbsp;Invoice
-                    <a class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
+                    <strong>Transaction</strong>&nbsp;Invoice
+                    <a href="~/Transaction/Transaction" onclick="location.reload();" class=" btn-sm btn-danger close" style="float: right;" data-dismiss="modal">
                         <i class="fas fa-close" style="color:white;"></i>
                     </a>
                 </div>
                 <div class="modal-body">
-                    @* Printing Bill *@
-                    <div class="container d-none" id="invoice">
-                        <div class="card-body card-block">
-                            <div class="row form-group">
-                                <div class="col-sm-12">
-                                    <p>
-                                        <Strong>Invoice No: </Strong> 98614516
-                                    </p>
-                                    <p>
-                                        <Strong>Date Issued: </Strong> 09/08/2020
-                                    </p>
-                                    <p>
-                                        <Strong>Due Date: </Strong> 09/08/2020
-                                    </p>
+                    @if (TransacctionVariable != null)
+                    {
+                        @* Displaying printing *@
+                        <div class="container d-none" id="invoice">
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <p>
+                                            <Strong>Invoice No: </Strong> &nbsp;#@TransacctionVariable.InvoiceNo
+                                        </p>
+                                        <p>
+                                            <Strong>Date Issued: </Strong> &nbsp;@(string.Format("{0:dd/MM/yyyy}", TransacctionVariable.InvoiceEntryDate))
+                                        </p>
+                                        <p>
+                                            <Strong>Invoice Date: </Strong> 0&nbsp;@(string.Format("{0:dd/MM/yyyy}", TransacctionVariable.InvoiceDate))
+                                        </p>
+                                        <p>
+                                            <Strong>Date Generated: </Strong> 0&nbsp;@DateTime.Now.ToShortDateString()
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-12">
-                                    <span>
-                                        <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
-                                    </span>
-                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <span>
+                                            <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                                        </span>
+                                    </div>
 
-                                <div class="col-sm-12">
-                                    <br />
-                                    <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
-                                </div>
+                                    <div class="col-sm-12">
+                                        <br />
+                                        <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
+                                    </div>
 
-                            </div>
-                            <hr />
-                            <div class="row form-group">
-                                <div class="col-sm-6">
-                                    <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
-                                    <hr />
-                                </div>
-                                <div class="col-sm-6">
-                                    <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-12">
-                                    <table class="table table-bordered table-hover">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th style="text-align: center;">SN</th>
-                                                <th style="text-align: center;">Product Name</th>
-                                                <th style="text-align: center;">Cost (NRS)</th>
-                                                <th style="text-align: center;">Units</th>
-                                                <th style="text-align: center;">Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="text-align: center;">1</td>
-                                                <td style="text-align: center;">Mac Book Pro</td>
-                                                <td style="text-align: center;">50000</td>
-                                                <td style="text-align: center;">500</td>
-                                                <td style="text-align: center;">5000000</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;">2</td>
-                                                <td style="text-align: center;">Mac Book Pro</td>
-                                                <td style="text-align: center;">50000</td>
-                                                <td style="text-align: center;">500</td>
-                                                <td style="text-align: center;">5000000</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                                 <hr />
-                                <br />
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-6">
-                                    <br />
-                                    <p>Thanks for your business.</p>
+                                <div class="row form-group">
+                                    <div class="col-sm-6">
+                                        @if (TransacctionVariable.TransactionLevel == 1)/*Distributor to Reseller*/
+                                        {
+                                            var SupplierPrimaryInfo = user.GetModelById(TransacctionVariable.SupplierID);
+                                            var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
+                                            if (SupplierDetails != null)
+                                            {
+                                                <strong>Bill From</strong><p>@SupplierDetails.DistrubitorName</p><p>@SupplierDetails.Address,@SupplierDetails.District</p><p><a href="mailto:@(SupplierDetails.Email)">@SupplierDetails.Email</a></p><p>@SupplierDetails.MobileNo</p><p>@SupplierDetails.Phone</p>
+                                            }
+                                        }
+                                        else/*Company to Distributor*/
+                                        {
+                                            <strong>Bill From</strong><p>Tinjure Organic Tea</p><p>Tinjure village, Illam, Jhapa</p><p><a href="mailto:tea@cooperativetea.org">tea@cooperativetea.org</a></p><p>+977 9852680918, +977 9860927319</p>
+                                        }
+                                        <hr />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @if (TransacctionVariable.TransactionLevel == 1)/*Distributor to Reseller*/
+                                        {
+                                            var resellerInfo = reseller.GetResellerById(TransacctionVariable.ReceiverID);
+                                            <strong>Bill To</strong><p>@resellerInfo.ResellerName</p><p>@resellerInfo.Address, @resellerInfo.District</p><p>@resellerInfo.Email</p><p>@resellerInfo.Mobile, @resellerInfo.Phone</p>
+                                        }
+                                        else/*Company to Distributor*/
+                                        {
+                                            var ReceiverPrimaryInfo = user.GetModelById(TransacctionVariable.ReceiverID);
+                                            var ReceiverDetails = new Distributor_Model();
+                                            if (ReceiverPrimaryInfo != null)
+                                            {
+                                                ReceiverDetails = distributor_.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                            }
+
+                                            if (ReceiverDetails != null)
+                                            {
+                                                <strong>Bill To</strong><p>@ReceiverDetails.DistrubitorName</p><p>@ReceiverDetails.Address,@ReceiverDetails.District</p><p><a href="mailto:@(ReceiverDetails.Email)">@ReceiverDetails.Email</a></p><p>@ReceiverDetails.MobileNo, @ReceiverDetails.Phone</p>
+                                            }
+                                        }
+                                        <hr />
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="text-align: center;">SN</th>
+                                                    <th style="text-align: center;">Product Name</th>
+                                                    <th style="text-align: center;">Cost (NRS)</th>
+                                                    <th style="text-align: center;">Units</th>
+                                                    <th style="text-align: center;">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in transaction.TransactionDetailsByID(TransacctionVariable.TransactionID))
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: center;">@(SearialNumberInvoicePrint++)</td>
+                                                        <td style="text-align: center;">@product.GetProductNameById(Convert.ToInt64(item.ProductID))</td>
+                                                        <td style="text-align: center;">@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID))</td>
+                                                        <td style="text-align: center;">@item.Quantity</td>
+                                                        <td style="text-align: center;">@(@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID)) * item.Quantity)</td>
+                                                    </tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr />
+                                    <br />
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-6">
                                         <br />
-                                        <br />
+                                        <p>Thanks for your business.</p>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Subtotal</p></div>
-                                        <div class="col-6"><p>NRS 10000000</p></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Discount</p></div>
-                                        <div class="col-6"><p>-NRS 50</p></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Tax</p></div>
-                                        <div class="col-6"><p>13%</p></div>
-                                    </div>
-                                    <hr style="width:90%;" />
-                                    <div class="row">
-                                        <div class="col-6"><p>Invoice Total</p></div>
-                                        <div class="col-6"><p> NRS 100000000</p></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Discount</p></div>
-                                        <div class="col-6"><p> NRS 0</p></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Balance(NRS)</p></div>
-                                        <div class="col-6"><p>NRS 100000000</p></div>
-                                    </div>
+                                    @{
+                                        decimal discountAmountPrint = 0;
+                                        decimal discountPercentPrint = 0;
+                                        if (TransacctionVariable.DiscountPercent != null)
+                                        {
+                                            discountAmountPrint = Convert.ToDecimal(((TransacctionVariable.DiscountPercent) / 100) * TransacctionVariable.Balance);
+                                            discountPercentPrint = Convert.ToDecimal(TransacctionVariable.DiscountPercent);
+                                        }
+                                        decimal taxPercentPrint = 13;
+                                        if (TransacctionVariable.TaxPercent != null)
+                                        {
+                                            taxPercentPrint = Convert.ToDecimal(TransacctionVariable.TaxPercent);
+                                        }
+
+                                        var SubtotalPrint = TransacctionVariable.Balance;
+                                        var taxAmountPrint = ((SubtotalPrint - discountAmountPrint) / 100) * taxPercentPrint;
+                                        var discountedValuePrint = SubtotalPrint - discountAmountPrint;
+                                        var grandTotalPrint = taxAmountPrint + discountedValuePrint;
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-6"><p>Subtotal</p></div>
+                                                <div class="col-6"><p>NRS @(string.Format("{0:#.00}", TransacctionVariable.Balance))/-</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><p>Discount</p></div>
+                                                <div class="col-6"><p>-@(string.Format("{0:#.00}", discountPercentPrint))%</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><p>Tax</p></div>
+                                                <div class="col-6"><p>+@(string.Format("{0:#.00}", taxPercentPrint))%</p></div>
+                                            </div>
+                                            <hr style="width:90%;" />
+                                            <div class="row">
+                                                <div class="col-6"><p>Discount amount</p></div>
+                                                <div class="col-6"><p>NRS - @(string.Format("{0:#.00}", discountAmountPrint))/-</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><p>Tax amount</p></div>
+                                                <div class="col-6"><p> NRS + @(string.Format("{0:#.00}", taxAmountPrint))/-</p></div>
+                                            </div>
+                                            <hr style="width:90%;" />
+                                            <div class="row">
+                                                <div class="col-6"><p>Grand Total(NRS)</p></div>
+                                                <div class="col-6"><p>NRS @(string.Format("{0:#.00}", grandTotalPrint))/-</p></div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    @* Displaying Bill *@
-                    <div class="container">
-                        <div class="card-body card-block">
-                            <div class="row form-group">
-                                <div class="col-sm-12">
-                                    <p>
-                                        <Strong>Invoice No: </Strong> 98614516
-                                    </p>
-                                    <p>
-                                        <Strong>Date Issued: </Strong> 09/08/2020
-                                    </p>
-                                    <p>
-                                        <Strong>Due Date: </Strong> 09/08/2020
-                                    </p>
+                        @* Displaying Bill *@
+                        <div class="container">
+                            <div class="card-body card-block">
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <p>
+                                            <Strong>Invoice No: </Strong> &nbsp;#@TransacctionVariable.InvoiceNo
+                                        </p>
+                                        <p>
+                                            <Strong>Date Issued: </Strong> &nbsp;@(string.Format("{0:dd/MM/yyyy}", TransacctionVariable.InvoiceEntryDate))
+                                        </p>
+                                        <p>
+                                            <Strong>Invoice Date: </Strong> &nbsp;@(string.Format("{0:dd/MM/yyyy}", TransacctionVariable.InvoiceDate))
+                                        </p>
+                                        <p>
+                                            <Strong>Date Generated: </Strong> 0&nbsp;@DateTime.Now.ToShortDateString()
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-12">
-                                    <span>
-                                        <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
-                                    </span>
-                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <span>
+                                            <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                                        </span>
+                                    </div>
 
-                                <div class="col-sm-12">
-                                    <br />
-                                    <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
-                                </div>
+                                    <div class="col-sm-12">
+                                        <br />
+                                        <h2 style="color:green; line-height:40px;">Invoice</h2><p>Tinjuri Tea factory</p>
+                                    </div>
 
-                            </div>
-                            <hr />
-                            <div class="row form-group">
-                                <div class="col-sm-6">
-                                    <strong>Bill From</strong><p>Idebus Interprices. ltd</p><p>Gaushala,Pinglashtan</p><p>Kingraj530@gmail.com</p><p>9861315234</p>
-                                    <hr />
-                                </div>
-                                <div class="col-sm-6">
-                                    <strong>Bill To</strong><p>Loyla technorm</p><p>Bhaktapur, Challing</p><p>rohampurin325@gmail.com</p><p>986132526</p>
-                                    <hr />
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-12">
-                                    <table class="table dynamic-scroable-table-module table-bordered table-hover">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th style="text-align: center;">SN</th>
-                                                <th style="text-align: center;">Product Name</th>
-                                                <th style="text-align: center;">Cost (NRS)</th>
-                                                <th style="text-align: center;">Units</th>
-                                                <th style="text-align: center;">Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style="text-align: center;">1</td>
-                                                <td style="text-align: center;">Mac Book Pro</td>
-                                                <td style="text-align: center;">50000</td>
-                                                <td style="text-align: center;">500</td>
-                                                <td style="text-align: center;">5000000</td>
-                                            </tr>
-                                            <tr>
-                                                <td style="text-align: center;">2</td>
-                                                <td style="text-align: center;">Mac Book Pro</td>
-                                                <td style="text-align: center;">50000</td>
-                                                <td style="text-align: center;">500</td>
-                                                <td style="text-align: center;">5000000</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                                 <hr />
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-sm-6">
-                                    <p>Thanks for your business.</p>
+                                <div class="row form-group">
+                                    <div class="col-sm-6">
+                                        @if (TransacctionVariable.TransactionLevel == 1)/*Distributor to Reseller*/
+                                        {
+                                            var SupplierPrimaryInfo = user.GetModelById(TransacctionVariable.SupplierID);
+                                            var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
+                                            if (SupplierDetails != null)
+                                            {
+                                                <strong>Bill From</strong><p>@SupplierDetails.DistrubitorName</p><p>@SupplierDetails.Address,@SupplierDetails.District</p><p><a href="mailto:@(SupplierDetails.Email)">@SupplierDetails.Email</a></p><p>@SupplierDetails.MobileNo</p><p>@SupplierDetails.Phone</p>
+                                            }
+                                        }
+                                        else/*Company to Distributor*/
+                                        {
+                                            <strong>Bill From</strong><p>Tinjure Organic Tea</p><p>Tinjure village, Illam, Jhapa</p><p><a href="mailto:tea@cooperativetea.org">tea@cooperativetea.org</a></p><p>+977 9852680918, +977 9860927319</p>
+                                        }
+                                        <hr />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @if (TransacctionVariable.TransactionLevel == 1)/*Distributor to Reseller*/
+                                        {
+                                            var resellerInfo = reseller.GetResellerById(TransacctionVariable.ReceiverID);
+                                            <strong>Bill To</strong><p>@resellerInfo.ResellerName</p><p>@resellerInfo.Address, @resellerInfo.District</p><p>@resellerInfo.Email</p><p>@resellerInfo.Mobile, @resellerInfo.Phone</p>
+                                        }
+                                        else/*Company to Distributor*/
+                                        {
+                                            var ReceiverPrimaryInfo = user.GetModelById(TransacctionVariable.ReceiverID);
+                                            var ReceiverDetails = new Distributor_Model();
+                                            if (ReceiverPrimaryInfo != null)
+                                            {
+                                                ReceiverDetails = distributor_.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                            }
+
+                                            if (ReceiverDetails != null)
+                                            {
+                                                <strong>Bill To</strong><p>@ReceiverDetails.DistrubitorName</p><p>@ReceiverDetails.Address,@ReceiverDetails.District</p><p><a href="mailto:@(ReceiverDetails.Email)">@ReceiverDetails.Email</a></p><p>@ReceiverDetails.MobileNo, @ReceiverDetails.Phone</p>
+                                            }
+                                        }
+                                        <hr />
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <div class="col-6"><p>Subtotal</p></div>
-                                        <div class="col-6"><p>NRS 10000000</p></div>
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+                                        <table class="table dynamic-scroable-table-module table-bordered table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th style="text-align: center;">SN</th>
+                                                    <th style="text-align: center;">Product Name</th>
+                                                    <th style="text-align: center;">Cost (NRS)</th>
+                                                    <th style="text-align: center;">Units</th>
+                                                    <th style="text-align: center;">Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in transaction.TransactionDetailsByID(TransacctionVariable.TransactionID))
+                                                {
+                                                    <tr>
+                                                        <td style="text-align: center;">@(SearialNumberInvoice++)</td>
+                                                        <td style="text-align: center;">@product.GetProductNameById(Convert.ToInt64(item.ProductID))</td>
+                                                        <td style="text-align: center;">@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID))</td>
+                                                        <td style="text-align: center;">@item.Quantity</td>
+                                                        <td style="text-align: center;">@(@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID)) * item.Quantity)</td>
+                                                    </tr>
+
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Discount</p></div>
-                                        <div class="col-6"><p>-NRS 50</p></div>
+                                    <hr />
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-sm-6">
+                                        <p>Thanks for your business.</p>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Tax</p></div>
-                                        <div class="col-6"><p>13%</p></div>
-                                    </div>
-                                    <hr style="width:90%;" />
-                                    <div class="row">
-                                        <div class="col-6"><p>Invoice Total</p></div>
-                                        <div class="col-6"><p> NRS 100000000</p></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Discount</p></div>
-                                        <div class="col-6"><p> NRS 0</p></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6"><p>Balance(NRS)</p></div>
-                                        <div class="col-6"><p>NRS 100000000</p></div>
-                                    </div>
+                                    @{
+                                        decimal discountAmount = 0;
+                                        decimal discountPercent = 0;
+                                        if (TransacctionVariable.DiscountPercent != null)
+                                        {
+                                            discountAmount = Convert.ToDecimal(((TransacctionVariable.DiscountPercent) / 100) * TransacctionVariable.Balance);
+                                            discountPercent = Convert.ToDecimal(TransacctionVariable.DiscountPercent);
+                                        }
+                                        decimal taxPercent = 13;
+                                        if (TransacctionVariable.TaxPercent != null)
+                                        {
+                                            taxPercent = Convert.ToDecimal(TransacctionVariable.TaxPercent);
+                                        }
+
+                                        var Subtotal = TransacctionVariable.Balance;
+                                        var taxAmount = ((Subtotal - discountAmount) / 100) * taxPercent;
+                                        var discountedValue = Subtotal - discountAmount;
+                                        var grandTotal = taxAmount + discountedValue;
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-6"><p>Subtotal</p></div>
+                                                <div class="col-6"><p>NRS @(string.Format("{0:#.00}", TransacctionVariable.Balance))/-</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><p>Discount</p></div>
+                                                <div class="col-6"><p>-@(string.Format("{0:#.00}", discountPercent))%</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><p>Tax</p></div>
+                                                <div class="col-6"><p>+@(string.Format("{0:#.00}", taxPercent))%</p></div>
+                                            </div>
+                                            <hr style="width:90%;" />
+                                            <div class="row">
+                                                <div class="col-6"><p>Discount amount</p></div>
+                                                <div class="col-6"><p>NRS - @(string.Format("{0:#.00}", discountAmount))/-</p></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><p>Tax amount</p></div>
+                                                <div class="col-6"><p> NRS + @(string.Format("{0:#.00}", taxAmount))/-</p></div>
+                                            </div>
+                                            <hr style="width:90%;" />
+                                            <div class="row">
+                                                <div class="col-6"><p>Grand Total(NRS)</p></div>
+                                                <div class="col-6"><p>NRS @(string.Format("{0:#.00}", grandTotal))/-</p></div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>                
+                    }
+
+                </div>
                 <div class="modal-footer text-white">
                     <a onclick="printDiv('invoice')" class="btn btn-success btn-sm">
                         <i class="fa fa-file-pdf bg-danger"></i> Save / <i class="fa fa-print"></i> Print
@@ -412,7 +468,7 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 }
 <!--#endregion Forms ends-->
 @section scripts{
@@ -486,7 +542,7 @@
             cell = $(row.insertCell(-1));
             var btnRemove = $("<button class='btn btn-danger btn-sm'> <i class='fas fa-minus'> Remove</button>");
             btnRemove.attr("type", "button");
-            btnRemove.attr("onclick", "Remove(this);");     
+            btnRemove.attr("onclick", "Remove(this);");
             cell.append(btnRemove);
 
             //Clear the TextBoxes.
@@ -505,7 +561,7 @@
         };
 
         $("body").on("click", "#AddTransactionAjax", function () {
-            //Loop through the Table rows and build a JSON array.          
+            //Loop through the Table rows and build a JSON array.
             var transaction = {};
             transaction.TransactionLevel = $("#TransactionLevel").val();
             transaction.SupplierID = $("#SupplierID").val();
@@ -514,8 +570,6 @@
             transaction.InvoiceDate = $("#InvoiceDate").val();
             transaction.DiscountPercent = $("#DiscountPercent").val();
             transaction.TaxPercent = $("#TaxPercent").val();
-
-            console.log(transaction);
             //Send the JSON array to Controller using AJAX.
             $.ajax({
                 type: "POST",
@@ -524,7 +578,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                        var transactionDetail = new Array();                       
+                        var transactionDetail = new Array();
                         $("#tableTransactionDetails TBODY TR").each(function () {
                             var row = $(this);
                             var AddTransDetail = {};
@@ -532,9 +586,8 @@
                             AddTransDetail.ProductID = row.find("TD").eq(0).html();
                             AddTransDetail.Quantity = row.find("TD").eq(1).html();
                             AddTransDetail.DateCreated = "@(DateTime.Now)";
-                            transactionDetail.push(AddTransDetail);                           
+                            transactionDetail.push(AddTransDetail);
                         });
-                      console.log(transactionDetail);
                         $.ajax({
                         type: "POST",
                         url: "/Transaction/TransactionDetailsAdd",
@@ -549,6 +602,31 @@
             });
         });
 
+        function setTransaction(id) {
+            var data = {};
+            data.TID = id;
+             $.ajax({
+                type: "POST",
+                url: "/Transaction/TransactionView",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                 success: function () {
+                }
+            });
+
+        }
+
+        $('[data-toggle=modal]').on('click', function (e) {
+            var $target = $($(this).data('target'));
+            $target.data('triggered',true);
+            setTimeout(function() {
+                if ($target.data('triggered')) {
+                    $target.modal('show').data('triggered',false);
+                };
+            }, 1000); // milliseconds
+            return false;
+        });
     </script>
 }
 
