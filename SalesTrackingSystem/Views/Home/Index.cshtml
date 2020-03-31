@@ -1,13 +1,115 @@
-﻿@using Models
+﻿@model Models.Users_Model
+@using Models
+@{
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+}
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home Page";
     ViewBag.Page = "Home";
 }
 @Html.Partial("~/Views/Shared/_Alert.cshtml")
-@{
+<div class="row">
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item overview-item--c1">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="zmdi zmdi-accounts-list"></i>
+                    </div>
+                    <div class="text p-b-20">
+                        <h2 id="ActiveUsers"></h2>
+                        <span>Active users</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item overview-item--c3">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="zmdi zmdi-face"></i>
+                    </div>
+                    <div class="text p-b-20">
+                        <h2 id="Distributors"></h2>
+                        <span>Distributors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item overview-item--c2">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="zmdi zmdi-accounts"><i class="zmdi zmdi-accounts"></i></i>
+                    </div>
+                    <div class="text p-b-20">
+                        <h2 id="Resellers"></h2>
+                        <span>Resellers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="overview-item overview-item--c3">
+            <div class="overview__inner">
+                <div class="overview-box clearfix">
+                    <div class="icon">
+                        <i class="zmdi zmdi-shopping-cart"></i>
+                    </div>
+                    <div class="text p-b-20">
+                        <h2 id="Products"></h2>
+                        <span>Products</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@{
     ViewBag.UserInfo = true;
     //ViewBag.ServerInfo = true;
     //ViewBag.ServerDebug = true;
-}
+}*@
 @Html.Partial("~/Views/Shared/_Debug.cshtml")
+@if (SessionVariable.UserID != 0)
+{
+    @section scripts{
+        <script>
+            /* Over views */
+            $(document).ready(function () {
+                sendOverviewRequest();
+                function sendOverviewRequest() {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Home/GetDashboardOverviews",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            for (var i = 0; i < json.length; i++) {
+                                document.getElementById("Distributors").innerHTML = json[i].Distributors;
+                                document.getElementById("ActiveUsers").innerHTML = json[i].ActiveUsers;
+                                document.getElementById("Resellers").innerHTML = json[i].Resellers;
+                                document.getElementById("Products").innerHTML = json[i].Products;
+                            }
+                        },
+                        complete: function () {
+                            setInterval(sendOverviewRequest, 60000);
+                        }
+                    })
+                };
+            });
+        </script>
+    }
+}

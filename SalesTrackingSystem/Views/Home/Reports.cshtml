@@ -1,0 +1,278 @@
+﻿@model Models.Users_Model
+@using Models
+@{
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
+}
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Page = "Reports";
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-12 container">
+        <div class="col-sm-12 card">
+            <div class="container-fluid">
+                <div class="card-header">
+                    <strong>Reports</strong>
+                </div>
+                <div id="prinTingReport">
+                    <div class="card-body card-block m-t-20">
+                        <div class="row form-group">
+                            <div class="col-sm-12">
+                                <p>
+                                    <Strong>Date Generated: </Strong> 0&nbsp;@DateTime.Now.ToShortDateString()
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-12">
+                                <span>
+                                    <img src="~/images/icon/logo.png" alt="Tinjure tea factory" style="min-height:54px; min-width:179px; max-height:52px;max-width:179px;" />
+                                </span>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <br />
+                                <h2 style="color:green; line-height:40px;">Report</h2><p>Tinjuri Tea factory</p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row m-t-20">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-4 col-sm-12">
+                                                Year:
+                                            </div>
+                                            <div class="col-8 col-sm-12">
+                                                <select name="Year" id="Year" class="form-control">
+                                                    <option selected>Select Year</option>
+                                                    <option value="1999">1999</option>
+                                                    <option value="2000">2000</option>
+                                                    <option value="2001">2001</option>
+                                                    <option value="2002">2002</option>
+                                                    <option value="2003">2003</option>
+                                                    <option value="2004">2004</option>
+                                                    <option value="2005">2005</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-4 col-sm-12">
+                                                Month:
+                                            </div>
+                                            <div class="col-8 col-sm-12">
+                                                <select name="Month" id="Month" class="form-control">
+                                                    <option value="Month" selected>Select Month</option>
+                                                    <option value="January">January</option>
+                                                    <option value="February">February</option>
+                                                    <option value="March">March</option>
+                                                    <option value="April">April</option>
+                                                    <option value="May">May</option>
+                                                    <option value="June">June</option>
+                                                    <option value="July">July</option>
+                                                    <option value="August">August</option>
+                                                    <option value="September">September</option>
+                                                    <option value="October">October</option>
+                                                    <option value="November">November</option>
+                                                    <option value="December">December</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-4 col-sm-12">
+                                                Product:
+                                            </div>
+                                            <div class="col-8">
+                                                <select name="Product" id="Product" class="form-control">
+                                                    <option value="Product" selected>Select Product</option>
+                                                    <option value="Apple">Apple</option>
+                                                    <option value="Mango">Mango</option>
+                                                    <option value="Banana">Banana</option>
+                                                    <option value="Pineapple">Pineapple</option>
+                                                    <option value="Watermelon">Watermelon</option>
+                                                    <option value="Kiwi">Kiwi</option>
+                                                    <option value="Grapes">Grapes</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <table id="Report_Table" class="table table-bordered table-hover"width="100%">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th style="text-align: center;">SN</th>
+                                    <th style="text-align: center;">Year</th>
+                                    <th style="text-align: center;">Month</th>
+                                    <th style="text-align: center;">Supplier</th>
+                                    <th style="text-align: center;">Receiver</th>
+                                    <th style="text-align: center;">Product</th>
+                                    <th style="text-align: center;">Quantity</th>
+                                    <th style="text-align: center;">Cost price</th>
+                                    <th style="text-align: center;">Selling Price</th>
+                                    <th style="text-align: center;">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align: center;">1</td>
+                                    <td style="text-align: center;">1999</td>
+                                    <td style="text-align: center;">January</td>
+                                    <td style="text-align: center;">Dibesh</td>
+                                    <td style="text-align: center;">Rohan</td>
+                                    <td style="text-align: center;">Watermelon</td>
+                                    <td style="text-align: center;">200</td>
+                                    <td style="text-align: center;">50</td>
+                                    <td style="text-align: center;">150</td>
+                                    <td style="text-align: center;">15000</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">2</td>
+                                    <td style="text-align: center;">1999</td>
+                                    <td style="text-align: center;">February</td>
+                                    <td style="text-align: center;">Dibesh</td>
+                                    <td style="text-align: center;">Rohan</td>
+                                    <td style="text-align: center;">Banana</td>
+                                    <td style="text-align: center;">200</td>
+                                    <td style="text-align: center;">50</td>
+                                    <td style="text-align: center;">150</td>
+                                    <td style="text-align: center;">15000</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">3</td>
+                                    <td style="text-align: center;">2005</td>
+                                    <td style="text-align: center;">February</td>
+                                    <td style="text-align: center;">Rohan</td>
+                                    <td style="text-align: center;">Rohan</td>
+                                    <td style="text-align: center;">Watermelon</td>
+                                    <td style="text-align: center;">200</td>
+                                    <td style="text-align: center;">50</td>
+                                    <td style="text-align: center;">150</td>
+                                    <td style="text-align: center;">15000</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">4</td>
+                                    <td style="text-align: center;">1999</td>
+                                    <td style="text-align: center;">March</td>
+                                    <td style="text-align: center;">Dibesh</td>
+                                    <td style="text-align: center;">Rohan</td>
+                                    <td style="text-align: center;">Banana</td>
+                                    <td style="text-align: center;">200</td>
+                                    <td style="text-align: center;">50</td>
+                                    <td style="text-align: center;">150</td>
+                                    <td style="text-align: center;">15000</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;">5</td>
+                                    <td style="text-align: center;">2005</td>
+                                    <td style="text-align: center;">January</td>
+                                    <td style="text-align: center;">Dibesh</td>
+                                    <td style="text-align: center;">Rohan</td>
+                                    <td style="text-align: center;">Mango</td>
+                                    <td style="text-align: center;">200</td>
+                                    <td style="text-align: center;">50</td>
+                                    <td style="text-align: center;">150</td>
+                                    <td style="text-align: center;">15000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>               
+            </div>
+            <div class="card-footer">
+                <a onclick="printDiv('prinTingReport')" class="btn btn-success btn-sm" style="color:white;">
+                    <i class="fa fa-file-pdf bg-danger"></i> Save / <i class="fa fa-print"></i> Print
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (SessionVariable.UserID != 0)
+{
+    @section scripts{
+        <script>
+
+            $(function () {
+            $('#Report_Table').DataTable({
+                responsive: !0,
+                scrollY: "65vh",
+                scrollCollapse: !0,
+                responsive: true,
+                lengthMenu: [
+                    [5, 10, 25, 50, -1],
+                    [5, 10, 25, 50, "All"]
+                ]
+            });
+        });
+               function printDiv(divName) {
+                var printContents = document.getElementById(divName).innerHTML;
+                var originalContents = document.body.innerHTML;
+                document.body.innerHTML = printContents;
+                window.print();
+                document.body.innerHTML = originalContents;
+               }
+
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+
+                    if (settings.nTable.id === '#Report_Table') {
+                        return true;
+                    }
+
+                    var Year = parseInt($('#Year').val(), 10);
+                    var Month = $('#Month').val();
+                    var Supplier = $('#Supplier').val();
+                    var Receiver = $('#Receiver').val();
+                    var Product = $('#Product').val();
+
+                    var year = data[1];
+                    var month = data[2];
+                    var supplier = data[3];
+                    var receiver = data[4];
+                    var product = data[5];
+
+                    if ((isNaN(Year)    && Year == year)    &&
+                        (isNaN(Month)   && Month == month)  &&
+                        (Year == year   && Month == month)  || 
+                        (Year == year   || Month == month   &&   isNaN(Month)   ||  Month == month)  ||
+                        (Year == year   && Month == month   ||   isNaN(Year)    ||  Year == year  )  &&
+                        (Year == year   || Month == month   &&   isNaN(Month)   &&  Year == year  )  ||
+                        (Year == year   && Month == month   ||   isNaN(Year)    &&  Month == month)  &&
+                        (Year != year   && Month == month)  ||
+                        (Year == year   && Month != month)  &&
+                        (Year != year   || Month == month)  &&
+                        (Year == year   || Month != month)  &&
+                        (isNaN(Product) && Product == product) ||
+                        (Year == year   || Product == product  ||    Month == month)          
+                    ) {
+                        return true;
+                    }
+
+                    return false;
+                }
+            );
+
+            $(document).ready(function () {
+                var table = $('#Report_Table').DataTable();
+                // Event listener to the two range filtering inputs to redraw on input
+                $('#Year,#Month,#Product').change(function () {
+                    table.draw();
+                });
+            });          
+        </script>
+    }
+}

@@ -30,6 +30,11 @@ namespace SalesTrackingSystem.Controllers
             return View("Setting");
         }
 
+        public ActionResult Reports()
+        {
+            return View("Reports");
+        }
+
         [HttpPost]
         public ActionResult Reset(string OldPassword, string NewPassword)
         {
