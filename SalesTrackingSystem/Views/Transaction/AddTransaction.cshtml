@@ -43,7 +43,10 @@
                                 {
                                     if (users_Interface.DisplayTable() != null)
                                     {
-                                        <option value="@user.UserID">@user.FullName (@user.Email)</option>
+                                        if (user.ProfileName == "Distributor")
+                                        {
+                                            <option value="@user.UserID">@user.FullName (@user.Email)</option>
+                                        }
                                     }
                                 }
                             }

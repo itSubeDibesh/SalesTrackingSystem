@@ -48,9 +48,14 @@ namespace DataAccessLayer
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Verification> Verifications { get; set; }
     
-        public virtual ObjectResult<FetchDates_Result> FetchDates()
+        public virtual ObjectResult<string> FetchMonth()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchDates_Result>("FetchDates");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("FetchMonth");
+        }
+    
+        public virtual ObjectResult<string> FetchYear()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("FetchYear");
         }
     
         public virtual ObjectResult<FetchReport_Result> FetchReport()

@@ -665,23 +665,33 @@ GO
 /*-------------------------------------------------------------------------------------------------*/
 /*----------------------------------(April 3 2020) Procedures  ------------------------------------*/
 /*-------------------------------------------------------------------------------------------------*/
-CREATE PROCEDURE FetchDates
+CREATE PROCEDURE FetchYear
 AS
-SELECT   DATENAME(YEAR,T.InvoiceDate)[Years],DATENAME(MONTH,T.InvoiceDate)[Months]
+select  DATENAME(YEAR,T.InvoiceDate)[Year]
 from Transactions T
-GROUP BY  DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate)
-Order BY  DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate) DESC
+GROUP BY DATENAME(YEAR,T.InvoiceDate)
+Order BY DATENAME(YEAR,T.InvoiceDate) DESC
+GO
+/*-------------------------------------------------------------------------------------------------*/
+GO
+CREATE PROCEDURE FetchMonth
+AS
+select  DATENAME(MONTH,T.InvoiceDate)[Month]
+from Transactions T where  DATENAME(YEAR,GETDATE())= DATENAME(YEAR,GETDATE())
+GROUP BY DATENAME(MONTH,T.InvoiceDate)
+Order BY DATENAME(MONTH,T.InvoiceDate) DESC
 GO
 /*-------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE FetchReport
 AS
 BEGIN
-select  DATENAME(YEAR,T.InvoiceDate)[Year],DATENAME(MONTH,T.InvoiceDate)[Month],T.SupplierID[Supplier],T.ReceiverID[Receiver],P.ProductID,P.UnitId,SUM(TD.Quantity) as Quantity,T.TransactionLevel[Level],T.DiscountPercent,T.TaxPercent,T.Balance
+select  DATENAME(YEAR,T.InvoiceDate)[Year],DATENAME(MONTH,T.InvoiceDate)[Month],T.SupplierID[Supplier],T.ReceiverID[Receiver],TD.ProductID,TD.Quantity,T.TransactionLevel[Level],T.DiscountPercent,T.TaxPercent,T.Balance
 from TransactionDetails TD
 left join Transactions T on T.TransactionID=TD.TransactionID
 left join Products P on P.ProductID=TD.TransactionDetailsID
 left join Batch B on B.ProductID=P.ProductID
-GROUP BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,P.ProductID,P.UnitId,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance
-Order BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,P.ProductID,P.UnitId,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance DESC
+left join Unit U on P.UnitId=U.UnitId
+GROUP BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,TD.ProductID,TD.Quantity,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance
+Order BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,TD.ProductID,TD.Quantity,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance DESC
 END
 GO

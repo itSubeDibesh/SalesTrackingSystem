@@ -17,12 +17,11 @@ namespace DataAccessLayer
         public string Month { get; set; }
         public Nullable<long> Supplier { get; set; }
         public Nullable<long> Receiver { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public Nullable<byte> Level { get; set; }
         public Nullable<decimal> DiscountPercent { get; set; }
         public Nullable<decimal> TaxPercent { get; set; }
         public Nullable<decimal> Balance { get; set; }
         public Nullable<long> ProductID { get; set; }
-        public Nullable<long> UnitId { get; set; }
     }
 }

@@ -121,17 +121,20 @@ namespace Services.Service
             }
         }
 
-        public string UnitAbbrById(long unitID)
+        public string UnitAbbrByProductId(long productID)
         {
             using (var _context = new SalesTrackingSystemEntities())
             {
                 try
                 {
-                    var data = _context.Units.Where(Unit => Unit.UnitId == unitID).Select(Unit => new Unit_Model()
-                    {                      
-                        UnitAbb = Unit.UnitAbb
-                    }).FirstOrDefault();
-                    if (data.UnitAbb != null)
+
+                    var data = (from products in _context.Products.Where(products => products.ProductID == productID)
+                                join units in _context.Units on products.UnitId equals units.UnitId
+                                select new Products_Model()
+                                {
+                                    UnitAbb = units.UnitAbb
+                                }).FirstOrDefault();
+                    if (string.IsNullOrWhiteSpace(data.UnitAbb))
                     {
                         return data.UnitAbb;
                     }
@@ -139,7 +142,7 @@ namespace Services.Service
                     {
                         return " ";
                     }
-                   
+                  
                 }
                 catch (Exception)
                 {

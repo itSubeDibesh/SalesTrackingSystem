@@ -16,6 +16,6 @@ namespace Services.Interface
         bool Delete(long unitID);
         Unit_Model GetUnitById(long unitID);
         bool UnitExist(long unitID);
-        string UnitAbbrById(long unitID);
+        string UnitAbbrByProductId(long productID);
     }
 }

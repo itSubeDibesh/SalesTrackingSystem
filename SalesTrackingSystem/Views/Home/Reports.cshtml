@@ -5,7 +5,6 @@
 @using DataAccessLayer
 @{
     var SessionVariable = new Users_Model();
-    Int16 level=3;
     int SerialDisplay = 1;
     int SerialPrint = 1;
 
@@ -19,21 +18,7 @@
     Distributor_Interface distributor = new Distributor_Service();
     Reseller_Interface reseller = new Reseller_Service();
     Unit_Interface unit_ = new Unit_Service();
-     if (SessionVariable != null)
-        {
-            if (SessionVariable.ProfileName == "Company")
-            {
-                /*Distributor to Reseller*/
-                level = 1;
-            } else if (SessionVariable.ProfileName == "Distributor") {
-                /*Company to Distributor*/
-                level = 2;
-            }
-            else
-            {
-                level = 0;
-            }
-        }
+    Users_Interface users = new Users_Service();
 }
 @{
     ViewBag.Title = "Reports";
@@ -81,11 +66,11 @@
                                             <div class="col-8 col-sm-12">
                                                 <select name="Year" id="Year" class="form-control">
                                                     <option selected>Select Year</option>
-                                                    @foreach (var item in entities.FetchDates())
+                                                    @foreach (var item in entities.FetchYear())
                                                     {
                                                         if (item != null)
                                                         {
-                                                             <option value="@item.Years">@item.Years</option>
+                                                             <option value="@item">@item</option>
                                                         }
                                                     }                                                  
                                                 </select>
@@ -100,11 +85,11 @@
                                             <div class="col-8 col-sm-12">
                                                 <select name="Month" id="Month" class="form-control">
                                                     <option value="Month" selected>Select Month</option>
-                                                    @foreach (var item in entities.FetchDates())
+                                                    @foreach (var item in entities.FetchMonth())
                                                     {
                                                         if (item != null)
                                                         {
-                                                            <option value="@item.Months">@item.Months</option>
+                                                            <option value="@item">@item</option>
                                                         }
                                                     }                                                 
                                                 </select>
@@ -157,29 +142,66 @@
                                     <td style="text-align: center;">@(SerialDisplay++)</td>
                                     <td style="text-align: center;">@item.Year</td>
                                     <td style="text-align: center;">@item.Month</td>
-                                    <td style="text-align: center;">@(item.Level == 1 ? distributor.GetDistributorNameByID(Convert.ToInt64(item.Supplier)) +item.Receiver: "Tinjure Organic Tea")</td>
-                                    <td style="text-align: center;">@(item.Level == 1 ? reseller.ResellerNameById(Convert.ToInt64(item.Receiver)) : distributor.GetDistributorNameByID(Convert.ToInt64(item.Receiver)))</td>
-                                    <td style="text-align: center;">@product.GetProductNameById(Convert.ToInt64(item.ProductID))</td>
-                                    <td style="text-align: center;">@item.Quantity @unit_.UnitAbbrById(Convert.ToInt64(item.UnitId))</td>
-                                    <td style="text-align: center;">NRS @(string.Format("{0:#.00}", item.Balance / item.Quantity))/-</td>
-                                    @{decimal discountAmountPrint = 0;
-                                    decimal discountPercentPrint = 0;
-                                    if (item.DiscountPercent != null)
+                                    @if (item.Level == 1)/*Distributor to Reseller*/
                                     {
-                                    discountAmountPrint = Convert.ToDecimal(((item.DiscountPercent) / 100) * item.Balance);
-                                    discountPercentPrint = Convert.ToDecimal(item.DiscountPercent);
+                                        var SupplierPrimaryInfo = users.GetModelById(Convert.ToInt64(item.Supplier));
+                                        var SupplierDetails = distributor.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
+                                        if (SupplierDetails != null)
+                                        {
+                                            <td style="text-align: center;">@(SupplierDetails.DistrubitorName+" Distributors")</td>
+
+                                        }
                                     }
-                                    decimal taxPercentPrint = 13;
-                                    if (item.TaxPercent != null)
+                                    else/*Company to Distributor*/
                                     {
-                                    taxPercentPrint = Convert.ToDecimal(item.TaxPercent);
+                                        <td style="text-align: center;">Tinjure Organic Tea</td>
                                     }
 
-                                    var SubtotalPrint = item.Balance;
-                                    var taxAmountPrint = ((SubtotalPrint - discountAmountPrint) / 100) * taxPercentPrint;
-                                    var discountedValuePrint = SubtotalPrint - discountAmountPrint;
-                                    var grandTotalPrint = taxAmountPrint + discountedValuePrint;}
-                                <td style="text-align: center;">NRS @(string.Format("{0:#.00}", grandTotalPrint))/-</td>
+                                    @if (item.Level == 1)/*Distributor to Reseller*/
+                                    {
+                                        var resellerInfo = reseller.GetResellerById(Convert.ToInt64(item.Receiver));
+                                        <td style="text-align: center;">@resellerInfo.ResellerName</td>
+
+                                    }
+                                    else/*Company to Distributor*/
+                                    {
+                                        var ReceiverPrimaryInfo = users.GetModelById(Convert.ToInt64(item.Receiver));
+                                        var ReceiverDetails = new Distributor_Model();
+                                        if (ReceiverPrimaryInfo != null)
+                                        {
+                                            ReceiverDetails = distributor.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                        }
+
+                                        if (ReceiverDetails != null)
+                                        {
+                                            <td style="text-align: center;">@ReceiverDetails.DistrubitorName</td>                                 
+                                        }
+                                    }
+
+                                    @{
+                                        var productInfo = product.GetProductById(Convert.ToInt64(item.ProductID));
+                                    }
+                                    <td style="text-align: center;">@productInfo.ProductName</td>
+                                    <td style="text-align: center;">@item.Quantity @productInfo.UnitAbb</td>
+                                    <td style="text-align: center;">NRS @(string.Format("{0:#.00}", item.Balance / item.Quantity))/-</td>
+                                    @{decimal discountAmountPrint = 0;
+                                        decimal discountPercentPrint = 0;
+                                        if (item.DiscountPercent != null)
+                                        {
+                                            discountAmountPrint = Convert.ToDecimal(((item.DiscountPercent) / 100) * item.Balance);
+                                            discountPercentPrint = Convert.ToDecimal(item.DiscountPercent);
+                                        }
+                                        decimal taxPercentPrint = 13;
+                                        if (item.TaxPercent != null)
+                                        {
+                                            taxPercentPrint = Convert.ToDecimal(item.TaxPercent);
+                                        }
+
+                                        var SubtotalPrint = item.Balance;
+                                        var taxAmountPrint = ((SubtotalPrint - discountAmountPrint) / 100) * taxPercentPrint;
+                                        var discountedValuePrint = SubtotalPrint - discountAmountPrint;
+                                        var grandTotalPrint = taxAmountPrint + discountedValuePrint;}
+                                    <td style="text-align: center;">NRS @(string.Format("{0:#.00}", grandTotalPrint))/-</td>
                                 </tr>
                                     }
                                 }      
@@ -227,34 +249,72 @@
                                 {
                                     if (item != null)
                                     {
-                                        <tr>
-                                            <td style="text-align: center;">@(SerialDisplay++)</td>
-                                            <td style="text-align: center;">@item.Year</td>
-                                            <td style="text-align: center;">@item.Month</td>
-                                            <td style="text-align: center;">@(item.Level == 1 ? distributor.GetDistributorNameByID(Convert.ToInt64(item.Supplier)) + item.Receiver : "Tinjure Organic Tea")</td>
-                                            <td style="text-align: center;">@(item.Level == 1 ? reseller.ResellerNameById(Convert.ToInt64(item.Receiver)) : distributor.GetDistributorNameByID(Convert.ToInt64(item.Receiver)))</td>
-                                            <td style="text-align: center;">@product.GetProductNameById(Convert.ToInt64(item.ProductID))</td>
-                                            <td style="text-align: center;">@item.Quantity @unit_.UnitAbbrById(Convert.ToInt64(item.UnitId))</td>
-                                            <td style="text-align: center;">NRS @(string.Format("{0:#.00}", item.Balance / item.Quantity))/-</td>
-                                            @{decimal discountAmountPrint = 0;
-                                                decimal discountPercentPrint = 0;
-                                                if (item.DiscountPercent != null)
-                                                {
-                                                    discountAmountPrint = Convert.ToDecimal(((item.DiscountPercent) / 100) * item.Balance);
-                                                    discountPercentPrint = Convert.ToDecimal(item.DiscountPercent);
-                                                }
-                                                decimal taxPercentPrint = 13;
-                                                if (item.TaxPercent != null)
-                                                {
-                                                    taxPercentPrint = Convert.ToDecimal(item.TaxPercent);
-                                                }
+                                <tr>
+                                    <td style="text-align: center;">@(SerialPrint++)</td>
+                                    <td style="text-align: center;">@item.Year</td>
+                                    <td style="text-align: center;">@item.Month</td>
+                                    @if (item.Level == 1)/*Distributor to Reseller*/
+                                    {
+                                        var SupplierPrimaryInfo = users.GetModelById(Convert.ToInt64(item.Supplier));
+                                        var SupplierDetails = distributor.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
+                                        if (SupplierDetails != null)
+                                        {
+                                            <td style="text-align: center;">@(SupplierDetails.DistrubitorName+" Distributors")</td>
 
-                                                var SubtotalPrint = item.Balance;
-                                                var taxAmountPrint = ((SubtotalPrint - discountAmountPrint) / 100) * taxPercentPrint;
-                                                var discountedValuePrint = SubtotalPrint - discountAmountPrint;
-                                                var grandTotalPrint = taxAmountPrint + discountedValuePrint;}
-                                            <td style="text-align: center;">NRS @(string.Format("{0:#.00}", grandTotalPrint))/-</td>
-                                        </tr>
+                                        }
+                                    }
+                                    else/*Company to Distributor*/
+                                    {
+                                        <td style="text-align: center;">Tinjure Organic Tea</td>
+                                    }
+
+                                    @if (item.Level == 1)/*Distributor to Reseller*/
+                                    {
+                                        var resellerInfo = reseller.GetResellerById(Convert.ToInt64(item.Receiver));
+                                        <td style="text-align: center;">@resellerInfo.ResellerName</td>
+
+                                    }
+                                    else/*Company to Distributor*/
+                                    {
+                                        var ReceiverPrimaryInfo = users.GetModelById(Convert.ToInt64(item.Receiver));
+                                        var ReceiverDetails = new Distributor_Model();
+                                        if (ReceiverPrimaryInfo != null)
+                                        {
+                                            ReceiverDetails = distributor.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                        }
+
+                                        if (ReceiverDetails != null)
+                                        {
+                                            <td style="text-align: center;">@ReceiverDetails.DistrubitorName</td>
+
+                                        }
+                                    }
+
+                                    @{
+                                        var productInfo = product.GetProductById(Convert.ToInt64(item.ProductID));
+                                    }
+                                    <td style="text-align: center;">@productInfo.ProductName</td>
+                                    <td style="text-align: center;">@item.Quantity @productInfo.UnitAbb</td>
+                                    <td style="text-align: center;">NRS @(string.Format("{0:#.00}", item.Balance / item.Quantity))/-</td>
+                                    @{decimal discountAmountPrint = 0;
+                                        decimal discountPercentPrint = 0;
+                                        if (item.DiscountPercent != null)
+                                        {
+                                            discountAmountPrint = Convert.ToDecimal(((item.DiscountPercent) / 100) * item.Balance);
+                                            discountPercentPrint = Convert.ToDecimal(item.DiscountPercent);
+                                        }
+                                        decimal taxPercentPrint = 13;
+                                        if (item.TaxPercent != null)
+                                        {
+                                            taxPercentPrint = Convert.ToDecimal(item.TaxPercent);
+                                        }
+
+                                        var SubtotalPrint = item.Balance;
+                                        var taxAmountPrint = ((SubtotalPrint - discountAmountPrint) / 100) * taxPercentPrint;
+                                        var discountedValuePrint = SubtotalPrint - discountAmountPrint;
+                                        var grandTotalPrint = taxAmountPrint + discountedValuePrint;}
+                                    <td style="text-align: center;">NRS @(string.Format("{0:#.00}", grandTotalPrint))/-</td>
+                                </tr>
                                     }
                                 }
                             </tbody>

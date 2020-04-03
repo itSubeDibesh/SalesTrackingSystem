@@ -88,7 +88,7 @@ namespace Services.Service
                                 {                                                               
                                     ProductName = product.ProductName,                                   
                                 }).FirstOrDefault();
-                    if (data.ProductName!=null)
+                    if (string.IsNullOrWhiteSpace(data.ProductName))
                     {
                         return data.ProductName;
                     }

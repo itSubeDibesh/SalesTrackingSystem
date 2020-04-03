@@ -131,13 +131,13 @@ namespace Services.Service
                 try
                 {
                     var data = _context.Distributors.Where(dist => dist.DistrubitorID == id).Select(dist => new Distributor_Model()
-                    {         
-                        OwnerName = dist.OwnerName                     
+                    {
+                        DistrubitorName = dist.DistrubitorName
                     }).FirstOrDefault();
                   
-                    if (data.OwnerName != null)
+                    if (string.IsNullOrWhiteSpace(data.DistrubitorName))
                     {
-                        return data.OwnerName;
+                        return data.DistrubitorName;
                     }
                     else
                     {
