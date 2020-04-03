@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.AppName = "Tinjure tea factory";
     var SerialNumber = 1;
+    var SerialNumber2 = 1;
     ViewBag.Action = "AddProductCategory";
     ViewBag.ActionProduct = "AddProduct";
 
@@ -186,7 +187,7 @@
                         @foreach (var itemProd in product.ListAllData())
                         {
                             <tr>
-                                <td style="text-align: center;">@(SerialNumber++)</td>
+                                <td style="text-align: center;">@(SerialNumber2++)</td>
                                 <td style="text-align: center;">@itemProd.ProductName</td>
                                 <td style="text-align: center;">@itemProd.ProductCategoryName</td>
                                 <td style="text-align: center;">@batch_.StockLeftByProduct(itemProd.ProductID)</td>

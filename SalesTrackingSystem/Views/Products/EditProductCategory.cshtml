@@ -40,12 +40,12 @@
                         </div>
                         <div class="col-md-3 col-sm-6">
                             <select name="SubCategoryOf" id="SubCategoryOf" class="form-control">
-                                <option selected disabled>Please select</option>
+                                <option>Not set</option>
                                 @foreach (var ModuleItem in productCategory.ListAllData())
                                 {
                                     if (productCategory.ListAllData() != null)
                                     {
-                                        <option value="@ModuleItem.ProductCategoryID" @(Model.ProductCategoryID == ModuleItem.ProductCategoryID ? "selected" : "")>@ModuleItem.ProductCategoryName</option>
+                                        <option value="@ModuleItem.ProductCategoryID" @(true== ModuleItem.IsSubCategory ? "selected" : "")>@ModuleItem.ProductCategoryName</option>
                                     }
                                 }
                             </select>

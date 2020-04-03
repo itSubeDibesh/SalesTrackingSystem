@@ -141,6 +141,32 @@ namespace Services.Service
             }
         }
 
+        public string ResellerNameById(long id)
+        {
+            using (var _context = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _context.Resellers.Where(res => res.ResellerID == id).Select(res => new Reseller_Model()
+                    {                       
+                       ResellerName = res.ResellerName
+                    }).FirstOrDefault();      
+                    if (data.ResellerName != null)
+                    {
+                        return data.ResellerName;
+                    }
+                    else
+                    {
+                        return " ";
+                    }
+                }
+                catch (Exception)
+                {
+                    return " ";
+                }
+            }
+        }
+
         public bool Save(Reseller_Model res)
         {
             using (var _context = new SalesTrackingSystemEntities())

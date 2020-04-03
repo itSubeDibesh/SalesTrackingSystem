@@ -16,5 +16,6 @@ namespace Services.Interface
         bool Delete(long ResellerId);
         Reseller_Model GetResellerById(long id);
         bool ResellerExist(long id);
+        string ResellerNameById(long id);
     }
 }

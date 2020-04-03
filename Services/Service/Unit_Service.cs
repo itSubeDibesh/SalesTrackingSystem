@@ -121,6 +121,33 @@ namespace Services.Service
             }
         }
 
+        public string UnitAbbrById(long unitID)
+        {
+            using (var _context = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _context.Units.Where(Unit => Unit.UnitId == unitID).Select(Unit => new Unit_Model()
+                    {                      
+                        UnitAbb = Unit.UnitAbb
+                    }).FirstOrDefault();
+                    if (data.UnitAbb != null)
+                    {
+                        return data.UnitAbb;
+                    }
+                    else
+                    {
+                        return " ";
+                    }
+                   
+                }
+                catch (Exception)
+                {
+                    return " ";
+                }
+            }
+        }
+
         public bool UnitExist(long unitID)
         {
             using (var _dbContext = new SalesTrackingSystemEntities())

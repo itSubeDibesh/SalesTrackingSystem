@@ -18,7 +18,7 @@ namespace Services.Interface
         bool DeleteTransaction(Int64 TransactionID);
         Int64 GetNewTransactionID();
         bool UpateBalance(decimal balance,long transactionID);
-        List<TransactionDetail_Model> TransactionDetailsByID(Int64 TransactionID);
+        List<TransactionDetail_Model> TransactionDetailsByID(Int64 TransactionID);  
         //Int64 GetNewTransactionDetailsID();
     }
 }

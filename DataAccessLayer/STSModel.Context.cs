@@ -12,6 +12,8 @@ namespace DataAccessLayer
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SalesTrackingSystemEntities : DbContext
     {
@@ -45,5 +47,15 @@ namespace DataAccessLayer
         public virtual DbSet<UserProfileDetail> UserProfileDetails { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Verification> Verifications { get; set; }
+    
+        public virtual ObjectResult<FetchDates_Result> FetchDates()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchDates_Result>("FetchDates");
+        }
+    
+        public virtual ObjectResult<FetchReport_Result> FetchReport()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchReport_Result>("FetchReport");
+        }
     }
 }

@@ -88,11 +88,19 @@ namespace Services.Service
                                 {                                                               
                                     ProductName = product.ProductName,                                   
                                 }).FirstOrDefault();
-                    return data.ProductName;
+                    if (data.ProductName!=null)
+                    {
+                        return data.ProductName;
+                    }
+                    else
+                    {
+                        return "Na";
+                    }
+                    
                 }
                 catch (Exception)
                 {
-                    throw;
+                    return "Na";
                 }
             }
         }

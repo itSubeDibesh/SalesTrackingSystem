@@ -603,6 +603,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="FetchDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SalesTrackingSystemModelStoreContainer">
           <EntitySet Name="Batch" EntityType="Self.Batch" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dashboard" EntityType="Self.Dashboard" Schema="dbo" store:Type="Tables" />
@@ -730,6 +732,8 @@
     <edmx:ConceptualModels>
       <Schema Namespace="SalesTrackingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="SalesTrackingSystemEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="FetchDates" ReturnType="Collection(SalesTrackingSystemModel.FetchDates_Result)" />
+          <FunctionImport Name="FetchReport" ReturnType="Collection(SalesTrackingSystemModel.FetchReport_Result)" />
           <EntitySet Name="Batches" EntityType="SalesTrackingSystemModel.Batch" />
           <EntitySet Name="Dashboards" EntityType="SalesTrackingSystemModel.Dashboard" />
           <EntitySet Name="DashboardColumns" EntityType="SalesTrackingSystemModel.DashboardColumn" />
@@ -851,6 +855,23 @@
             <End Role="Verification" EntitySet="Verifications" />
           </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="FetchDates_Result">
+          <Property Type="String" Name="Years" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Months" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="FetchReport_Result">
+          <Property Type="String" Name="Year" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Month" Nullable="true" MaxLength="30" />
+          <Property Type="Int64" Name="Supplier" Nullable="true" />
+          <Property Type="Int64" Name="Receiver" Nullable="true" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Byte" Name="Level" Nullable="true" />
+          <Property Type="Decimal" Name="DiscountPercent" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="TaxPercent" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Balance" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int64" Name="ProductID" Nullable="true" />
+          <Property Type="Int64" Name="UnitId" Nullable="true" />
+        </ComplexType>
         <EntityType Name="Batch">
           <Key>
             <PropertyRef Name="BatchID" />
@@ -1505,6 +1526,31 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SalesTrackingSystemModelStoreContainer" CdmEntityContainer="SalesTrackingSystemEntities">
+          <FunctionImportMapping FunctionImportName="FetchDates" FunctionName="SalesTrackingSystemModel.Store.FetchDates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SalesTrackingSystemModel.FetchDates_Result">
+                <ScalarProperty Name="Years" ColumnName="Years" />
+                <ScalarProperty Name="Months" ColumnName="Months" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchReport" FunctionName="SalesTrackingSystemModel.Store.FetchReport">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SalesTrackingSystemModel.FetchReport_Result">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
+                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="DiscountPercent" ColumnName="DiscountPercent" />
+                <ScalarProperty Name="TaxPercent" ColumnName="TaxPercent" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="Batches">
             <EntityTypeMapping TypeName="SalesTrackingSystemModel.Batch">
               <MappingFragment StoreEntitySet="Batch">

@@ -124,6 +124,33 @@ namespace Services.Service
             }
         }
 
+        public string GetDistributorNameByID(long id)
+        {
+            using (var _context = new SalesTrackingSystemEntities())
+            {
+                try
+                {
+                    var data = _context.Distributors.Where(dist => dist.DistrubitorID == id).Select(dist => new Distributor_Model()
+                    {         
+                        OwnerName = dist.OwnerName                     
+                    }).FirstOrDefault();
+                  
+                    if (data.OwnerName != null)
+                    {
+                        return data.OwnerName;
+                    }
+                    else
+                    {
+                        return " ";
+                    }
+                }
+                catch (Exception)
+                {
+                    return " ";
+                }
+            }
+        }
+
         public int GetNewDistributorID()
         {
             try

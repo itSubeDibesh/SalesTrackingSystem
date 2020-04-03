@@ -185,7 +185,7 @@
                                             var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
                                             if (SupplierDetails != null)
                                             {
-                                                <strong>Bill From</strong><p>@SupplierDetails.DistrubitorName</p><p>@SupplierDetails.Address,@SupplierDetails.District</p><p><a href="mailto:@(SupplierDetails.Email)">@SupplierDetails.Email</a></p><p>@SupplierDetails.MobileNo</p><p>@SupplierDetails.Phone</p>
+                                                <strong>Bill From</strong><p>@SupplierDetails.DistrubitorName</p><p>@SupplierDetails.Address,@SupplierDetails.District</p><p><a href="mailto:@(SupplierDetails.Email)">@SupplierDetails.Email</a></p><p>@SupplierDetails.MobileNo, @SupplierDetails.Phone</p>
                                             }
                                         }
                                         else/*Company to Distributor*/
@@ -232,13 +232,13 @@
                                             <tbody>
                                                 @foreach (var item in transaction.TransactionDetailsByID(TransacctionVariable.TransactionID))
                                                 {
-                                                    <tr>
-                                                        <td style="text-align: center;">@(SearialNumberInvoicePrint++)</td>
-                                                        <td style="text-align: center;">@product.GetProductNameById(Convert.ToInt64(item.ProductID))</td>
-                                                        <td style="text-align: center;">@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID))</td>
-                                                        <td style="text-align: center;">@item.Quantity</td>
-                                                        <td style="text-align: center;">@(@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID)) * item.Quantity)</td>
-                                                    </tr>
+                                                <tr>
+                                                    <td style="text-align: center;">@(SearialNumberInvoicePrint++)</td>
+                                                    <td style="text-align: center;">@(product.GetProductNameById(Convert.ToInt64(item.ProductID)))</td>
+                                                    <td style="text-align: center;">@(string.Format("{0:#.00}", batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID))))</td>
+                                                    <td style="text-align: center;">@(string.Format("{0:#.00}", item.Quantity))</td>
+                                                    <td style="text-align: center;">@(string.Format("{0:#.00}", batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID)) * item.Quantity))</td>
+                                                </tr>
 
                                                 }
                                             </tbody>
@@ -343,7 +343,7 @@
                                             var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
                                             if (SupplierDetails != null)
                                             {
-                                                <strong>Bill From</strong><p>@SupplierDetails.DistrubitorName</p><p>@SupplierDetails.Address,@SupplierDetails.District</p><p><a href="mailto:@(SupplierDetails.Email)">@SupplierDetails.Email</a></p><p>@SupplierDetails.MobileNo</p><p>@SupplierDetails.Phone</p>
+                                                <strong>Bill From</strong><p>@SupplierDetails.DistrubitorName</p><p>@SupplierDetails.Address,@SupplierDetails.District</p><p><a href="mailto:@(SupplierDetails.Email)">@SupplierDetails.Email</a></p><p>@SupplierDetails.MobileNo, @SupplierDetails.Phone</p>
                                             }
                                         }
                                         else/*Company to Distributor*/
@@ -392,10 +392,10 @@
                                                 {
                                                     <tr>
                                                         <td style="text-align: center;">@(SearialNumberInvoice++)</td>
-                                                        <td style="text-align: center;">@product.GetProductNameById(Convert.ToInt64(item.ProductID))</td>
-                                                        <td style="text-align: center;">@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID))</td>
-                                                        <td style="text-align: center;">@item.Quantity</td>
-                                                        <td style="text-align: center;">@(@batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID)) * item.Quantity)</td>
+                                                        <td style="text-align: center;">@(product.GetProductNameById(Convert.ToInt64(item.ProductID)))</td>
+                                                        <td style="text-align: center;">@(string.Format("{0:#.00}",batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID))))</td>
+                                                        <td style="text-align: center;">@(string.Format("{0:#.00}",item.Quantity))</td>
+                                                        <td style="text-align: center;">@(string.Format("{0:#.00}", batch.MaxPriceByProductID(Convert.ToInt64(item.ProductID)) * item.Quantity))</td>
                                                     </tr>
 
                                                 }

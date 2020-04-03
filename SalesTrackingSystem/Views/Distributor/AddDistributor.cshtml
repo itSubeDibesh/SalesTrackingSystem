@@ -87,16 +87,14 @@
                     </div>
 
                     <div class="row form-group">
-                        <div class="col-md-3 col-sm-6">
-                            <label for="phone-input" class=" form-control-label">District</label>
+                        <div class="col-md-3 col-sm-6">                           
                             @Html.LabelFor(model => model.District, htmlAttributes: new { @class = "control-label" })
                         </div>
                         <div class="col-md-3 col-sm-6">
                             @Html.EditorFor(model => model.District, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.District, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-3 col-sm-6">
-                            <label for="phone-input" class=" form-control-label">District</label>
+                        <div class="col-md-3 col-sm-6">                           
                             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
                         </div>
                         <div class="col-md-3 col-sm-6">

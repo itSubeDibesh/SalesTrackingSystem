@@ -153,7 +153,7 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = _context.ProductCategories.Where(productCategory => productCategory.SubCategoryOf == id).Select(productCategory => new ProductCategory_Model()
+                    var data = _context.ProductCategories.Where(productCategory => productCategory.ProductCategoryID == id).Select(productCategory => new ProductCategory_Model()
                     {                       
                         ProductCategoryName = productCategory.ProductCategoryName                     
                     }).FirstOrDefault();

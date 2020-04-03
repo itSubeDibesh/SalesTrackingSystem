@@ -17,8 +17,10 @@ namespace SalesTrackingSystem.Controllers
     public class HomeController : Controller
     {
         Users_Interface Users;
+        Transaction_Interface transaction;
         public HomeController(){
             Users = new Users_Service();
+            transaction = new Transaction_Service();
         }
         public ActionResult Index()
         {
@@ -28,11 +30,6 @@ namespace SalesTrackingSystem.Controllers
         public ActionResult Setting()
         {
             return View("Setting");
-        }
-
-        public ActionResult Reports()
-        {
-            return View("Reports");
         }
 
         [HttpPost]
@@ -282,9 +279,42 @@ namespace SalesTrackingSystem.Controllers
         //        }
         //        catch (Exception)
         //        {
-                   
+
         //        }
         //    }
         //}
+
+        public ActionResult Reports()
+        {
+            return View("Reports");
+        }
+
+        //public JsonResult GetSalesRepoart()
+        //{
+        //    var LoginSession = (Users_Model)Session["auth"];
+        //    if (LoginSession!=null)
+        //    {
+        //        List<TransactionDetail_Model> Report;
+        //        if (LoginSession.ProfileName == "Company")
+        //        {
+        //            Report = transaction.SalesReportByLevel(2);
+        //            return Json(Report, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else if (LoginSession.ProfileName == "Distributor")
+        //        {
+        //            Report = transaction.SalesReportByLevel(1);
+        //            return Json(Report, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else
+        //        {
+        //            return Json("Error");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return Json("Server Error");
+        //    }
+        //}
+
     }
 }

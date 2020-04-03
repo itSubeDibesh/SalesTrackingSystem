@@ -36,6 +36,9 @@ namespace Models
         public Nullable<decimal> TaxPercent { get; set; }
         public Nullable<decimal> Balance { get; set; }
 
+        public string Years { get; set; }
+        public string Months { get; set; }
+
     }
   
 }

@@ -77,6 +77,12 @@
     <Compile Include="DistributorArea.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FetchDates_Result.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FetchReport_Result.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Module.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>

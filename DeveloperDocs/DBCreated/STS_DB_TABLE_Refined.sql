@@ -661,3 +661,27 @@ GO
 Alter TABLE TransactionDetails
 Drop	Column	Units
 GO
+
+/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------(April 3 2020) Procedures  ------------------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+CREATE PROCEDURE FetchDates
+AS
+SELECT   DATENAME(YEAR,T.InvoiceDate)[Years],DATENAME(MONTH,T.InvoiceDate)[Months]
+from Transactions T
+GROUP BY  DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate)
+Order BY  DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate) DESC
+GO
+/*-------------------------------------------------------------------------------------------------*/
+CREATE PROCEDURE FetchReport
+AS
+BEGIN
+select  DATENAME(YEAR,T.InvoiceDate)[Year],DATENAME(MONTH,T.InvoiceDate)[Month],T.SupplierID[Supplier],T.ReceiverID[Receiver],P.ProductID,P.UnitId,SUM(TD.Quantity) as Quantity,T.TransactionLevel[Level],T.DiscountPercent,T.TaxPercent,T.Balance
+from TransactionDetails TD
+left join Transactions T on T.TransactionID=TD.TransactionID
+left join Products P on P.ProductID=TD.TransactionDetailsID
+left join Batch B on B.ProductID=P.ProductID
+GROUP BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,P.ProductID,P.UnitId,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance
+Order BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,P.ProductID,P.UnitId,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance DESC
+END
+GO

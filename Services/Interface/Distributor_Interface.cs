@@ -16,5 +16,6 @@ namespace Services.Interface
         bool Delete(long DistributorId);
         Distributor_Model GetDistributorById(long id);
         bool DistributorExist(long id);
+        string GetDistributorNameByID(long id);
     }
 }
