@@ -23,6 +23,12 @@ namespace SalesTrackingSystem.Controllers
             ViewBag.Message = "Un authorized Access.";
             return View();
         }
+        public ActionResult E403()
+        {
+            ViewBag.Title = "403";
+            ViewBag.Message = "Forbidden Access.";
+            return View();
+        }
         public ActionResult E500()
         {
             ViewBag.Title = "500";

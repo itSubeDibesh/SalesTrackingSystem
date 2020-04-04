@@ -36,5 +36,6 @@ namespace Models
 
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateUpdated { get; set; }
+        public long UserID { get; set; }
     }
 }

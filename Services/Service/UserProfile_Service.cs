@@ -11,6 +11,42 @@ namespace Services.Service
 {
     public class UserProfile_Service : UserProfile_Interface
     {
+        public List<UserAuth_Model> AuthDetailsByUserID(long userId)
+        {
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                try
+                {           
+                    var data = (from UPD in _dbContext.UserProfileDetails
+                                join UP in _dbContext.UserProfiles on UPD.UserProfileID equals UP.UserProfileID
+                                join U in _dbContext.Users.Where(u=>u.UserID==userId) on UP.UserProfileID equals U.UserProfileID
+                                join M in _dbContext.Modules on UPD.ModuleID equals M.ModuleID
+                                join MA in _dbContext.ModuleActions on UPD.ModuleActionID equals MA.ModuleActionID                               
+                                select new UserAuth_Model()
+                                {
+                                   UserProfileDetailID=UPD.UserProfileDetailID,
+                                   UserProfileID=UPD.UserProfileID.Value,
+                                   ModuleID = UPD.ModuleID.Value,
+                                   ModuleActionID=UPD.ModuleActionID.Value,
+                                   ProfileDetailStatus=UPD.ProfileDetailStatus,
+                                   CreatedBy=UPD.CreatedBy,
+                                   ProfileName=UP.ProfileName,
+                                   FullName=U.FullName,
+                                   Email=U.Email,
+                                   MobileNo=U.MobileNo,
+                                   ModuleName=M.ModuleName,
+                                   ControllerName=M.ControllerName,
+                                   ActionName=MA.ActionName                                  
+                                }).ToList();
+                    return data;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
         public bool DeleteUserProfile(long userProfileId)
         {
             using (var _context = new SalesTrackingSystemEntities())

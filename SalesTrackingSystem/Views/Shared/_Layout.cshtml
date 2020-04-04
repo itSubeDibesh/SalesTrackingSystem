@@ -55,32 +55,52 @@
                                 <i class="zmdi zmdi-home zmdi-hc-lg"></i>Home
                             </a>
                         </li>
-                        <li>
-                            <a href="~/Home/Dashboard" style="color:@(ViewBag.Page == "Dashboard" ? "royalblue" : "")">
-                                <i class="fas fa-chart-line"></i>Dashboard
-                            </a>
-                        </li>                       
-                        <li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Distributor"||ViewBag.Page == "Distributor Area" ? "royalblue" : "")">
-                                <i class="zmdi zmdi-store zmdi-hc-lg"></i>Distribution
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="~/Distributor/Distributor"><i class="fas fa-truck"></i>Distributor</a>
-                                </li>
-                                <li>
-                                    <a href="~/Distributor/DistributorArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributor Area</a>
-                                </li>
-                            </ul>
-                        <li>
-                            <a href="~/Reseller/Reseller">
-                                <i class="zmdi zmdi-store-24 zmdi-hc-lg" style="color:@(ViewBag.Page == "Reseller" ? "royalblue" : "")"></i>Reseller
-                            </a>
-                        </li>
+                        @if ((SessionVariable.ProfileName == "Developer" || SessionVariable.ProfileName == "Company") && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li>
+                                <a href="~/Home/Dashboard" style="color:@(ViewBag.Page == "Dashboard" ? "royalblue" : "")">
+                                    <i class="fas fa-chart-line"></i>Dashboard
+                                </a>
+                            </li>
+                        }
+                        @if (SessionVariable.ProfileName == "Company" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Distributor"||ViewBag.Page == "Distributon Area" ? "royalblue" : "")">
+                                    <i class="zmdi zmdi-store zmdi-hc-lg"></i>Distribution
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                    <li>
+                                        <a href="~/Distributor/Distributor"><i class="fas fa-truck"></i>Distributor</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Distributor/DistributorArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributor Area</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else if (SessionVariable.ProfileName == "Distributor" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li>
+                                <a href="~/Distributor/DistributorArea">
+                                    <i class="zmdi zmdi-map zmdi-hc-lg" style="color:@(ViewBag.Page == "Distributon Area" ? "royalblue" : "")"></i>Distributor Area
+                                </a>
+                            </li>
+                        }
+                        else
+                        { }
+                        @if ((SessionVariable.ProfileName == "Company" || SessionVariable.ProfileName == "Distributor") && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li>
+                                <a href="~/Reseller/Reseller">
+                                    <i class="zmdi zmdi-store-24 zmdi-hc-lg" style="color:@(ViewBag.Page == "Reseller" ? "royalblue" : "")"></i>Reseller
+                                </a>
+                            </li>
+                        }
+
                         @if (SessionVariable.ProfileName == "Developer" && SessionVariable.UserProfileStatus == true)
                         {
                             <li class="has-sub">
@@ -116,7 +136,7 @@
                                 </ul>
                             </li>
                         }
-                        else
+                        else if (SessionVariable.ProfileName == "Company" && SessionVariable.UserProfileStatus == true)
                         {
                             <li>
                                 <a href="~/User/Users">
@@ -124,31 +144,52 @@
                                 </a>
                             </li>
                         }
+                        else
+                        {
 
-                        <li>
-                            <a href="~/Transaction/Transaction">
-                                <i class="zmdi zmdi-file-text zmdi-hc-lg" style="color:@(ViewBag.Page == "Transaction" ? "royalblue" : "")"></i>Transaction
-                            </a>
-                        </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ||ViewBag.Page == "Unit"? "royalblue" : "")">
-                                <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="~/Products/Unit"><i class="zmdi zmdi-plus-1 zmdi-hc-lg"></i> Units</a>
-                                </li>
-                                <li>
-                                    <a href="~/Products/Batch"><i class="fas fa-sitemap"></i> Batch</a>
-                                </li>
-                                <li>
-                                    <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
-                                </li>
-                            </ul>
-                        </li>
+                        }
+                        @if ((SessionVariable.ProfileName == "Company" || SessionVariable.ProfileName == "Distributor") && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li>
+                                <a href="~/Transaction/Transaction">
+                                    <i class="zmdi zmdi-file-text zmdi-hc-lg" style="color:@(ViewBag.Page == "Transaction" ? "royalblue" : "")"></i>Transaction
+                                </a>
+                            </li>
+                        }
+
+                        @if (SessionVariable.ProfileName == "Company" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="has-sub">
+                                <a class="js-arrow" href="#" style="color:@(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ||ViewBag.Page == "Unit"? "royalblue" : "")">
+                                    <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                                    <li>
+                                        <a href="~/Products/Unit"><i class="zmdi zmdi-plus-1 zmdi-hc-lg"></i> Units</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Products/Batch"><i class="fas fa-sitemap"></i> Batch</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else if (SessionVariable.ProfileName == "Distributor" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li>
+                                <a href="~/Products/Products">
+                                    <i class="zmdi zmdi-shopping-basket zmdi-hc-lg" style="color:@(ViewBag.Page == "Products" ? "royalblue" : "")"></i>Products
+                                </a>
+                            </li>
+                        }
+                        else
+                        { }
+
                     </ul>
                 </div>
             </nav>
@@ -169,33 +210,52 @@
                                 <i class="zmdi zmdi-home zmdi-hc-lg"></i>Home
                             </a>
                         </li>
-                        <li class="@(ViewBag.Page == "Dashboard" ? "active" : " ")">
-                            <a href="~/Home/Dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
-                        </li>                       
-                        <li class="has-sub @(ViewBag.Page == "Distributor"||ViewBag.Page == "Distributor Area" ? "active" : " ")">
-                            <a class="js-arrow" href="#">
-                                <i class="zmdi zmdi-store zmdi-hc-lg"></i>Distribution
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="~/Distributor/Distributor"><i class="fas fa-truck"></i>Distributor</a>
-                                </li>
-                                <li>
-                                    <a href="~/Distributor/DistributorArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributor Area</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="@(ViewBag.Page == "Reseller" ? "active" : " ")">
-                            <a href="~/Reseller/Reseller">
-                                <i class="zmdi zmdi-store-24 zmdi-hc-lg"></i>Reseller
-                            </a>
-                        </li>
+                        @if ((SessionVariable.ProfileName == "Developer" || SessionVariable.ProfileName == "Company") && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="@(ViewBag.Page == "Dashboard" ? "active" : " ")">
+                                <a href="~/Home/Dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+                            </li>
+                        }
+                        @if (SessionVariable.ProfileName == "Company" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="has-sub @(ViewBag.Page == "Distributor"||ViewBag.Page == "Distributon Area" ? "active" : " ")">
+                                <a class="js-arrow" href="#">
+                                    <i class="zmdi zmdi-store zmdi-hc-lg"></i>Distribution
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="~/Distributor/Distributor"><i class="fas fa-truck"></i>Distributor</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Distributor/DistributorArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributor Area</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else if (SessionVariable.ProfileName == "Distributor" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="@(ViewBag.Page == "Distributon Area" ? "active" : " ")">
+                                <a href="~/Distributor/DistributorArea"><i class="zmdi zmdi-map zmdi-hc-lg"></i> Distributor Area</a>
+                            </li>
+                        }
+                        else
+                        { }
+
+                        @if ((SessionVariable.ProfileName == "Company" || SessionVariable.ProfileName == "Distributor") && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="@(ViewBag.Page == "Reseller" ? "active" : " ")">
+                                <a href="~/Reseller/Reseller">
+                                    <i class="zmdi zmdi-store-24 zmdi-hc-lg"></i>Reseller
+                                </a>
+                            </li>
+                        }
+
                         @if (SessionVariable.ProfileName == "Developer" && SessionVariable.UserProfileStatus == true)
                         {
-                            <li class="has-sub @(ViewBag.Page == "Module"||ViewBag.Page == "Action" ? "active" : " ")">
+                            <li class="has-sub @(ViewBag.Page == "Module" || ViewBag.Page == "Action" ? "active" : " ")">
                                 <a class="js-arrow" href="#">
                                     <i class="zmdi zmdi-view-module zmdi-hc-lg"></i>Modules
                                     <span class="arrow">
@@ -211,7 +271,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="has-sub @(ViewBag.Page == "Users"||ViewBag.Page == "User Profile" ? "active" : " ")">
+                            <li class="has-sub @(ViewBag.Page == "Users" || ViewBag.Page == "User Profile" ? "active" : " ")">
                                 <a class="js-arrow" href="#">
                                     <i class="zmdi zmdi-accounts zmdi-hc-lg"></i>User
                                     <span class="arrow">
@@ -228,38 +288,53 @@
                                 </ul>
                             </li>
                         }
-                        else
+                        else if (SessionVariable.ProfileName == "Company" && SessionVariable.UserProfileStatus == true)
                         {
                             <li class="@(ViewBag.Page == "Users" ? "active" : " ")">
                                 <a href="~/User/Users"><i class="zmdi zmdi-accounts-list zmdi-hc-lg"></i> Users</a>
                             </li>
                         }
+                        else { }
 
+                        @if ((SessionVariable.ProfileName == "Company" || SessionVariable.ProfileName == "Distributor") && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="@(ViewBag.Page == "Transaction" ? "active" : " ")">
+                                <a href="~/Transaction/Transaction">
+                                    <i class="zmdi zmdi-file-text zmdi-hc-lg"></i>Transaction
+                                </a>
+                            </li>
+                        }
 
-                        <li class="@(ViewBag.Page == "Transaction" ? "active" : " ")">
-                            <a href="~/Transaction/Transaction">
-                                <i class="zmdi zmdi-file-text zmdi-hc-lg"></i>Transaction
-                            </a>
-                        </li>
-                        <li class="has-sub  @(ViewBag.Page == "Products"||ViewBag.Page == "Batch" ||ViewBag.Page == "Unit"? "active" : " ")">
-                            <a class="js-arrow" href="#">
-                                <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
-                            </a>
-                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="~/Products/Unit"><i class="zmdi zmdi-plus-1 zmdi-hc-lg"></i> Units</a>
-                                </li>
-                                <li>
-                                    <a href="~/Products/Batch"><i class="fas fa-sitemap"></i> Batch</a>
-                                </li>
-                                <li>
-                                    <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (SessionVariable.ProfileName == "Company" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="has-sub  @(ViewBag.Page == "Products" || ViewBag.Page == "Batch" || ViewBag.Page == "Unit" ? "active" : " ")">
+                                <a class="js-arrow" href="#">
+                                    <i class="zmdi zmdi-shopping-cart zmdi-hc-lg"></i>Products
+                                    <span class="arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a href="~/Products/Unit"><i class="zmdi zmdi-plus-1 zmdi-hc-lg"></i> Units</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Products/Batch"><i class="fas fa-sitemap"></i> Batch</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        else if (SessionVariable.ProfileName == "Distributor" && SessionVariable.UserProfileStatus == true)
+                        {
+                            <li class="@(ViewBag.Page == "Products" ? "active" : " ")">
+                                <a href="~/Products/Products"><i class="zmdi zmdi-shopping-basket zmdi-hc-lg"></i> Products</a>
+                            </li>
+                        }
+                        else
+                        { }
                     </ul>
                 </nav>
             </div>
@@ -356,84 +431,84 @@
 @RenderSection("scripts", required: false)
 </html>
 @*<script>
-    document.addEventListener('contextmenu', event => event.preventDefault());
-    document.onkeypress = function (event) {
-        event = (event || window.event);
-        if (event.keyCode == 123) {
-            return false;
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeypress = function (event) {
+            event = (event || window.event);
+            if (event.keyCode == 123) {
+                return false;
+            }
         }
+        document.onmousedown = function (event) {
+            event = (event || window.event);
+            if (event.keyCode == 123) {
+                return false;
+            }
+        }
+        document.onkeydown = function (event) {
+            event = (event || window.event);
+            if (event.keyCode == 123) {
+                return false;
+            }
+            else if (event.ctrlKey && event.keyCode == 85) {
+                return false;
+            }
+            else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
+                return false;
+            }
+            else if (event.ctrlKey && event.shiftKey && event.keyCode == 74) {
+                return false;
+            }
+            else if (event.ctrlKey && event.shiftKey && event.keyCode == 67) {
+                return false;
+            }
+        }
+        var checkStatus;
+
+        var element = new Image();
+        element.__defineGetter__('id', function () {
+            checkStatus = 'on';
+        });
+
+        setInterval(function () {
+            checkStatus = 'off';
+            console.log(element);
+            console.clear();
+            if (checkStatus == "on") {
+                window.location="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401";
+            }
+        }, 1000)
+
+        var timeoutID;
+
+    function setup() {
+        this.addEventListener("mousemove", resetTimer, false);
+        this.addEventListener("mousedown", resetTimer, false);
+        this.addEventListener("keypress", resetTimer, false);
+        this.addEventListener("DOMMouseScroll", resetTimer, false);
+        this.addEventListener("mousewheel", resetTimer, false);
+        this.addEventListener("touchmove", resetTimer, false);
+        this.addEventListener("MSPointerMove", resetTimer, false);
+
+        startTimer();
     }
-    document.onmousedown = function (event) {
-        event = (event || window.event);
-        if (event.keyCode == 123) {
-            return false;
-        }
+    setup();
+
+    function startTimer() {
+        // wait 2 seconds before calling goInactive
+        timeoutID = window.setTimeout(goInactive, 300000);
     }
-    document.onkeydown = function (event) {
-        event = (event || window.event);
-        if (event.keyCode == 123) {
-            return false;
-        }
-        else if (event.ctrlKey && event.keyCode == 85) {
-            return false;
-        }
-        else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
-            return false;
-        }
-        else if (event.ctrlKey && event.shiftKey && event.keyCode == 74) {
-            return false;
-        }
-        else if (event.ctrlKey && event.shiftKey && event.keyCode == 67) {
-            return false;
-        }
+
+    function resetTimer(e) {
+        window.clearTimeout(timeoutID);
+
+        goActive();
     }
-    var checkStatus;
 
-    var element = new Image();
-    element.__defineGetter__('id', function () {
-        checkStatus = 'on';
-    });
+    function goInactive() {
+         window.location="https://@Request.ServerVariables["HTTP_HOST"]/Auth/Logout";
+    }
 
-    setInterval(function () {
-        checkStatus = 'off';
-        console.log(element);
-        console.clear();
-        if (checkStatus == "on") {
-            window.location="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401";
-        }
-    }, 1000)
-
-    var timeoutID;
-
-function setup() {
-    this.addEventListener("mousemove", resetTimer, false);
-    this.addEventListener("mousedown", resetTimer, false);
-    this.addEventListener("keypress", resetTimer, false);
-    this.addEventListener("DOMMouseScroll", resetTimer, false);
-    this.addEventListener("mousewheel", resetTimer, false);
-    this.addEventListener("touchmove", resetTimer, false);
-    this.addEventListener("MSPointerMove", resetTimer, false);
-
-    startTimer();
-}
-setup();
-
-function startTimer() {
-    // wait 2 seconds before calling goInactive
-    timeoutID = window.setTimeout(goInactive, 300000);
-}
-
-function resetTimer(e) {
-    window.clearTimeout(timeoutID);
-
-    goActive();
-}
-
-function goInactive() {    
-     window.location="https://@Request.ServerVariables["HTTP_HOST"]/Auth/Logout";
-}
-
-function goActive() {
-    startTimer();
-}
-</script>*@
+    function goActive() {
+        startTimer();
+    }
+    </script>*@

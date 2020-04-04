@@ -11,315 +11,409 @@
 }
 @using Services.Interface;
 @using Services.Service;
+@using Models;
 @{
     ProductCategory_Interface productCategory = new ProductCategory_Service();
     Product_Interface product = new Product_Service();
     Batch_Interface batch_ = new Batch_Service();
+    Unit_Interface unit_ = new Unit_Service();
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
 }
 
 @Html.Partial("~/Views/Shared/_Alert.cshtml")
-<div class="row">
-    <div class="col-12">
-        <div class="overview-wrap">
-            <div class="title-1">
-                <h4><a href="">@ViewBag.AppName</a> > Products > @ViewBag.Page</h4>
+@if (SessionVariable.ProfileName == "Distributor")
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="overview-wrap">
+                <div class="title-1">
+                    <h4><a href="">@ViewBag.AppName</a> > Products</h4>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong> Product List</strong>
+                </div>
+                <div class="card-body card-block">
+                    <table class="dynamic-table-action table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;">SN</th>
+                                <th style="text-align: center;">Product Name</th>
+                                <th style="text-align: center;">Category</th>
+                                <th style="text-align: center;">Stock Left</th>
+                                <th style="text-align: center;">Package rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itemProd in product.ListAllData())
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SerialNumber2++)</td>
+                                    <td style="text-align: center;">@itemProd.ProductName</td>
+                                    <td style="text-align: center;">@itemProd.ProductCategoryName</td>
+                                    <td style="text-align: center;">@(string.Format("{0:#.00}", batch_.StockLeftByProduct(itemProd.ProductID))) @itemProd.UnitAbb</td>
+                                    <td style="text-align: center;">@(string.Format("{0:#.00}",itemProd.PackRate)) X Rs @(string.Format("{0:#.00}",batch_.MaxPriceByProductID(itemProd.ProductID)))/-</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <br>
     </div>
-</div>
-@ViewBag.UpdateError
-<!--#region Forms-->
-@if (ViewBag.AddProductCategory != null)
-{
-    <script>
-        window.onload = function () {
-            $('#AddProductCategory').slideDown();
-        }
-    </script>
 }
-@if (ViewBag.UpdateError != null)
+else
 {
-    <script>
-        window.onload = function () {
-            $('#EditProductCategory').slideDown();
+    <div class="row">
+        <div class="col-12">
+            <div class="overview-wrap">
+                <div class="title-1">
+                    <h4><a href="">@ViewBag.AppName</a> > Products > @ViewBag.Page</h4>
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+
+    @ViewBag.UpdateError;
+    <!--
+    #region Forms-->
+    if (ViewBag.AddProductCategory != null)
+    {
+        <script>
+            window.onload = function () {
+                $('#AddProductCategory').slideDown();
+            }
+        </script>
+    }
+    if (ViewBag.UpdateError != null)
+    {
+        <script>
+            window.onload = function () {
+                $('#EditProductCategory').slideDown();
+            }
+        </script>
+    }
+    if (ViewBag.AddProduct != null)
+    {
+        <script>
+            window.onload = function () {
+                $('#AddProduct').slideDown();
+            }
+        </script>
+    }
+    if (ViewBag.ProductUpdateError != null)
+    {
+        <script>
+            window.onload = function () {
+                $('#EditProduct').slideDown();
+            }
+        </script>
+    }
+
+    <div class="row">
+        @*Add Product*@
+        @if (ViewBag.ActionProduct == "AddProduct")
+        {
+            @Html.Partial("AddProduct")
         }
-    </script>
-}
-@if (ViewBag.AddProduct != null)
-{
-    <script>
-        window.onload = function () {
-            $('#AddProduct').slideDown();
+        @if (Request.Params.Get("action") == "UpdateProduct")
+        {
+            if (product.ProductExist(Convert.ToInt64(Request.Params.Get("prod"))))
+            {
+                @Html.Partial("EditProduct", product.GetProductById(Convert.ToInt64(Request.Params.Get("prod"))));
+            }
+            else
+            {
+                Session["Error"] = " Product couldn't be found please retry!!";
+            }
         }
-    </script>
-}
-@if (ViewBag.ProductUpdateError != null)
-{
-    <script>
-        window.onload = function () {
-            $('#EditProduct').slideDown();
+        @if (ViewBag.UpdateProductData != null)
+        {
+            Int64 productId = Convert.ToInt64(ViewBag.UpdateProductData);
+            if (product.ProductExist(productId))
+            {
+                @Html.Partial("EditProduct", product.GetProductById(productId));
+            }
+            else
+            {
+                Session["Error"] = " Module couldn't be found please retry!!";
+            }
         }
-    </script>
+        @*Add Product Category*@
+        @if (ViewBag.Action == "AddProductCategory")
+        {
+            @Html.Partial("AddProductCategory")
+        }
+        @if (Request.Params.Get("action") == "UpdateProductCategory")
+        {
+            if (productCategory.ProductCategoryExist(Convert.ToInt64(Request.Params.Get("pC"))))
+            {
+                @Html.Partial("EditProductCategory", productCategory.GetProductCatgoryById(Convert.ToInt64(Request.Params.Get("pC"))));
+            }
+            else
+            {
+                Session["Error"] = " ProductCategory couldn't be found please retry!!";
+            }
+        }
+        @if (ViewBag.UpdateProductCatData != null)
+        {
+            Int64 productCatId = Convert.ToInt64(ViewBag.UpdateProductCatData);
+            if (productCategory.ProductCategoryExist(productCatId))
+            {
+                @Html.Partial("EditProductCategory", productCategory.GetProductCatgoryById(productCatId));
+            }
+            else
+            {
+                Session["Error"] = " Module couldn't be found please retry!!";
+            }
+        }
+        @*Add Product Category*@
+        <!-- Forms ends -->
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong> Product Category List</strong>
+                    <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add Product Category" onclick="javascript:$('#AddProductCategory').slideDown()">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+                <div class="card-body card-block">
+                    <table class="dynamic-scroable-table-module  table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;">SN</th>
+                                <th style="text-align: center;">Product Category Name</th>
+                                <th style="text-align: center;">Is Sub Category</th>
+                                <th style="text-align: center;">Sub Category Name</th>
+                                <th style="text-align: center;">Category Status</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in productCategory.ListAllData())
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SerialNumber++)</td>
+                                    <td style="text-align: center;">@item.ProductCategoryName</td>
+                                    <td style="text-align: center; color:@(item.IsSubCategory ==true  ? "green" :"red");"> <i class="@(item.IsSubCategory ==true  ? "fas fa-thumbs-up" :"fas fa-thumbs-down")"></i> @(item.IsSubCategory == true ? "True" : "False")</td>
+                                    <td style="text-align: center;">@(item.SubCategoryOf!=null?productCategory.SubCategoryNameBYID(Convert.ToInt64(item.SubCategoryOf)):"-")</td>
+                                    <td style="text-align: center; color:@(item.CategoryStatus==true?"green":"red")"><i class="@(item.CategoryStatus == true  ? "fas fa-thumbs-up" :"fas fa-thumbs-down")"></i> @item.CategoryStatus</td>
+                                    <td style="padding-left:4%;">
+                                        <a href="~/Products/EditProductCategory?action=UpdateProductCategory&pC=@item.ProductCategoryID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                        <a href="#" onclick="DeleteAndNotify(@item.ProductCategoryID,'@item.ProductCategoryName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <strong> Product List</strong>
+                    <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add Product" onclick="javascript:$('#AddProduct').slideDown()">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+                <div class="card-body card-block">
+                    <table class="dynamic-table-action table table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="text-align: center;">SN</th>
+                                <th style="text-align: center;">Product Name</th>
+                                <th style="text-align: center;">Category</th>
+                                <th style="text-align: center;">Stock Left</th>
+                                <th style="text-align: center;">Package rate</th>
+                                <th style="text-align: center;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var itemProd in product.ListAllData())
+                            {
+                                <tr>
+                                    <td style="text-align: center;">@(SerialNumber2++)</td>
+                                    <td style="text-align: center;">@itemProd.ProductName</td>
+                                    <td style="text-align: center;">@itemProd.ProductCategoryName</td>
+                                    <td style="text-align: center;">@(string.Format("{0:#.00}", batch_.StockLeftByProduct(itemProd.ProductID))) @itemProd.UnitAbb</td>
+                                    <td style="text-align: center;">@(string.Format("{0:#.00}",itemProd.PackRate)) X Rs @(string.Format("{0:#.00}",batch_.MaxPriceByProductID(itemProd.ProductID)))/-</td>
+                                    <td style="padding-left:4%;">
+                                        <a href="~/Products/EditProduct?action=UpdateProduct&prod=@itemProd.ProductID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                        <a href="#" onclick="DeleteAndNotifyProduct(@itemProd.ProductID,'@itemProd.ProductName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--#endregion Forms ends-->
 }
 
-<div class="row">
-    @*Add Product*@
-    @if (ViewBag.ActionProduct == "AddProduct")
-    {
-        @Html.Partial("AddProduct")
-    }
-    @if (Request.Params.Get("action") == "UpdateProduct")
-    {
-        if (product.ProductExist(Convert.ToInt64(Request.Params.Get("prod"))))
-        {
-            @Html.Partial("EditProduct", product.GetProductById(Convert.ToInt64(Request.Params.Get("prod"))));
-        }
-        else
-        {
-            Session["Error"] = " Product couldn't be found please retry!!";
-        }
-    }
-    @if (ViewBag.UpdateProductData != null)
-    {
-        Int64 productId = Convert.ToInt64(ViewBag.UpdateProductData);
-        if (product.ProductExist(productId))
-        {
-            @Html.Partial("EditProduct", product.GetProductById(productId));
-        }
-        else
-        {
-            Session["Error"] = " Module couldn't be found please retry!!";
-        }
-    }
-    @*Add Product Category*@
-    @if (ViewBag.Action == "AddProductCategory")
-    {
-        @Html.Partial("AddProductCategory")
-    }
-    @if (Request.Params.Get("action") == "UpdateProductCategory")
-    {
-        if (productCategory.ProductCategoryExist(Convert.ToInt64(Request.Params.Get("pC"))))
-        {
-            @Html.Partial("EditProductCategory", productCategory.GetProductCatgoryById(Convert.ToInt64(Request.Params.Get("pC"))));
-        }
-        else
-        {
-            Session["Error"] = " ProductCategory couldn't be found please retry!!";
-        }
-    }
-    @if (ViewBag.UpdateProductCatData != null)
-    {
-        Int64 productCatId = Convert.ToInt64(ViewBag.UpdateProductCatData);
-        if (productCategory.ProductCategoryExist(productCatId))
-        {
-            @Html.Partial("EditProductCategory", productCategory.GetProductCatgoryById(productCatId));
-        }
-        else
-        {
-            Session["Error"] = " Module couldn't be found please retry!!";
-        }
-    }
-    @{ ViewBag.ServerDebug = true;}
-    @*Add Product Category*@
-    <!-- Forms ends -->
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-header">
-                <strong> Product Category List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add Product Category" onclick="javascript:$('#AddProductCategory').slideDown()">
-                    <i class="fas fa-plus"></i> Add
-                </button>
-            </div>
-            <div class="card-body card-block">
-                <table class="dynamic-scroable-table-module  table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="text-align: center;">SN</th>
-                            <th style="text-align: center;">Product Category Name</th>
-                            <th style="text-align: center;">Is Sub Category</th>
-                            <th style="text-align: center;">Sub Category Name</th>
-                            <th style="text-align: center;">Category Status</th>
-                            <th style="text-align: center;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in productCategory.ListAllData())
-                        {
-                            <tr>
-                                <td style="text-align: center;">@(SerialNumber++)</td>
-                                <td style="text-align: center;">@item.ProductCategoryName</td>
-                                <td style="text-align: center; color:@(item.IsSubCategory ==true  ? "green" :"red");"> <i class="@(item.IsSubCategory ==true  ? "fas fa-thumbs-up" :"fas fa-thumbs-down")"></i> @(item.IsSubCategory == true ? "True" : "False")</td>
-                                <td style="text-align: center;">@(item.SubCategoryOf!=null?productCategory.SubCategoryNameBYID(Convert.ToInt64(item.SubCategoryOf)):"-")</td>
-                                <td style="text-align: center; color:@(item.CategoryStatus==true?"green":"red")"><i class="@(item.CategoryStatus == true  ? "fas fa-thumbs-up" :"fas fa-thumbs-down")"></i> @item.CategoryStatus</td>
-                                <td style="padding-left:4%;">
-                                    <a href="~/Products/EditProductCategory?action=UpdateProductCategory&pC=@item.ProductCategoryID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                    <a href="#" onclick="DeleteAndNotify(@item.ProductCategoryID,'@item.ProductCategoryName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-header">
-                <strong> Product List</strong>
-                <button class="btn btn-primary " style="float: right;" data-toggle="tooltip" data-placement="left" title="Add Product" onclick="javascript:$('#AddProduct').slideDown()">
-                    <i class="fas fa-plus"></i> Add
-                </button>
-            </div>
-            <div class="card-body card-block">
-                <table class="dynamic-table-action table table-bordered table-hover">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th style="text-align: center;">SN</th>
-                            <th style="text-align: center;">Product Name</th>
-                            <th style="text-align: center;">Category</th>
-                            <th style="text-align: center;">Stock Left</th>
-                            <th style="text-align: center;">Package rate</th>
-                            <th style="text-align: center;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var itemProd in product.ListAllData())
-                        {
-                            <tr>
-                                <td style="text-align: center;">@(SerialNumber2++)</td>
-                                <td style="text-align: center;">@itemProd.ProductName</td>
-                                <td style="text-align: center;">@itemProd.ProductCategoryName</td>
-                                <td style="text-align: center;">@batch_.StockLeftByProduct(itemProd.ProductID)</td>
-                                <td style="text-align: center;">@itemProd.PackRate</td>
-                                <td style="padding-left:4%;">
-                                    <a href="~/Products/EditProduct?action=UpdateProduct&prod=@itemProd.ProductID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                    <a href="#" onclick="DeleteAndNotifyProduct(@itemProd.ProductID,'@itemProd.ProductName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-<!--#endregion Forms ends-->
 @*@Html.Partial("~/Views/Shared/_Debug.cshtml")*@
 
 @section scripts{
-    <script>
-        $(function () {
-            $('.dynamic-scroable-table-module').DataTable({
-                responsive: !0,
-                scrollY: "65vh",
-                scrollCollapse: !0,
-                responsive: true,
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
-                ]
-            });
-        });
-        $(function () {
-            $('.dynamic-table-action').DataTable({
-                responsive: !0,
-                scrollY: "65vh",
-                scrollCollapse: !0,
-                responsive: true,
-                lengthMenu: [
-                    [5, 10, 25, 50, -1],
-                    [5, 10, 25, 50, "All"]
-                ],drawCallback: function (e) {
-                    var t = this.api(),
-                        l = t.rows({
+    @if (SessionVariable.ProfileName == "Distributor")
+    {
+        <script>
+         
+            $(function () {
+                $('.dynamic-table-action').DataTable({
+                    responsive: !0,
+                    scrollY: "65vh",
+                    scrollCollapse: !0,
+                    responsive: true,
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, "All"]
+                    ], drawCallback: function (e) {
+                        var t = this.api(),
+                            l = t.rows({
+                                page: "current"
+                            }).nodes(),
+                            c = null;
+                        t.column(2, {
                             page: "current"
-                        }).nodes(),
-                        c = null;
-                    t.column(2, {
-                        page: "current"
-                    }).data().each(function (e, t) {
-                        c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
-                    })
-                }            
+                        }).data().each(function (e, t) {
+                            c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
+                        })
+                    }
+                });
             });
-        });
 
-        function DeleteAndNotify(id, value) {
-            swal({
-                title: "Are you sure?",
-                text: "You want to delete " + value + ", all the related data will be deleted!",
-                icon: "warning",
-                closeOnEsc: false,
-                closeOnClickOutside: false,
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        var data = {};
-                        data.ProductCategoryID = id;
-                        data.ProductCategoryName = value;
-                        $.ajax({
-                            type: "POST",
-                            url: "/Products/ProductCategoryDelete",
-                            dataType: "json",
-                            data: JSON.stringify(data),
-                            contentType: "application/json; charset=utf-8",
-                            success: function (response) {
-                                swal("Poof all gone! " + response, {
-                                    icon: "success",
-                                }).then(function () {
-                                    window.location.href = "/Products/Products"
-                                });
-                            },
-                            failure: function (response) {
-                                alert(response.responseText);
-                            },
-                            error: function (response) {
-                                alert(response.responseText);
-                            }
-                        });
+        </script>
+    }
+    else
+    {
+        <script>
+            $(function () {
+                $('.dynamic-scroable-table-module').DataTable({
+                    responsive: !0,
+                    scrollY: "65vh",
+                    scrollCollapse: !0,
+                    responsive: true,
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, "All"]
+                    ]
+                });
+            });
+            $(function () {
+                $('.dynamic-table-action').DataTable({
+                    responsive: !0,
+                    scrollY: "65vh",
+                    scrollCollapse: !0,
+                    responsive: true,
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, "All"]
+                    ], drawCallback: function (e) {
+                        var t = this.api(),
+                            l = t.rows({
+                                page: "current"
+                            }).nodes(),
+                            c = null;
+                        t.column(2, {
+                            page: "current"
+                        }).data().each(function (e, t) {
+                            c !== e && ($(l).eq(t).before('<tr class="group"><td colspan="5">' + e + "</td></tr>"), c = e)
+                        })
                     }
                 });
-        }
-        function DeleteAndNotifyProduct(id, value) {
-            swal({
-                title: "Are you sure?",
-                text: "You want to delete " + value + ", all the related data will be deleted!",
-                icon: "warning",
-                closeOnEsc: false,
-                closeOnClickOutside: false,
-                buttons: true,
-                dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        var data = {};
-                        data.ProductID = id;
-                        data.ProductName = value;
-                        $.ajax({
-                            type: "POST",
-                            url: "/Products/DeleteProduct",
-                            dataType: "json",
-                            data: JSON.stringify(data),
-                            contentType: "application/json; charset=utf-8",
-                            success: function (response) {
-                                swal("Poof all gone! " + response, {
-                                    icon: "success",
-                                }).then(function () {
-                                    window.location.href = "/Products/Products"
-                                });
-                            },
-                            failure: function (response) {
-                                alert(response.responseText);
-                            },
-                            error: function (response) {
-                                alert(response.responseText);
-                            }
-                        });
-                    }
-                });
-        }
-    </script>
+            });
+
+            function DeleteAndNotify(id, value) {
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to delete " + value + ", all the related data will be deleted!",
+                    icon: "warning",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false,
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.ProductCategoryID = id;
+                            data.ProductCategoryName = value;
+                            $.ajax({
+                                type: "POST",
+                                url: "/Products/ProductCategoryDelete",
+                                dataType: "json",
+                                data: JSON.stringify(data),
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+                                    swal("Poof all gone! " + response, {
+                                        icon: "success",
+                                    }).then(function () {
+                                        window.location.href = "/Products/Products"
+                                    });
+                                },
+                                failure: function (response) {
+                                    alert(response.responseText);
+                                },
+                                error: function (response) {
+                                    alert(response.responseText);
+                                }
+                            });
+                        }
+                    });
+            }
+            function DeleteAndNotifyProduct(id, value) {
+                swal({
+                    title: "Are you sure?",
+                    text: "You want to delete " + value + ", all the related data will be deleted!",
+                    icon: "warning",
+                    closeOnEsc: false,
+                    closeOnClickOutside: false,
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            var data = {};
+                            data.ProductID = id;
+                            data.ProductName = value;
+                            $.ajax({
+                                type: "POST",
+                                url: "/Products/DeleteProduct",
+                                dataType: "json",
+                                data: JSON.stringify(data),
+                                contentType: "application/json; charset=utf-8",
+                                success: function (response) {
+                                    swal("Poof all gone! " + response, {
+                                        icon: "success",
+                                    }).then(function () {
+                                        window.location.href = "/Products/Products"
+                                    });
+                                },
+                                failure: function (response) {
+                                    alert(response.responseText);
+                                },
+                                error: function (response) {
+                                    alert(response.responseText);
+                                }
+                            });
+                        }
+                    });
+            }
+        </script>
+    }
+
 }

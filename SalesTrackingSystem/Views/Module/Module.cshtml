@@ -90,7 +90,7 @@
                 </button>
             </div>
             <div class="card-body card-block">
-                <table class="table dynamic-scroable-table-module table-bordered table-hover">
+                <table class="table dynamica-scroable-module table-bordered table-hover">
                     <thead class="thead-dark">
                         <tr>
                             <th style="text-align: center;">SN</th>
@@ -110,7 +110,7 @@
                                     <td style="text-align: center;">@ModuleItem.ModuleName</td>
                                     <td style="text-align: center;">@ModuleItem.ControllerName</td>
                                     <td style="text-align: center; color:@(ModuleItem.ModuleStatus==true?"green":"red");"> <i class="fas @(ModuleItem.ModuleStatus==true ?"fa-thumbs-up":"fa-thumbs-down")"></i> @(ModuleItem.ModuleStatus == true ? "Enabled" : "Disabled")</td>
-                                    <td style="padding-left:15%;">
+                                    <td style="padding-left:5%;">
                                         <a href="~/Module/ModuleEdit?action=Update&uaid=@ModuleItem.ModuleID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
                                         <a href="#" onclick="DeleteAndNotify(@ModuleItem.ModuleID,'@ModuleItem.ModuleName')"><i class="fas fa-trash" style="color:red;"></i></a>
                                     </td>
@@ -128,17 +128,15 @@
 @section scripts{
     <script>
         $(function () {
-            $('.dynamic-scroable-table-module').DataTable({
+            $('.dynamica-scroable-module').DataTable({
                 responsive: !0,
                 scrollY: "65vh",
                 scrollCollapse: !0,
-                paging: !1,
-                "searching": false,
-                "bPaginate": false,
-                "bLengthChange": false,
-                "bFilter": true,
-                "bInfo": false,
-                "bAutoWidth": false
+                responsive: true,
+                lengthMenu: [
+                    [10, 20 , 25, 50, -1],
+                    [10, 20 , 25, 50, "All"]
+                ] 
             });
         });
 

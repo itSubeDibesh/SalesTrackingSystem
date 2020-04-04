@@ -19,12 +19,14 @@ namespace SalesTrackingSystem.Controllers
         #region //Interface Inatialization
         Users_Interface Users;
         Verification_Interface Verification;
+        UserProfile_Interface UserProfile_;
         #endregion
 
         public AuthController()
         {
             Users = new Users_Service();
             Verification = new Verification_service();
+            UserProfile_ = new UserProfile_Service();
         }
 
         [HttpGet]

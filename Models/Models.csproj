@@ -58,6 +58,7 @@
     <Compile Include="TransactionDetail_Model.cs" />
     <Compile Include="Transaction_Model.cs" />
     <Compile Include="Unit_Model.cs" />
+    <Compile Include="UserAuth_Model.cs" />
     <Compile Include="UserProfile_Model.cs" />
     <Compile Include="UserProfileDetails_Model.cs" />
     <Compile Include="Users_Model.cs" />

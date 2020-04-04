@@ -15,5 +15,6 @@ namespace Services.Interface
         UserProfile_Model UserProfilByID(Int64 userProfileId);
         bool UpdateUserProfile(UserProfile_Model userProfile);
         bool DeleteUserProfile(Int64 userProfileId);
+        List<UserAuth_Model> AuthDetailsByUserID(long userId);
     }
 }
