@@ -82,14 +82,14 @@ namespace Services.Service
             {
                 try
                 {
-                    var data = (from ModuleActions in _dbContext.Modules.Where(ModuleActions => ModuleActions.ModuleID == moduleId)
-                                select new Module_Model()
+                    var data = (from moduleActions in _dbContext.ModuleActions.Where(moduleActions => moduleActions.ModuleActionID == moduleId)
+                                select new ModuleAction_Model()
                                 {
-                                    ModuleID = ModuleActions.ModuleID,
-                                    ModuleName=ModuleActions.ModuleName
+                                    ModuleActionID = moduleActions.ModuleActionID,
+                                    ActionName= moduleActions.ActionName
                                    
                                 }).FirstOrDefault();
-                    if (string.IsNullOrWhiteSpace(data.ModuleName) && moduleId != data.ModuleID)
+                    if (string.IsNullOrWhiteSpace(data.ActionName) && moduleId != data.ModuleActionID)
                     {
                         return false;
                     }

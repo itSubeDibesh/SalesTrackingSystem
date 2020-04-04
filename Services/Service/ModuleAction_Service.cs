@@ -120,7 +120,8 @@ namespace Services.Service
                         ModuleID = action.ModuleID,
                         ActionName = action.ActionName,
                         ActionStatus = action.ActionStatus,
-                        Description = action.Description
+                        Description = action.Description,
+                        DateCreated=DateTime.Now
                     };
                     _dbContext.ModuleActions.Add(data);
                     _dbContext.SaveChanges();
@@ -144,6 +145,7 @@ namespace Services.Service
                     data.ActionName = action.ActionName;
                     data.ActionStatus = action.ActionStatus;
                     data.Description = action.Description;
+                    data.DateUpdated = DateTime.Now;
                     _context.SaveChanges();
                     return true;
                 }

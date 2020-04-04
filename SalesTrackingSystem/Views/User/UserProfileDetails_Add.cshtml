@@ -6,6 +6,11 @@
     Module_Interface module_ = new Module_Service();
     ModuleAction_Interface moduleAction_ = new ModuleAction_Service();
     UserProfile_Interface userProfile_ = new UserProfile_Service();
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
 }
 
 @model Models.UserProfileDetails_Model
@@ -70,9 +75,20 @@
                             <option selected disabled>Please select</option>
                             @foreach (var moduleActionItem in moduleAction_.DisplayTable())
                             {
-                                if (moduleAction_.DisplayTable() != null)
+                                foreach (var moduleItem in module_.DisplayTable())
                                 {
-                                    <option value="@moduleActionItem.ModuleActionID">@moduleActionItem.ModuleName</option>
+                                    if (moduleAction_.DisplayTable() != null)
+                                    {
+
+                                        if (module_.DisplayTable() != null)
+                                        {
+                                            if (moduleItem.ControllerName == moduleActionItem.ControllerName)
+                                            {
+                                                <option value="@moduleActionItem.ModuleActionID">@moduleActionItem.ActionName - @moduleItem.ModuleName</option>
+                                            }
+                                        }
+                                    }
+
                                 }
                             }
                         </select>
@@ -95,7 +111,7 @@
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
+                <input type="hidden" name="CreatedBy" value="@SessionVariable.UserID" />              
                 @*<div class="form-group">
             @Html.LabelFor(model => model.CreatedBy, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
