@@ -604,6 +604,7 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="FetchMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="FetchMonthlyQuantity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchReport" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="FetchYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SalesTrackingSystemModelStoreContainer">
@@ -856,6 +857,7 @@
           <FunctionImport Name="FetchMonth" ReturnType="Collection(String)" />
           <FunctionImport Name="FetchYear" ReturnType="Collection(String)" />
           <FunctionImport Name="FetchReport" ReturnType="Collection(SalesTrackingSystemModel.FetchReport_Result)" />
+          <FunctionImport Name="FetchMonthlyQuantity" ReturnType="Collection(SalesTrackingSystemModel.FetchMonthlyQuantity_Result)" />
         </EntityContainer>
         <ComplexType Name="FetchDates_Result">
           <Property Type="String" Name="Years" Nullable="true" MaxLength="30" />
@@ -1521,6 +1523,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="FetchMonthlyQuantity_Result">
+          <Property Type="String" Name="Month" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1830,6 +1836,14 @@
                 <ScalarProperty Name="TaxPercent" ColumnName="TaxPercent" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FetchMonthlyQuantity" FunctionName="SalesTrackingSystemModel.Store.FetchMonthlyQuantity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SalesTrackingSystemModel.FetchMonthlyQuantity_Result">
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

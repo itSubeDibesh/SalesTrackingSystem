@@ -670,16 +670,16 @@ AS
 select  DATENAME(YEAR,T.InvoiceDate)[Year]
 from Transactions T
 GROUP BY DATENAME(YEAR,T.InvoiceDate)
-Order BY DATENAME(YEAR,T.InvoiceDate) DESC
+Order BY DATENAME(YEAR,T.InvoiceDate) ASC
 GO
 /*-------------------------------------------------------------------------------------------------*/
 GO
 CREATE PROCEDURE FetchMonth
 AS
-select  DATENAME(MONTH,T.InvoiceDate)[Month]
+select  {fn MONTHNAME(T.InvoiceDate)}[Month]
 from Transactions T where  DATENAME(YEAR,GETDATE())= DATENAME(YEAR,GETDATE())
-GROUP BY DATENAME(MONTH,T.InvoiceDate)
-Order BY DATENAME(MONTH,T.InvoiceDate) DESC
+GROUP BY  T.InvoiceDate
+Order BY T.InvoiceDate 
 GO
 /*-------------------------------------------------------------------------------------------------*/
 CREATE PROCEDURE FetchReport
@@ -693,5 +693,20 @@ left join Batch B on B.ProductID=P.ProductID
 left join Unit U on P.UnitId=U.UnitId
 GROUP BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,TD.ProductID,TD.Quantity,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance
 Order BY DATENAME(YEAR,T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate),T.SupplierID,T.ReceiverID,TD.ProductID,TD.Quantity,T.TransactionLevel,T.DiscountPercent,T.TaxPercent,T.Balance DESC
+END
+GO
+/*-------------------------------------------------------------------------------------------------*/
+/*----------------------------------(April 4 2020) Procedures  ------------------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------*/
+CREATE PROCEDURE FetchMonthlyQuantity
+AS
+BEGIN
+select  MONTH(T.InvoiceDate)[SN],DATENAME(MONTH,T.InvoiceDate)[Month],SUM(TD.Quantity)[Quantity]
+from TransactionDetails TD   
+ join Transactions T on T.TransactionID=TD.TransactionID
+where DATENAME(YEAR,T.InvoiceDate)=DATENAME(YEAR,GETDATE())
+GROUP BY MONTH(T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate)
+Order BY MONTH(T.InvoiceDate),DATENAME(MONTH,T.InvoiceDate)
 END
 GO

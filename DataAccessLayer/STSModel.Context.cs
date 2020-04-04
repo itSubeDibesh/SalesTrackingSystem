@@ -62,5 +62,10 @@ namespace DataAccessLayer
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchReport_Result>("FetchReport");
         }
+    
+        public virtual ObjectResult<FetchMonthlyQuantity_Result> FetchMonthlyQuantity()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FetchMonthlyQuantity_Result>("FetchMonthlyQuantity");
+        }
     }
 }

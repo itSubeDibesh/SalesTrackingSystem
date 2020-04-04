@@ -104,7 +104,7 @@
                                             <div class="col-8">
                                                 <select name="Product" id="Product" class="form-control">
                                                     <option value="Product" selected>Select Product</option>
-                                                    @foreach (var item in product.ListAllData())
+                                                    @foreach (var item in product.ListAllData().OrderBy(m=>m.ProductName))
                                                     {
                                                         if (item != null)
                                                         {

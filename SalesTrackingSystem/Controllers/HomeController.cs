@@ -248,73 +248,21 @@ namespace SalesTrackingSystem.Controllers
             return Json(overviewData, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult GetDashboardTransaction()
-        //{
-        //    using (var _dbContext = new SalesTrackingSystemEntities())
-        //    {
-        //        try
-        //        {
-        //            var data = (from Users in _dbContext.Users
-        //                        join actionUserProfile in _dbContext.UserProfiles on Users.UserProfileID equals actionUserProfile.UserProfileID
-        //                        select new Users_Model()
-        //                        {
-        //                            UserID = Users.UserID,
-        //                            UserProfileID = Users.UserProfileID,
-        //                            DistrubitorID = Users.DistrubitorID,
-        //                            FullName = Users.FullName,
-        //                            PasswordHash = Users.PasswordHash,
-        //                            Email = Users.Email,
-        //                            Token = Users.Token,
-        //                            MobileNo = Users.MobileNo,
-        //                            ImageString = Users.ImageString,
-        //                            UsersStatus = Users.UsersStatus,
-        //                            DateCreated = Users.DateCreated,
-        //                            DateUpdated = Users.DateUpdated,
-        //                            ProfileName = actionUserProfile.ProfileName,
-        //                            Description = actionUserProfile.Description,
-        //                            CreatedBy = actionUserProfile.CreatedBy,
-        //                            UserProfileStatus = actionUserProfile.UserProfileStatus
-        //                        }).ToList().OrderBy(Users => Users.FullName).ToList();
-        //            return data;
-        //        }
-        //        catch (Exception)
-        //        {
-
-        //        }
-        //    }
-        //}
+        public JsonResult GetDashboardQuantity()
+        {
+            object dats;
+            using (var _dbContext = new SalesTrackingSystemEntities())
+            {
+                dats = _dbContext.FetchMonthlyQuantity().ToList();
+               
+            }
+            return Json(dats, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Reports()
         {
             return View("Reports");
         }
-
-        //public JsonResult GetSalesRepoart()
-        //{
-        //    var LoginSession = (Users_Model)Session["auth"];
-        //    if (LoginSession!=null)
-        //    {
-        //        List<TransactionDetail_Model> Report;
-        //        if (LoginSession.ProfileName == "Company")
-        //        {
-        //            Report = transaction.SalesReportByLevel(2);
-        //            return Json(Report, JsonRequestBehavior.AllowGet);
-        //        }
-        //        else if (LoginSession.ProfileName == "Distributor")
-        //        {
-        //            Report = transaction.SalesReportByLevel(1);
-        //            return Json(Report, JsonRequestBehavior.AllowGet);
-        //        }
-        //        else
-        //        {
-        //            return Json("Error");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return Json("Server Error");
-        //    }
-        //}
 
     }
 }

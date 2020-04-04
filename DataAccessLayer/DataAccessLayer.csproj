@@ -80,6 +80,9 @@
     <Compile Include="FetchDates_Result.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="FetchMonthlyQuantity_Result.cs">
+      <DependentUpon>STSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="FetchReport_Result.cs">
       <DependentUpon>STSModel.tt</DependentUpon>
     </Compile>
