@@ -564,6 +564,7 @@
     <Content Include="Views\Transaction\AddTransaction.cshtml" />
     <Content Include="Views\Home\Reports.cshtml" />
     <Content Include="Views\Error\E403.cshtml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">

@@ -9,7 +9,7 @@
 }
 <!DOCTYPE html>
 <noscript>
-    <meta http-equiv="refresh" content="0;url=https://@Request.ServerVariables["HTTP_HOST"]/Error/J404">
+    <meta http-equiv="refresh" content="0;"url="~/Error/J404">
 </noscript>
 @{ViewBag.AppName = "Tinjure tea factory";}
 <html lang="en">
@@ -363,7 +363,7 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="@(SessionVariable.ImageString == null ? "Https://" + Request.ServerVariables["HTTP_HOST"] + "/images/icon/user.png" : "Https://" + Request.ServerVariables["HTTP_HOST"] + SessionVariable.ImageString+"")" alt="Https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:500px; width:auto;" />
+                                            <img src="@(SessionVariable.ImageString == null ? "../Images/icon/user.png" : ".." + SessionVariable.ImageString+"")" alt="..@SessionVariable.ImageString" style="max-height:500px; width:auto;" />
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn">@SessionVariable.FullName</a>
@@ -371,7 +371,7 @@
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
-                                                    <img src="@(SessionVariable.ImageString == null ? "Https://" + Request.ServerVariables["HTTP_HOST"] + "/images/icon/user.png" : "Https://" + Request.ServerVariables["HTTP_HOST"] + SessionVariable.ImageString+"")" alt="Https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:500px; width:auto;" />
+                                                    <img src="@(SessionVariable.ImageString == null ? "../Images/icon/user.png" : ".." + SessionVariable.ImageString+"")" alt="..@SessionVariable.ImageString" style="max-height:500px; width:auto;" />
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
@@ -430,7 +430,7 @@
 @Scripts.Render("~/bundles/js")
 @RenderSection("scripts", required: false)
 </html>
-@*<script>
+<script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeypress = function (event) {
             event = (event || window.event);
@@ -474,7 +474,7 @@
             console.log(element);
             console.clear();
             if (checkStatus == "on") {
-                window.location="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401";
+                window.location="/Error/E401";
             }
         }, 1000)
 
@@ -505,10 +505,10 @@
     }
 
     function goInactive() {
-         window.location="https://@Request.ServerVariables["HTTP_HOST"]/Auth/Logout";
+         window.location="/Auth/Logout";
     }
 
     function goActive() {
         startTimer();
     }
-    </script>*@
+    </script>

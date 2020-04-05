@@ -123,6 +123,12 @@ namespace SalesTrackingSystem.Helpers
                     filterContext.Result = new RedirectResult("~/Error/E404");
                 }
 
+                //Redirecting to 404 page when page not found
+                if (HttpContext.Current.Response.StatusCode == 403.14)
+                {
+                    filterContext.Result = new RedirectResult("~/Error/E403");
+                }
+
 
                 //Redirecting to 401 page when un authorized access
                 if (HttpContext.Current.Response.StatusCode == 401)

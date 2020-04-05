@@ -37,7 +37,7 @@
             </div>
             <div class="card-body row">
                 <div class="mx-auto d-block">
-                    <img class="rounded-circle mx-auto d-block" src="@(SessionVariable.ImageString == null ? "Https://" + Request.ServerVariables["HTTP_HOST"] + "/images/icon/user.png" : "Https://" + Request.ServerVariables["HTTP_HOST"] + SessionVariable.ImageString+"")" alt="Https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:250px; width:auto;" />
+                    <img class="rounded-circle mx-auto d-block" src="@(SessionVariable.ImageString == null ? "../Images/icon/user.png" : ".."+ SessionVariable.ImageString+"")" alt="..@SessionVariable.ImageString" style="max-height:250px; width:auto;" />
                     <div class="row" style="text-align:center;">
                         <div class="col-sm-12">
                             <h5>@SessionVariable.FullName </h5>
@@ -269,7 +269,7 @@
                                     @if (SessionVariable.ImageString != null)
                                     {
                                         <div class="col-md-5 col-sm-6">
-                                            <img src="https://@Request.ServerVariables["HTTP_HOST"]@SessionVariable.ImageString" style="max-height:200px; width:auto;" alt="@SessionVariable.FullName" />
+                                            <img src="..@SessionVariable.ImageString" style="max-height:200px; width:auto;" alt="@SessionVariable.FullName" />
                                             <p>Previous Image</p>
                                         </div>
                                     }

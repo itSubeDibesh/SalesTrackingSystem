@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <noscript>
-    <meta http-equiv="refresh" content="0;url=https://@Request.ServerVariables["HTTP_HOST"]/Error/J404">
+    <meta http-equiv="refresh" content="0;"url="~/Error/J404">
 </noscript>
 <html lang="en">
 <head>
@@ -58,7 +58,7 @@
             return false;
         }
     }
-    @*var checkStatus;
+    var checkStatus;
 
     var element = new Image();
     // var element = document.createElement('any');
@@ -71,8 +71,8 @@
         console.log(element);
         console.clear();
         if (checkStatus == "on") {
-            window.location="https://@Request.ServerVariables["HTTP_HOST"]/Error/E401";
+            window.location="/Error/E401";
         }
-    }, 1000)*@
+    }, 1000)
 </script>
 <!-- end document-->
