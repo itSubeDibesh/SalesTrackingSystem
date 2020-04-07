@@ -1,5 +1,5 @@
 ﻿@model Models.Users_Model
-
+@using Models
 @{
     ViewBag.Title = "Reseller";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,8 +7,11 @@
     ViewBag.AppName = "Tinjure tea factory";
     ViewBag.Action = "AddReseller";
     var SerialNumber = 1;
-
-
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
 }
 @using Services.Interface;
 @using Services.Service;
@@ -83,22 +86,47 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in resellerService.ListAllData())
+                            @if (SessionVariable.ProfileName == "Company")
                             {
-                                <tr>
-                                    <td style="text-align: center;">@(SerialNumber++)</td>
-                                    <td style="text-align: center;">@item.ResellerName</td>
-                                    <td style="text-align: center;">@item.DistrubitorName</td>
-                                    <td style="text-align: center;">@item.OwnerName</td>
-                                    <td style="text-align: center;">@item.Mobile</td>
-                                    <td style="text-align: center;">@item.Email</td>
-                                    <td style="text-align: center;">@item.Address</td>
-                                    <td style="padding-left:4%;">
-                                        <a href="~/Reseller/EditReseller?action=UpdateReseller&res=@item.ResellerID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
-                                        <a href="#" onclick="DeleteAndNotify(@item.ResellerID,'@item.ResellerName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
-                                    </td>
-                                </tr>
+                                foreach (var item in resellerService.ListAllData())
+                                {
+                                    <tr>
+                                        <td style="text-align: center;">@(SerialNumber++)</td>
+                                        <td style="text-align: center;">@item.ResellerName</td>
+                                        <td style="text-align: center;">@item.DistrubitorName</td>
+                                        <td style="text-align: center;">@item.OwnerName</td>
+                                        <td style="text-align: center;">@item.Mobile</td>
+                                        <td style="text-align: center;">@item.Email</td>
+                                        <td style="text-align: center;">@item.Address</td>
+                                        <td style="padding-left:4%;">
+                                            <a href="~/Reseller/EditReseller?action=UpdateReseller&res=@item.ResellerID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                            <a href="#" onclick="DeleteAndNotify(@item.ResellerID,'@item.ResellerName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                        </td>
+                                    </tr>
 
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in resellerService.ListAllData())
+                                {
+                                    if (SessionVariable.DistrubitorID==item.DistrubitorID)
+                                    {
+                                        <tr>
+                                            <td style="text-align: center;">@(SerialNumber++)</td>
+                                            <td style="text-align: center;">@item.ResellerName</td>
+                                            <td style="text-align: center;">@item.DistrubitorName</td>
+                                            <td style="text-align: center;">@item.OwnerName</td>
+                                            <td style="text-align: center;">@item.Mobile</td>
+                                            <td style="text-align: center;">@item.Email</td>
+                                            <td style="text-align: center;">@item.Address</td>
+                                            <td style="padding-left:4%;">
+                                                <a href="~/Reseller/EditReseller?action=UpdateReseller&res=@item.ResellerID"> <i class="fas fa-edit" style="color:green;" data-toggle="tooltip" data-placement="left" title="Edit"></i></a> |
+                                                <a href="#" onclick="DeleteAndNotify(@item.ResellerID,'@item.ResellerName')"><i class="fas fa-trash" style="color:red;" data-toggle="tooltip" data-placement="right" title="Delete"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
                             }
 
                         </tbody>

@@ -14,6 +14,11 @@
     {
         TransacctionVariable = (Session["Transaction"] as Transaction_Model);
     }
+    var SessionVariable = new Users_Model();
+    if (Session["auth"] != null)
+    {
+        SessionVariable = (Session["auth"] as Users_Model);
+    }
 }
 
 @{
@@ -75,57 +80,97 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in transaction.DisplayTable())
+                        @if (SessionVariable.ProfileName == "Company")
                         {
-                            if (item != null)
+                            foreach (var item in transaction.DisplayTable())
                             {
-                                <tr>
-                                    <td style="text-align: center;">@(SearialNumber++)</td>
-                                    <td style="text-align: center;">
-                                        @if (item.TransactionLevel == 1)/*Distributor to Reseller*/
-                                        {
-                                            var SupplierPrimaryInfo = user.GetModelById(item.SupplierID);
-                                            var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
-                                            if (SupplierDetails != null)
+                                if (item != null)
+                                {
+                                    <tr>
+                                        <td style="text-align: center;">@(SearialNumber++)</td>
+                                        <td style="text-align: center;">
+                                            @if (item.TransactionLevel == 1)/*Distributor to Reseller*/
                                             {
-                                                <span>@SupplierDetails.DistrubitorName</span>
+                                                var SupplierPrimaryInfo = user.GetModelById(item.SupplierID);
+                                                var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo.DistrubitorID));
+                                                if (SupplierDetails != null)
+                                                {
+                                                    <span>@SupplierDetails.DistrubitorName</span>
+                                                }
                                             }
-                                        }
-                                        else/*Company to Distributor*/
-                                        {
-                                            <span> Tinjure Organic Tea</span>
-                                        }
-                                    </td>
-                                    <td style="text-align: center;">
-                                        @if (item.TransactionLevel == 1)/*Distributor to Reseller*/
-                                        {
-                                            var resellerInfo = reseller.GetResellerById(item.ReceiverID);
-                                            <span>@resellerInfo.ResellerName</span>
-                                        }
-                                        else/*Company to Distributor*/
-                                        {
-                                            var ReceiverPrimaryInfo = user.GetModelById(item.ReceiverID);
-                                            var ReceiverDetails = new Distributor_Model();
-                                            if (ReceiverPrimaryInfo != null)
+                                            else/*Company to Distributor*/
                                             {
-                                                ReceiverDetails = distributor_.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                                <span> Tinjure Organic Tea</span>
                                             }
+                                        </td>
+                                        <td style="text-align: center;">
+                                            @if (item.TransactionLevel == 1)/*Distributor to Reseller*/
+                                            {
+                                                var resellerInfo = reseller.GetResellerById(item.ReceiverID);
+                                                <span>@resellerInfo.ResellerName</span>
+                                            }
+                                            else/*Company to Distributor*/
+                                            {
+                                                var ReceiverPrimaryInfo = user.GetModelById(item.ReceiverID);
+                                                var ReceiverDetails = new Distributor_Model();
+                                                if (ReceiverPrimaryInfo != null)
+                                                {
+                                                    ReceiverDetails = distributor_.GetDistributorById(Convert.ToInt64(ReceiverPrimaryInfo.DistrubitorID));
+                                                }
 
-                                            if (ReceiverDetails != null)
-                                            {
-                                                <span>@ReceiverDetails.DistrubitorName</span>
+                                                if (ReceiverDetails != null)
+                                                {
+                                                    <span>@ReceiverDetails.DistrubitorName</span>
+                                                }
                                             }
-                                        }
-                                    </td>
-                                    <td style="text-align: center;">@item.InvoiceNo</td>
-                                    <td style="text-align: center;">@(string.Format("{0:dd/MM/yyyy}", item.InvoiceEntryDate))</td>
-                                    <td style="padding-left:3.5%;">
-                                        <button class="btn btn-success" onclick="setTransaction(@item.TransactionID)" data-toggle="modal" id="InvoiceTargete" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:white;"></i> View</button>
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td style="text-align: center;">@item.InvoiceNo</td>
+                                        <td style="text-align: center;">@(string.Format("{0:dd/MM/yyyy}", item.InvoiceEntryDate))</td>
+                                        <td style="padding-left:3.5%;">
+                                            <button class="btn btn-success" onclick="setTransaction(@item.TransactionID)" data-toggle="modal" id="InvoiceTargete" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:white;"></i> View</button>
+                                        </td>
+                                    </tr>
+                                }
                             }
                         }
-                    </tbody>
+                        else
+                        {
+                            foreach (var item in transaction.DisplayTable())
+                            {
+                                if (item != null)
+                                {
+                                    if (item.TransactionLevel == 1 && item.SupplierID==SessionVariable.UserID )/*Distributor to Reseller*/
+                                    {
+                                        <tr>
+                                            <td style="text-align: center;">@(SearialNumber++)</td>
+                                            <td style="text-align: center;">
+                                                @{
+                                                    var SupplierPrimaryInfo2 = user.GetModelById(item.SupplierID);
+                                                    var SupplierDetails = distributor_.GetDistributorById(Convert.ToInt64(SupplierPrimaryInfo2.DistrubitorID));
+                                                    if (SupplierDetails != null)
+                                                    {
+                                                        <span>@SupplierDetails.DistrubitorName</span>
+                                                    }
+                                                }
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @{
+                                                    var resellerInfo = reseller.GetResellerById(item.ReceiverID);
+                                                    <span>@resellerInfo.ResellerName</span>
+                                                }                                               
+                                            </td>
+                                            <td style="text-align: center;">@item.InvoiceNo</td>
+                                            <td style="text-align: center;">@(string.Format("{0:dd/MM/yyyy}", item.InvoiceEntryDate))</td>
+                                            <td style="padding-left:3.5%;">
+                                                <button class="btn btn-success" onclick="setTransaction(@item.TransactionID)" data-toggle="modal" id="InvoiceTargete" data-target="#InvoicePopup"><i class="fas fa-eye" style="color:white;"></i> View</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+
+                        </tbody>
                 </table>
             </div>
         </div>
